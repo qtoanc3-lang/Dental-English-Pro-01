@@ -1,0 +1,1898 @@
+"example": "Endodontics focuses on the morphology, physiology, and pathology of the dental pulp.", "exampleVi": "Nội nha tập trung vào hình thái học, sinh lý học và bệnh lý của tủy răng.", "clinicalNote": "Chuyên khoa điều trị tủy và mô quanh chóp.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_10", "unit": "Unit 4", "word": "Endodontist", "ipa": "/ˌen.dəʊˈdɒn.tɪst/", "pos": "n.", "meaning": "Bác sĩ nội nha", "relatedTerms": [ "Retreatment", "Apexification", "Rotary instrumentation" ], "example": "The endodontist negotiated a severely curved root canal successfully.", "exampleVi": "Bác sĩ nội nha đã xử lý thành công một ống tủy bị cong gắt.", "clinicalNote": "Chuyên gia điều trị các ca tủy phức tạp hoặc tái điều trị.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_11", "unit": "Unit 4", "word": "Tissue", "ipa": "/ˈtɪʃ.uː/", "pos": "n.", "meaning": "Mô", "relatedTerms": [ "Hard tissue", "Soft tissue", "Histology" ], "example": "Necrotic tissue inside the root canal must be debrided thoroughly.", "exampleVi": "Mô hoại tử bên trong ống tủy phải được làm sạch triệt để.", "clinicalNote": "Bao gồm mô mềm (tủy, nướu) và mô cứng (men, ngà, xương).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_12", "unit": "Unit 4", "word": "Dental pulp", "ipa": "/ˈden.təl pʌlp/", "pos": "n.", "meaning": "Tủy răng", "relatedTerms": [ "Pulp chamber", "Radicular pulp", "Pulp vitality" ], "example": "The dental pulp contains blood vessels, nerves, and connective tissue.", "exampleVi": "Tủy răng chứa mạch máu, dây thần kinh và mô liên kết.", "clinicalNote": "Cơ quan nuôi dưỡng và dẫn truyền cảm giác của răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_13", "unit": "Unit 4", "word": "Damaged", "ipa": "/ˈdæm.ɪdʒd/", "pos": "adj.", "meaning": "Bị tổn thương", "relatedTerms": [ "Structural damage", "Traumatic injury", "Fractured cusp" ], "example": "Severely damaged coronal structure requires full coverage restoration.", "exampleVi": "Cấu trúc thân răng bị tổn thương nghiêm trọng cần phải phục hình bọc toàn phần.", "clinicalNote": "Tổn thương do sâu răng, chấn thương hoặc mòn răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_14", "unit": "Unit 4", "word": "Inflamed", "ipa": "/ɪnˈfleɪmd/", "pos": "adj.", "meaning": "Bị viêm", "relatedTerms": [ "Inflammatory response", "Erythematous", "Edematous" ], "example": "The inflamed gingival margin bled immediately upon probing.", "exampleVi": "Viền nướu bị viêm chảy máu ngay lập tức khi thăm khám bằng thám trâm.", "clinicalNote": "Dấu hiệu đáp ứng miễn dịch với màng sinh học vi khuẩn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_15", "unit": "Unit 4", "word": "Infected", "ipa": "/ɪnˈfek.tɪd/", "pos": "adj.", "meaning": "Bị nhiễm trùng", "relatedTerms": [ "Bacterial colonization", "Suppuration", "Periapical abscess" ], "example": "An infected root canal system can lead to acute apical periodontitis.", "exampleVi": "Hệ thống ống tủy bị nhiễm trùng có thể dẫn đến viêm quanh chóp cấp tính.", "clinicalNote": "Hiện diện vi khuẩn sinh bệnh trong cấu trúc răng/nha chu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_16", "unit": "Unit 4", "word": "Root canal", "ipa": "/ˈruːt kəˌnæl/", "pos": "n.", "meaning": "Ống tủy răng / Quy trình điều trị tủy", "relatedTerms": [ "Canal anatomy", "Apical foramen", "Obturation" ], "example": "The molar has four distinct root canals that require cleaning.", "exampleVi": "Răng hàm lớn có bốn ống tủy riêng biệt cần được làm sạch.", "clinicalNote": "Khoang giải phẫu bên trong chân răng chứa tủy chân.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_17", "unit": "Unit 4", "word": "Shape", "ipa": "/ʃeɪp/", "pos": "v.", "meaning": "Tạo hình (ống tủy)", "relatedTerms": [ "Biomechanical preparation", "Canal tapering", "Rotary files" ], "example": "Nickel-titanium files are used to shape the root canal efficiently.", "exampleVi": "Trâm máy Nickel-titanium được dùng để tạo hình ống tủy một cách hiệu quả.", "clinicalNote": "Tạo độ thuôn liên tục từ cổ răng về chóp răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_18", "unit": "Unit 4", "word": "Fill", "ipa": "/fɪl/", "pos": "v.", "meaning": "Trám / Bít kín", "relatedTerms": [ "Restoration", "Obturation", "Gutta-percha" ], "example": "The clinician will fill the prepared cavity with composite resin.", "exampleVi": "Bác sĩ lâm sàng sẽ trám xoang đã chuẩn bị bằng nhựa composite.", "clinicalNote": "Tái tạo thể tích mô răng đã mất bằng vật liệu nhân tạo.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_19", "unit": "Unit 4", "word": "Seal", "ipa": "/siːl/", "pos": "v.", "meaning": "Bít kín", "relatedTerms": [ "Hermetic seal", "Coronal seal", "Endodontic sealer" ], "example": "A proper coronal seal prevents recontamination of the root canal.", "exampleVi": "Bít kín thân răng chuẩn giúp ngăn ngừa sự tái nhiễm trùng của ống tủy.", "clinicalNote": "Yếu tố quyết định thành công lâu dài của điều trị tủy.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_20", "unit": "Unit 4", "word": "Preserve", "ipa": "/prɪˈzɜːv/", "pos": "v.", "meaning": "Bảo tồn", "relatedTerms": [ "Tooth preservation", "Minimally invasive", "Structure retention" ], "example": "The main goal of endodontic treatment is to preserve the natural tooth.", "exampleVi": "Mục tiêu chính của điều trị nội nha là bảo tồn răng thật tự nhiên.", "clinicalNote": "Triết lý điều trị xâm lấn tối thiểu trong nha khoa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_21", "unit": "Unit 4", "word": "Periodontics", "ipa": "/ˌper.i.əʊˈdɒn.tɪks/", "pos": "n.", "meaning": "Nha chu", "relatedTerms": [ "Periodontal ligament", "Alveolar bone loss", "Periodontal pocket" ], "example": "Periodontics addresses inflammatory diseases affecting supporting tissues.", "exampleVi": "Nha chu học giải quyết các bệnh lý viêm nhiễm ảnh hưởng đến các mô nâng đỡ.", "clinicalNote": "Chuyên ngành về các tổ chức quanh răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_22", "unit": "Unit 4", "word": "Periodontist", "ipa": "/ˌper.i.əʊˈdɒn.tɪst/", "pos": "n.", "meaning": "Bác sĩ nha chu", "relatedTerms": [ "Periodontal surgery", "Bone graft", "Soft tissue graft" ], "example": "The periodontist performed scaling and root planing to reduce pocket depth.", "exampleVi": "Bác sĩ nha chu đã thực hiện cạo vôi và xử lý mặt gốc răng để giảm độ sâu túi.", "clinicalNote": "Chuyên gia về mô nướu, xương ổ răng và cấy ghép implant.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_23", "unit": "Unit 4", "word": "Gingivitis", "ipa": "/ˌdʒɪn.dʒɪˈvaɪ.tɪs/", "pos": "n.", "meaning": "Viêm lợi / Viêm nướu", "relatedTerms": [ "Plaque-induced", "Bleeding on probing", "Reversible condition" ], "example": "Gingivitis is a reversible condition if oral hygiene is maintained.", "exampleVi": "Viêm nướu là tình trạng có thể hồi phục nếu duy trì vệ sinh răng miệng tốt.", "clinicalNote": "Giai đoạn sớm của bệnh nha chu, chưa mất bám dính lâm sàng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_24", "unit": "Unit 4", "word": "Periodontal disease", "ipa": "/ˌper.i.əʊˈdɒn.təl dɪˈziːz/", "pos": "n.", "meaning": "Bệnh nha chu", "relatedTerms": [ "Chronic infection", "Attachment loss", "Tooth mobility" ], "example": "Untreated periodontal disease is a leading cause of tooth loss in adults.", "exampleVi": "Bệnh nha chu không được điều trị là nguyên nhân hàng đầu gây mất răng ở người lớn.", "clinicalNote": "Nhiễm khuẩn mạn tính phá hủy cấu trúc nâng đỡ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_25", "unit": "Unit 4", "word": "Periodontitis", "ipa": "/ˌper.i.əʊ.dɒnˈtaɪ.tɪs/", "pos": "n.", "meaning": "Viêm nha chu", "relatedTerms": [ "Pocket formation", "Clinical attachment level", "Bone resorption" ], "example": "Severe periodontitis causes progressive destruction of the alveolar bone.", "exampleVi": "Viêm nha chu nặng gây tiêu xương ổ răng tiến triển.", "clinicalNote": "Tình trạng viêm không thể đảo ngược, có tổn thương xương ổ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_26", "unit": "Unit 4", "word": "Gradually", "ipa": "/ˈɡrædʒ.u.ə.li/", "pos": "adv.", "meaning": "Từ từ / Dần dần", "relatedTerms": [ "Progressive loss", "Chronic process", "Slow progression" ], "example": "Alveolar bone height decreases gradually under untreated inflammation.", "exampleVi": "Chiều cao xương ổ răng giảm dần dần dưới tình trạng viêm không được điều trị.", "clinicalNote": "Đặc tính diễn tiến mạn tính của bệnh nha chu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_27", "unit": "Unit 4", "word": "Stability", "ipa": "/stəˈbɪl.ə.ti/", "pos": "n.", "meaning": "Sự ổn định", "relatedTerms": [ "Primary stability", "Secondary stability", "Implant osseointegration" ], "example": "Good primary stability is essential for successful immediate implant placement.", "exampleVi": "Sự ổn định ban đầu tốt là điều kiện thiết yếu để cấy ghép implant tức thì thành công.", "clinicalNote": "Độ vững chắc của răng hoặc implant trong xương ổ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_28", "unit": "Unit 4", "word": "Prosthodontics", "ipa": "/ˌprɒs.θəˈdɒn.tɪks/", "pos": "n.", "meaning": "Phục hình răng", "relatedTerms": [ "Crowns and bridges", "Fixed prosthodontics", "Removable partial denture" ], "example": "Prosthodontics restores masticatory function and dental aesthetics.", "exampleVi": "Phục hình răng khôi phục chức năng nhai và thẩm mỹ răng miệng.", "clinicalNote": "Chuyên ngành tái tạo và thay thế răng mất.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_29", "unit": "Unit 4", "word": "Prosthodontist", "ipa": "/ˌprɒs.θəˈdɒn.tɪst/", "pos": "n.", "meaning": "Bác sĩ phục hình răng", "relatedTerms": [ "Full mouth rehabilitation", "Occlusal reconstruction", "Maxillofacial prosthesis" ], "example": "The prosthodontist planned a full-arch implant-supported prosthesis.", "exampleVi": "Bác sĩ phục hình răng đã lên kế hoạch làm phục hình toàn hàm trên implant.", "clinicalNote": "Chuyên gia phục hồi toàn diện khớp cắn và thẩm mỹ nụ cười.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_30", "unit": "Unit 4", "word": "Denture", "ipa": "/ˈden.tʃər/", "pos": "n.", "meaning": "Hàm giả", "relatedTerms": [ "Complete denture", "Partial denture", "Acrylic base" ], "example": "The edentulous patient received a complete maxillary denture.", "exampleVi": "Bệnh nhân mất răng toàn bộ đã được gắn một hàm giả toàn phần hàm trên.", "clinicalNote": "Khí cụ phục hình tháo lắp thay thế răng và mô nướu đã mất.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_31", "unit": "Unit 4", "word": "Dental implant", "ipa": "/ˈden.təl ˈɪm.plɑːnt/", "pos": "n.", "meaning": "Implant nha khoa / Cấy ghép nha khoa", "relatedTerms": [ "Osseointegration", "Titanium fixture", "Abutment" ], "example": "A dental implant acts as an artificial tooth root anchored in bone.", "exampleVi": "Implant nha khoa hoạt động như một chân răng nhân tạo neo giữ trong xương.", "clinicalNote": "Giải pháp phục hình răng cố định tối ưu nhất hiện nay.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_32", "unit": "Unit 4", "word": "Enhance", "ipa": "/ɪnˈhɑːns/", "pos": "v.", "meaning": "Cải thiện / Nâng cao", "relatedTerms": [ "Aesthetic enhancement", "Function improvement", "Smile makeover" ], "example": "Ceramic veneers are used to enhance anterior tooth shade and form.", "exampleVi": "Mặt dán sứ được dùng để cải thiện màu sắc và hình thể răng phía trước.", "clinicalNote": "Tăng cường cả mặt cơ học nhai lẫn thẩm mỹ nụ cười.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_33", "unit": "Unit 4", "word": "Pediatric dentistry", "ipa": "/ˌpiː.diˈæt.rɪk ˈden.tɪ.stri/", "pos": "n.", "meaning": "Nha khoa trẻ em", "relatedTerms": [ "Pedodontics", "Behavior guidance", "Space maintainer" ], "example": "Pediatric dentistry focuses on dental health from infancy through adolescence.", "exampleVi": "Nha khoa trẻ em tập trung vào sức khỏe răng miệng từ giai đoạn sơ sinh đến thanh thiếu niên.", "clinicalNote": "Chuyên khoa điều trị và quản lý hành vi ở trẻ nhỏ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_34", "unit": "Unit 4", "word": "Pediatric dentist", "ipa": "/ˌpiː.diˈæt.rɪk ˈden.tɪst/", "pos": "n.", "meaning": "Bác sĩ nha khoa trẻ em", "relatedTerms": [ "Tell-show-do technique", "Nitrous oxide sedation", "Pulpotomy" ], "example": "The pediatric dentist applied fluoride varnish to prevent early childhood caries.", "exampleVi": "Bác sĩ nha khoa trẻ em đã bôi vecni fluor để phòng ngừa sâu răng sớm ở trẻ.", "clinicalNote": "Chuyên gia thấu hiểu tâm lý trẻ và đặc điểm răng sữa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_35", "unit": "Unit 4", "word": "Oral surgery", "ipa": "/ˈɔː.rəl ˈsɜː.dʒər.i/", "pos": "n.", "meaning": "Phẫu thuật miệng", "relatedTerms": [ "Dentoalveolar surgery", "Impacted wisdom tooth", "Bone biopsy" ], "example": "Oral surgery includes tooth extractions and pre-prosthetic bone contouring.", "exampleVi": "Phẫu thuật miệng bao gồm nhổ răng và sửa mào xương trước phục hình.", "clinicalNote": "Can thiệp ngoại khoa trong phạm vi khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_36", "unit": "Unit 4", "word": "Oral surgeon", "ipa": "/ˈɔː.rəl ˈsɜː.dʒən/", "pos": "n.", "meaning": "Bác sĩ phẫu thuật miệng", "relatedTerms": [ "Surgical flap", "Suturing", "Local anesthesia" ], "example": "The oral surgeon removed the horizontally impacted mandibular third molar.", "exampleVi": "Bác sĩ phẫu thuật miệng đã nhổ chiếc răng khôn hàm dưới mọc ngầm nằm ngang.", "clinicalNote": "Bác sĩ thực hiện các thủ thuật phẫu thuật răng miệng phức tạp.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_37", "unit": "Unit 4", "word": "Extraction", "ipa": "/ɪkˈstræk.ʃən/", "pos": "n.", "meaning": "Nhổ răng", "relatedTerms": [ "Simple extraction", "Surgical extraction", "Post-operative care" ], "example": "Tooth extraction is indicated when restorative options are exhausted.", "exampleVi": "Nhổ răng được chỉ định khi các phương án phục hồi không còn khả thi.", "clinicalNote": "Thủ thuật loại bỏ răng khỏi huyệt ổ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_38", "unit": "Unit 4", "word": "Maxillofacial", "ipa": "/ˌmæk.sɪl.əʊˈfeɪ.ʃəl/", "pos": "adj.", "meaning": "Hàm mặt", "relatedTerms": [ "Maxillofacial trauma", "Craniofacial", "Skeletal deformities" ], "example": "The department specializes in complex maxillofacial reconstructions.", "exampleVi": "Khoa chuyên sâu về các ca tái tạo hàm mặt phức tạp.", "clinicalNote": "Thuộc về cấu trúc vùng xương hàm trên và xương mặt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_39", "unit": "Unit 4", "word": "Maxillofacial surgery", "ipa": "/ˌmæk.sɪl.əʊˈfeɪ.ʃəl ˈsɜː.dʒər.i/", "pos": "n.", "meaning": "Phẫu thuật hàm mặt", "relatedTerms": [ "Orthognathic surgery", "Cleft palate repair", "Fracture fixation" ], "example": "Maxillofacial surgery corrects congenital defects and severe facial injuries.", "exampleVi": "Phẫu thuật hàm mặt chỉnh sửa các khiếm khuyết bẩm sinh và chấn thương mặt nghiêm trọng.", "clinicalNote": "Phẫu thuật can thiệp sâu vùng xương sọ mặt và hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_40", "unit": "Unit 4", "word": "Oral pathology", "ipa": "/ˈɔː.rəl pəˈθɒl.ə.dʒi/", "pos": "n.", "meaning": "Bệnh lý miệng", "relatedTerms": [ "Histopathological diagnosis", "Leukoplakia", "Oral malignancy" ], "example": "Oral pathology deals with the causes, processes, and effects of mouth diseases.", "exampleVi": "Bệnh lý miệng nghiên cứu nguyên nhân, quá trình và ảnh hưởng của các bệnh về miệng.", "clinicalNote": "Chuyên khoa chẩn đoán tổn thương mô mềm và mô cứng vùng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_41", "unit": "Unit 4", "word": "Oral pathologist", "ipa": "/ˈɔː.rəl pəˈθɒl.ə.dʒɪst/", "pos": "n.", "meaning": "Bác sĩ chuyên khoa bệnh lý miệng", "relatedTerms": [ "Tissue biopsy", "Microscopic examination", "Lesion characterization" ], "example": "The oral pathologist examined the biopsy specimen under a light microscope.", "exampleVi": "Bác sĩ bệnh lý miệng đã quan sát mẫu bệnh phẩm sinh thiết dưới kính hiển vi quang học.", "clinicalNote": "Bác sĩ xét nghiệm mô bệnh học để xác định u, nang, tổn thương tiền ung thư.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_42", "unit": "Unit 4", "word": "Radiology", "ipa": "/ˌreɪ.diˈɒl.ə.dʒi/", "pos": "n.", "meaning": "Chẩn đoán hình ảnh / X-quang học", "relatedTerms": [ "Oral and maxillofacial radiology", "CBCT imaging", "Radiation safety" ], "example": "Radiology is essential for evaluating bone levels and impacted roots.", "exampleVi": "Chẩn đoán hình ảnh là thiết yếu để đánh giá mức xương và các chân răng ngầm.", "clinicalNote": "Chuyên ngành sử dụng tia X và công nghệ quét 3D.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_43", "unit": "Unit 4", "word": "Radiograph", "ipa": "/ˈreɪ.di.əʊ.ɡrɑːf/", "pos": "n.", "meaning": "Phim X-quang", "relatedTerms": [ "Periapical radiograph", "Panoramic radiograph", "Bitewing" ], "example": "A periapical radiograph revealed a radiolucent lesion at the tooth apex.", "exampleVi": "Phim X-quang quanh chóp cho thấy một vùng thấu quang tại chóp răng.", "clinicalNote": "Hình ảnh cận lâm sàng phản ánh mật độ cản quang của mô.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_44", "unit": "Unit 4", "word": "Diagnosis", "ipa": "/ˌdaɪ.əɡˈnəʊ.sɪs/", "pos": "n.", "meaning": "Chẩn đoán", "relatedTerms": [ "Differential diagnosis", "Definitive diagnosis", "Clinical examination" ], "example": "An accurate diagnosis is required before commencing root canal therapy.", "exampleVi": "Cần phải có chẩn đoán chính xác trước khi bắt đầu điều trị tủy.", "clinicalNote": "Xác định bản chất bệnh dựa trên lâm sàng và cận lâm sàng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_45", "unit": "Unit 4", "word": "Treatment", "ipa": "/ˈtriːt.mənt/", "pos": "n.", "meaning": "Điều trị", "relatedTerms": [ "Treatment plan", "Palliative treatment", "Surgical treatment" ], "example": "The comprehensive treatment plan was discussed with the patient.", "exampleVi": "Kế hoạch điều trị toàn diện đã được thảo luận với bệnh nhân.", "clinicalNote": "Các giải pháp y khoa can thiệp để chữa lành hoặc kiểm soát bệnh.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_46", "unit": "Unit 4", "word": "Referral", "ipa": "/rɪˈfɜː.rəl/", "pos": "n.", "meaning": "Chuyển tuyến", "relatedTerms": [ "Referral letter", "Interdisciplinary consultation", "Secondary care" ], "example": "The general practitioner wrote a referral letter to the oral surgeon.", "exampleVi": "Bác sĩ đa khoa đã viết giấy chuyển tuyến đến bác sĩ phẫu thuật miệng.", "clinicalNote": "Quy trình chuyển bệnh nhân sang chuyên khoa sâu hơn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_47", "unit": "Unit 4", "word": "Specialist", "ipa": "/ˈspeʃ.əl.ɪst/", "pos": "n.", "meaning": "Bác sĩ chuyên khoa", "relatedTerms": [ "Clinical consultant", "Specialist practice", "Board certified" ], "example": "A specialist provides expert care for uncommon dental conditions.", "exampleVi": "Bác sĩ chuyên khoa cung cấp sự chăm sóc chuyên sâu cho các bệnh lý răng miệng hiếm gặp.", "clinicalNote": "Người có chứng chỉ chuyên môn sâu trong một phân ngành.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_48", "unit": "Unit 4", "word": "Specialized care", "ipa": "/ˈspeʃ.əl.aɪzd keər/", "pos": "n.", "meaning": "Chăm sóc chuyên khoa", "relatedTerms": [ "Advanced therapeutics", "Multidisciplinary approach", "Tertiary care" ], "example": "Patients with severe periodontal breakdown need specialized care.", "exampleVi": "Bệnh nhân bị phá hủy nha chu nặng cần được chăm sóc chuyên khoa.", "clinicalNote": "Mức độ can thiệp y tế đòi hỏi kỹ thuật và trang thiết bị chuyên dụng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_49", "unit": "Unit 4", "word": "Instruction", "ipa": "/ɪnˈstrʌk.ʃən/", "pos": "n.", "meaning": "Hướng dẫn", "relatedTerms": [ "Post-operative instructions", "Oral hygiene instructions", "Brushing technique" ], "example": "Clear post-operative instructions prevent dry socket after extraction.", "exampleVi": "Hướng dẫn chăm sóc sau phẫu thuật rõ ràng giúp phòng ngừa viêm ổ răng khô sau khi nhổ.", "clinicalNote": "Dặn dò của nha sĩ dành cho bệnh nhân tự chăm sóc tại nhà.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_50", "unit": "Unit 4", "word": "Advice", "ipa": "/ədˈvaɪs/", "pos": "n.", "meaning": "Lời khuyên", "relatedTerms": [ "Dietary counseling", "Smoking cessation advice", "Preventive counseling" ], "example": "The clinician gave dietary advice to reduce sugar frequency.", "exampleVi": "Bác sĩ lâm sàng đã đưa ra lời khuyên về chế độ ăn để giảm tần suất tiêu thụ đường.", "clinicalNote": "Tư vấn lối sống giúp nâng cao sức khỏe răng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_51", "unit": "Unit 4", "word": "Intervention", "ipa": "/ˌɪn.təˈven.ʃən/", "pos": "n.", "meaning": "Can thiệp", "relatedTerms": [ "Early intervention", "Surgical intervention", "Preventive measure" ], "example": "Early orthodontic intervention can guide jaw growth in children.", "exampleVi": "Can thiệp chỉnh nha sớm có thể định hướng sự phát triển xương hàm ở trẻ em.", "clinicalNote": "Hành động y khoa nhằm ngăn chặn hoặc đảo ngược bệnh lý.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_52", "unit": "Unit 4", "word": "Defect", "ipa": "/ˈdiː.fekt/", "pos": "n.", "meaning": "Khiếm khuyết", "relatedTerms": [ "Bony defect", "Enamel defect", "Craniofacial defect" ], "example": "Guided tissue regeneration was applied to treat the infrabony defect.", "exampleVi": "Tái tạo mô có hướng dẫn đã được áp dụng để điều trị khiếm khuyết xương dưới ổ.", "clinicalNote": "Tổn thương mất mô giải phẫu bẩm sinh hoặc mắc phải.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_53", "unit": "Unit 4", "word": "Recognition", "ipa": "/ˌrek.əɡˈnɪʃ.ən/", "pos": "n.", "meaning": "Sự nhận biết / Sự nhận diện", "relatedTerms": [ "Early recognition", "Pattern recognition", "Clinical detection" ], "example": "Early recognition of oral mucosal lesions improves prognosis significantly.", "exampleVi": "Sự nhận biết sớm các tổn thương niêm mạc miệng cải thiện tiên lượng đáng kể.", "clinicalNote": "Kỹ năng phát hiện triệu chứng bệnh ở giai đoạn đầu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_54", "unit": "Unit 4", "word": "Investigation", "ipa": "/ɪnˌves.tɪˈɡeɪ.ʃən/", "pos": "n.", "meaning": "Xét nghiệm / Thăm dò", "relatedTerms": [ "Diagnostic workup", "Blood investigation", "Imaging study" ], "example": "Further radiographic investigation was needed to confirm root fracture.", "exampleVi": "Cần thêm thăm dò hình ảnh X-quang để xác định tình trạng nứt gãy chân răng.", "clinicalNote": "Các bước cận lâm sàng hỗ trợ đưa ra chẩn đoán xác định.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_55", "unit": "Unit 4", "word": "Appropriate", "ipa": "/əˈprəʊ.pri.ət/", "pos": "adj.", "meaning": "Phù hợp / Thích hợp", "relatedTerms": [ "Appropriate indication", "Evidence-based choice", "Tailored treatment" ], "example": "Selecting the appropriate restorative material ensures long-term retention.", "exampleVi": "Việc lựa chọn vật liệu phục hồi phù hợp đảm bảo độ bền lâu dài.", "clinicalNote": "Chỉ định chuẩn y khoa dựa trên bằng chứng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_56", "unit": "Unit 4", "word": "Dental specialization", "ipa": "/ˈden.təl ˌspeʃ.əl.aɪˈzeɪ.ʃən/", "pos": "n.", "meaning": "Chuyên môn hóa nha khoa", "relatedTerms": [ "Accredited specialties", "Clinical subfield", "Advanced dentistry" ], "example": "Dental specialization ensures high standards in treating complicated disorders.", "exampleVi": "Chuyên môn hóa trong nha khoa đảm bảo các tiêu chuẩn cao trong điều trị các rối loạn phức tạp.", "clinicalNote": "Hệ thống các phân ngành sâu được công nhận quốc tế.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_57", "unit": "Unit 4", "word": "Professional", "ipa": "/prəˈfeʃ.ən.əl/", "pos": "adj.", "meaning": "Chuyên môn / Chuyên nghiệp", "relatedTerms": [ "Professional code", "Clinical ethics", "Professional development" ], "example": "A professional attitude fosters trust between the dentist and the patient.", "exampleVi": "Thái độ chuyên nghiệp xây dựng lòng tin giữa bác sĩ nha khoa và bệnh nhân.", "clinicalNote": "Chuẩn mực y đức và năng lực thực hành lâm sàng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_01", "unit": "Unit 5", "word": "Oral Health", "ipa": "/ˈɔː.rəl helθ/", "pos": "n.", "meaning": "Sức khỏe răng miệng", "relatedTerms": ["Well-being", "Dental fitness"], "example": "Good oral health is essential for your overall physical condition.", "exampleVi": "Sức khỏe răng miệng tốt là điều thiết yếu cho tình trạng thể chất tổng thể của bạn.", "clinicalNote": "Tình trạng không có bệnh lý ở răng và mô quanh răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_02", "unit": "Unit 5", "word": "Oral Hygiene", "ipa": "/ˈɔː.rəl ˈhaɪ.dʒiːn/", "pos": "n.", "meaning": "Vệ sinh răng miệng", "relatedTerms": ["Plaque control", "Brushing"], "example": "Strict oral hygiene prevents the onset of periodontitis.", "exampleVi": "Vệ sinh răng miệng nghiêm ngặt giúp ngăn ngừa sự khởi phát của bệnh viêm nha chu.", "clinicalNote": "Biện pháp làm sạch khoang miệng hàng ngày.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_03", "unit": "Unit 5", "word": "Oral Cavity", "ipa": "/ˈɔː.rəl ˈkæv.ə.ti/", "pos": "n.", "meaning": "Khoang miệng", "relatedTerms": ["Mouth", "Buccal cavity"], "example": "The oral cavity harbors a complex microbiome.", "exampleVi": "Khoang miệng chứa đựng một hệ vi sinh vật phức tạp.", "clinicalNote": "Khu vực chứa răng, nướu, lưỡi và tuyến nước bọt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_04", "unit": "Unit 5", "word": "Gingiva (Gums)", "ipa": "/ˈdʒɪn.dʒɪ.və/", "pos": "n.", "meaning": "Lợi / Nướu", "relatedTerms": ["Gingivitis", "Soft tissue"], "example": "Healthy gingiva fits tightly around the teeth.", "exampleVi": "Lợi khỏe mạnh bám chặt xung quanh các răng.", "clinicalNote": "Phần niêm mạc miệng che phủ xương ổ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_05", "unit": "Unit 5", "word": "Tongue", "ipa": "/tʌŋ/", "pos": "n.", "meaning": "Lưỡi", "relatedTerms": ["Lingual", "Taste buds"], "example": "The tongue is vital for tasting, swallowing, and speaking.", "exampleVi": "Lưỡi có vai trò sống còn đối với vị giác, việc nuốt và nói.", "clinicalNote": "Khối cơ linh hoạt trong khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_06", "unit": "Unit 5", "word": "Oral mucosa", "ipa": "/ˈɔː.rəl mjuːˈkəʊ.sə/", "pos": "n.", "meaning": "Niêm mạc miệng", "relatedTerms": ["Epithelium", "Lining mucosa"], "example": "Lesions on the oral mucosa should be biopsied if they persist.", "exampleVi": "Các tổn thương trên niêm mạc miệng nên được sinh thiết nếu chúng kéo dài.", "clinicalNote": "Lớp lót ướt bên trong khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_07", "unit": "Unit 5", "word": "Saliva", "ipa": "/səˈlaɪ.və/", "pos": "n.", "meaning": "Nước bọt", "relatedTerms": ["Salivary flow", "Amylase"], "example": "Saliva helps neutralize acids produced by bacteria.", "exampleVi": "Nước bọt giúp trung hòa các axit do vi khuẩn tạo ra.", "clinicalNote": "Chất lỏng bảo vệ răng và hỗ trợ tiêu hóa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_08", "unit": "Unit 5", "word": "Salivary gland", "ipa": "/səˈlaɪ.vər.i ɡlænd/", "pos": "n.", "meaning": "Tuyến nước bọt", "relatedTerms": ["Parotid gland", "Submandibular gland"], "example": "An infection in the salivary gland can cause facial swelling.", "exampleVi": "Nhiễm trùng ở tuyến nước bọt có thể gây sưng mặt.", "clinicalNote": "Cơ quan ngoại tiết tiết ra nước bọt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_09", "unit": "Unit 5", "word": "Dental plaque", "ipa": "/ˈden.təl plæk/", "pos": "n.", "meaning": "Mảng bám răng", "relatedTerms": ["Biofilm", "Calculus"], "example": "Dental plaque is a sticky film of bacteria on the teeth.", "exampleVi": "Mảng bám răng là một lớp màng vi khuẩn dính trên răng.", "clinicalNote": "Nguyên nhân chính gây sâu răng và bệnh nha chu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_10", "unit": "Unit 5", "word": "Dental calculus (Tartar)", "ipa": "/ˈden.təl ˈkæl.kjʊ.ləs/", "pos": "n.", "meaning": "Cao răng / Vôi răng", "relatedTerms": ["Scaling", "Mineralized plaque"], "example": "Dental calculus can only be removed by a professional cleaning.", "exampleVi": "Cao răng chỉ có thể được làm sạch bởi thao tác chuyên nghiệp.", "clinicalNote": "Mảng bám bị vôi hóa cứng bám trên răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_11", "unit": "Unit 5", "word": "Bacteria", "ipa": "/bækˈtɪə.ri.ə/", "pos": "n.", "meaning": "Vi khuẩn", "relatedTerms": ["Microorganisms", "Streptococcus mutans"], "example": "Certain bacteria in the mouth convert sugar into acid.", "exampleVi": "Một số vi khuẩn trong miệng chuyển hóa đường thành axit.", "clinicalNote": "Tác nhân vi sinh vật gây bệnh răng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_12", "unit": "Unit 5", "word": "Tooth brushing", "ipa": "/tuːθ ˈbrʌʃ.ɪŋ/", "pos": "n.", "meaning": "Chải răng", "relatedTerms": ["Oral hygiene", "Soft bristles"], "example": "Proper tooth brushing removes plaque from the facial and lingual surfaces.", "exampleVi": "Chải răng đúng cách giúp loại bỏ mảng bám ở mặt ngoài và mặt trong.", "clinicalNote": "Thao tác cơ bản nhất để làm sạch răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_13", "unit": "Unit 5", "word": "Dental floss", "ipa": "/ˈden.təl flɒs/", "pos": "n.", "meaning": "Chỉ tơ nha khoa", "relatedTerms": ["Interdental cleaning", "Flossing"], "example": "Use dental floss daily to clean between your teeth.", "exampleVi": "Sử dụng chỉ tơ nha khoa hàng ngày để làm sạch kẽ răng.", "clinicalNote": "Sợi chỉ nhỏ dùng làm sạch vùng kẽ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_14", "unit": "Unit 5", "word": "Mouthwash", "ipa": "/ˈmaʊθ.wɒʃ/", "pos": "n.", "meaning": "Nước súc miệng", "relatedTerms": ["Rinse", "Antiseptic"], "example": "An antiseptic mouthwash helps reduce bacterial load in the oral cavity.", "exampleVi": "Nước súc miệng sát khuẩn giúp giảm lượng vi khuẩn trong khoang miệng.", "clinicalNote": "Dung dịch hỗ trợ diệt khuẩn và làm sạch miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_15", "unit": "Unit 5", "word": "Fluoride toothpaste", "ipa": "/ˈflʊə.raɪd ˈtuːθ.peɪst/", "pos": "n.", "meaning": "Kem đánh răng có fluoride", "relatedTerms": ["Remineralization", "Decay prevention"], "example": "Brushing with fluoride toothpaste strengthens the enamel against decay.", "exampleVi": "Chải răng với kem đánh răng có fluoride giúp củng cố men răng chống lại sự sâu răng.", "clinicalNote": "Kem đánh răng chứa ion fluor giúp tái khoáng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_16", "unit": "Unit 5", "word": "Dental Check-up", "ipa": "/ˈden.təl ˈtʃek.ʌp/", "pos": "n.", "meaning": "Khám răng định kỳ", "relatedTerms": ["Routine exam", "Recall visit"], "example": "A six-month dental check-up allows for early disease detection.", "exampleVi": "Việc khám răng định kỳ sáu tháng một lần cho phép phát hiện bệnh sớm.", "clinicalNote": "Thăm khám tổng quát để tầm soát bệnh lý.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_17", "unit": "Unit 5", "word": "Dental scaling", "ipa": "/ˈden.təl ˈskeɪ.lɪŋ/", "pos": "n.", "meaning": "Lấy cao răng", "relatedTerms": ["Root planing", "Calculus removal"], "example": "Dental scaling removes hardened tartar that brushing cannot clear.", "exampleVi": "Lấy cao răng giúp loại bỏ vôi răng cứng mà việc chải răng không thể làm sạch.", "clinicalNote": "Thủ thuật làm sạch mảng bám vôi hóa bằng máy siêu âm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_18", "unit": "Unit 5", "word": "Dental hygienist", "ipa": "/ˈden.təl haɪˈdʒiː.nɪst/", "pos": "n.", "meaning": "Vệ sinh viên răng miệng", "relatedTerms": ["Preventive care", "Scaler"], "example": "The dental hygienist instructed the patient on proper flossing techniques.", "exampleVi": "Vệ sinh viên răng miệng đã hướng dẫn bệnh nhân kỹ thuật dùng chỉ nha khoa đúng cách.", "clinicalNote": "Chuyên viên hỗ trợ nha sĩ làm sạch và dự phòng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_19", "unit": "Unit 5", "word": "Dental caries", "ipa": "/ˈden.təl ˈkeə.riːz/", "pos": "n.", "meaning": "Sâu răng", "relatedTerms": ["Tooth decay", "Demineralization"], "example": "Dental caries is a multifactorial infectious disease of the teeth.", "exampleVi": "Sâu răng là một bệnh lý nhiễm trùng đa yếu tố của răng.", "clinicalNote": "Tên y khoa chính thức của bệnh sâu răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_20", "unit": "Unit 5", "word": "Tooth decay", "ipa": "/tuːθ dɪˈkeɪ/", "pos": "n.", "meaning": "Sâu răng (thuật ngữ phổ thông)", "relatedTerms": ["Cavity", "Rotten tooth"], "example": "High sugar consumption directly contributes to rapid tooth decay.", "exampleVi": "Tiêu thụ nhiều đường góp phần trực tiếp làm sâu răng tiến triển nhanh.", "clinicalNote": "Quá trình phân hủy mô cứng của răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_21", "unit": "Unit 5", "word": "Cavity", "ipa": "/ˈkæv.ə.ti/", "pos": "n.", "meaning": "Lỗ sâu răng", "relatedTerms": ["Filling", "Carious lesion"], "example": "The dentist found a small cavity on the occlusal surface of the molar.", "exampleVi": "Nha sĩ đã phát hiện một lỗ sâu nhỏ trên mặt nhai của răng cối.", "clinicalNote": "Khuyết hổng do mô răng bị vi khuẩn phá hủy.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_22", "unit": "Unit 5", "word": "Tooth sensitivity", "ipa": "/tuːθ ˌsen.sɪˈtɪv.ə.ti/", "pos": "n.", "meaning": "Ê buốt răng", "relatedTerms": ["Dentin hypersensitivity", "Cold stimulus"], "example": "Exposed roots often lead to severe tooth sensitivity to cold drinks.", "exampleVi": "Chân răng bị lộ thường dẫn đến tình trạng ê buốt răng nghiêm trọng với đồ uống lạnh.", "clinicalNote": "Đau nhói ngắn khi tiếp xúc kích thích nóng/lạnh.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_23", "unit": "Unit 5", "word": "Toothache", "ipa": "/ˈtuːθ.eɪk/", "pos": "n.", "meaning": "Đau răng", "relatedTerms": ["Pulpitis", "Dental pain"], "example": "A persistent toothache usually indicates irreversible pulp inflammation.", "exampleVi": "Một cơn đau răng dai dẳng thường báo hiệu viêm tủy không hồi phục.", "clinicalNote": "Cảm giác đau xuất phát từ tủy hoặc nha chu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_24", "unit": "Unit 5", "word": "White spot lesion", "ipa": "/waɪt spɒt ˈliː.ʒən/", "pos": "n.", "meaning": "Tổn thương đốm trắng", "relatedTerms": ["Early caries", "Decalcification"], "example": "A white spot lesion represents the earliest clinical sign of enamel demineralization.", "exampleVi": "Tổn thương đốm trắng là dấu hiệu lâm sàng sớm nhất của sự mất khoáng men răng.", "clinicalNote": "Giai đoạn sâu răng sớm, có thể hồi phục.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_25", "unit": "Unit 5", "word": "Gingivitis", "ipa": "/ˌdʒɪn.dʒɪˈvaɪ.tɪs/", "pos": "n.", "meaning": "Viêm lợi / Viêm nướu", "relatedTerms": ["Gum inflammation", "Bleeding gums"], "example": "Untreated gingivitis can progress into destructive periodontitis.", "exampleVi": "Viêm lợi không được điều trị có thể tiến triển thành viêm nha chu phá hủy.", "clinicalNote": "Tình trạng viêm mô mềm, chưa mất xương ổ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_26", "unit": "Unit 5", "word": "Periodontitis", "ipa": "/ˌper.i.əʊ.dɒnˈtaɪ.tɪs/", "pos": "n.", "meaning": "Viêm nha chu", "relatedTerms": ["Bone loss", "Periodontal disease"], "example": "Periodontitis causes irreversible destruction of the alveolar bone.", "exampleVi": "Viêm nha chu gây ra sự phá hủy không hồi phục của xương ổ răng.", "clinicalNote": "Bệnh lý viêm sâu ảnh hưởng đến dây chằng và xương.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_27", "unit": "Unit 5", "word": "Periodontal disease", "ipa": "/ˌper.i.əʊˈdɒn.təl dɪˈziːz/", "pos": "n.", "meaning": "Bệnh nha chu", "relatedTerms": ["Gum disease", "Periodontitis"], "example": "Smoking is a major risk factor for developing periodontal disease.", "exampleVi": "Hút thuốc là một yếu tố nguy cơ chính gây ra bệnh nha chu.", "clinicalNote": "Thuật ngữ chung cho các bệnh ảnh hưởng mô nâng đỡ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_28", "unit": "Unit 5", "word": "Gingival bleeding", "ipa": "/ˈdʒɪn.dʒɪ.vəl ˈbliː.dɪŋ/", "pos": "n.", "meaning": "Chảy máu lợi", "relatedTerms": ["BOP (Bleeding on probing)", "Inflammation"], "example": "Gingival bleeding during brushing is an alert for poor oral hygiene.", "exampleVi": "Chảy máu lợi khi chải răng là lời cảnh báo về vệ sinh răng miệng kém.", "clinicalNote": "Dấu hiệu lâm sàng của tình trạng viêm nướu hoạt động.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_29", "unit": "Unit 5", "word": "Gingival recession", "ipa": "/ˈdʒɪn.dʒɪ.vəl rɪˈseʃ.ən/", "pos": "n.", "meaning": "Tụt lợi", "relatedTerms": ["Root exposure", "Grafting"], "example": "Aggressive brushing can lead to severe gingival recession over time.", "exampleVi": "Chải răng quá mạnh có thể dẫn đến tụt lợi nghiêm trọng theo thời gian.", "clinicalNote": "Viền nướu di chuyển về phía chóp làm lộ chân răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_30", "unit": "Unit 5", "word": "Periodontal pocket", "ipa": "/ˌper.i.əʊˈdɒn.təl ˈpɒk.ɪt/", "pos": "n.", "meaning": "Túi nha chu", "relatedTerms": ["Pocket depth", "Probing"], "example": "A periodontal pocket deeper than 4mm requires professional scaling and root planing.", "exampleVi": "Túi nha chu sâu hơn 4mm cần được lấy cao răng và xử lý mặt gốc răng chuyên sâu.", "clinicalNote": "Khe nướu sâu bệnh lý do mất bám dính nha chu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_31", "unit": "Unit 5", "word": "Tooth mobility", "ipa": "/tuːθ məʊˈbɪl.ə.ti/", "pos": "n.", "meaning": "Lung lay răng", "relatedTerms": ["Loose tooth", "Bone loss"], "example": "Advanced periodontitis often results in noticeable tooth mobility.", "exampleVi": "Viêm nha chu tiến triển thường dẫn đến sự lung lay răng có thể nhận thấy rõ.", "clinicalNote": "Răng di động vượt quá giới hạn sinh lý.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_32", "unit": "Unit 5", "word": "Bone loss", "ipa": "/bəʊn lɒs/", "pos": "n.", "meaning": "Tiêu xương ổ răng", "relatedTerms": ["Resorption", "Alveolar bone"], "example": "Radiographs confirm bone loss around the lower incisors.", "exampleVi": "Phim X-quang xác nhận có sự tiêu xương ổ răng quanh các răng cửa dưới.", "clinicalNote": "Hệ quả phá hủy xương của bệnh viêm nha chu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_33", "unit": "Unit 5", "word": "Halitosis", "ipa": "/ˌhæl.ɪˈtəʊ.sɪs/", "pos": "n.", "meaning": "Hôi miệng", "relatedTerms": ["Bad breath", "Volatile sulfur compounds"], "example": "Halitosis is often caused by bacteria accumulating on the back of the tongue.", "exampleVi": "Hôi miệng thường do vi khuẩn tích tụ ở phần cuống lưỡi gây ra.", "clinicalNote": "Mùi hôi bất thường phát ra từ khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_34", "unit": "Unit 5", "word": "Bad breath", "ipa": "/bæd breθ/", "pos": "n.", "meaning": "Hơi thở hôi", "relatedTerms": ["Halitosis", "Mouth odor"], "example": "Using a tongue scraper can significantly reduce bad breath.", "exampleVi": "Sử dụng cây cạo lưỡi có thể giảm thiểu hơi thở hôi đáng kể.", "clinicalNote": "Thuật ngữ phổ thông của Halitosis.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_35", "unit": "Unit 5", "word": "Xerostomia", "ipa": "/ˌzɪə.rəˈstəʊ.mi.ə/", "pos": "n.", "meaning": "Khô miệng (thuật ngữ y khoa)", "relatedTerms": ["Dry mouth", "Salivary hypofunction"], "example": "Xerostomia increases the risk of rampant caries due to a lack of salivary buffering.", "exampleVi": "Bệnh khô miệng làm tăng nguy cơ sâu răng lan tỏa do thiếu sự đệm của nước bọt.", "clinicalNote": "Giảm tiết nước bọt bệnh lý.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_36", "unit": "Unit 5", "word": "Dry mouth", "ipa": "/draɪ maʊθ/", "pos": "n.", "meaning": "Khô miệng", "relatedTerms": ["Xerostomia", "Thirst"], "example": "Many common medications have dry mouth as a primary side effect.", "exampleVi": "Nhiều loại thuốc thông dụng có tác dụng phụ chính là gây khô miệng.", "clinicalNote": "Tình trạng thiếu độ ẩm trong khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_37", "unit": "Unit 5", "word": "Plaque accumulation", "ipa": "/plæk əˌkjuː.mjəˈleɪ.ʃən/", "pos": "n.", "meaning": "Sự tích tụ mảng bám", "relatedTerms": ["Biofilm growth", "Oral hygiene"], "example": "Rapid plaque accumulation occurs in areas that are difficult to reach with a toothbrush.", "exampleVi": "Sự tích tụ mảng bám nhanh chóng xảy ra ở những vùng khó tiếp cận bằng bàn chải.", "clinicalNote": "Quá trình vi khuẩn bám và nhân lên trên mặt răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_38", "unit": "Unit 5", "word": "Accumulate", "ipa": "/əˈkjuː.mjə.leɪt/", "pos": "v.", "meaning": "Tích tụ", "relatedTerms": ["Build up", "Gather"], "example": "Tartar will accumulate if you skip your daily flossing routine.", "exampleVi": "Vôi răng sẽ tích tụ nếu bạn bỏ qua thói quen dùng chỉ nha khoa hàng ngày.", "clinicalNote": "Quá trình dồn ứ mảng bám hoặc vôi răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_39", "unit": "Unit 5", "word": "Calculus formation", "ipa": "/ˈkæl.kjʊ.ləs fɔːˈmeɪ.ʃən/", "pos": "n.", "meaning": "Sự hình thành cao răng", "relatedTerms": ["Mineralization", "Tartar build-up"], "example": "Calculus formation happens when dental plaque calcifies over time.", "exampleVi": "Sự hình thành cao răng xảy ra khi mảng bám răng bị vôi hóa theo thời gian.", "clinicalNote": "Quá trình vôi hóa mảng bám mềm thành cấu trúc cứng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_40", "unit": "Unit 5", "word": "Fluoride", "ipa": "/ˈflʊə.raɪd/", "pos": "n.", "meaning": "Fluoride", "relatedTerms": ["Fluoridation", "Enamel strength"], "example": "Topical fluoride application is highly effective at preventing early tooth decay.", "exampleVi": "Bôi fluoride tại chỗ rất hiệu quả trong việc phòng ngừa sâu răng sớm.", "clinicalNote": "Khoáng chất thiết yếu giúp tái khoáng men răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_41", "unit": "Unit 5", "word": "Enamel", "ipa": "/ɪˈnæm.əl/", "pos": "n.", "meaning": "Men răng", "relatedTerms": ["Hydroxyapatite", "Outer layer"], "example": "Acidic drinks can slowly erode the protective enamel of your teeth.", "exampleVi": "Đồ uống có tính axit có thể từ từ bào mòn lớp men bảo vệ của răng bạn.", "clinicalNote": "Mô cứng nhất cơ thể bao bọc bên ngoài thân răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_42", "unit": "Unit 5", "word": "Demineralization", "ipa": "/ˌdiːˌmɪn.ər.ə.laɪˈzeɪ.ʃən/", "pos": "n.", "meaning": "Sự mất khoáng", "relatedTerms": ["Acid attack", "White spot"], "example": "Frequent snacking on sweets leads to rapid enamel demineralization.", "exampleVi": "Ăn vặt đồ ngọt thường xuyên dẫn đến sự mất khoáng men răng nhanh chóng.", "clinicalNote": "Tinh thể canxi và phosphat bị hòa tan khỏi men răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_43", "unit": "Unit 5", "word": "Remineralization", "ipa": "/ˌriːˌmɪn.ər.ə.laɪˈzeɪ.ʃən/", "pos": "n.", "meaning": "Sự tái khoáng", "relatedTerms": ["Fluoride uptake", "Enamel repair"], "example": "Saliva promotes remineralization by delivering calcium and phosphate back to the tooth.", "exampleVi": "Nước bọt thúc đẩy sự tái khoáng bằng cách cung cấp lại canxi và phosphate cho răng.", "clinicalNote": "Quá trình phục hồi lại khoáng chất cho cấu trúc men.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_44", "unit": "Unit 5", "word": "Prevention", "ipa": "/prɪˈven.ʃən/", "pos": "n.", "meaning": "Phòng ngừa", "relatedTerms": ["Prophylaxis", "Deterrence"], "example": "Prevention is always better and cheaper than complex dental treatment.", "exampleVi": "Phòng ngừa luôn tốt hơn và rẻ hơn so với việc điều trị nha khoa phức tạp.", "clinicalNote": "Chìa khóa trong triết lý nha khoa hiện đại.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_45", "unit": "Unit 5", "word": "Preventive treatment", "ipa": "/prɪˈven.tɪv ˈtriːt.mənt/", "pos": "n.", "meaning": "Điều trị dự phòng", "relatedTerms": ["Fissure sealant", "Fluoride varnish"], "example": "Applying pit and fissure sealants is an excellent preventive treatment for children.", "exampleVi": "Trám bít hố rãnh là một phương pháp điều trị dự phòng xuất sắc cho trẻ em.", "clinicalNote": "Can thiệp sớm trước khi bệnh lý xảy ra.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_46", "unit": "Unit 5", "word": "Oral examination", "ipa": "/ˈɔː.rəl ɪɡˌzæm.ɪˈneɪ.ʃən/", "pos": "n.", "meaning": "Khám răng miệng", "relatedTerms": ["Dental check-up", "Assessment"], "example": "A thorough oral examination includes checking the soft tissues for oral cancer.", "exampleVi": "Một cuộc khám răng miệng kỹ lưỡng bao gồm cả việc kiểm tra mô mềm để tầm soát ung thư.", "clinicalNote": "Quy trình đánh giá toàn diện khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_47", "unit": "Unit 5", "word": "Professional cleaning / Scaling", "ipa": "/prəˈfeʃ.ən.əl ˈkliː.nɪŋ/", "pos": "n.", "meaning": "Làm sạch răng chuyên nghiệp / Lấy cao răng", "relatedTerms": ["Prophylaxis", "Plaque removal"], "example": "You should schedule a professional cleaning at least twice a year.", "exampleVi": "Bạn nên sắp xếp lịch làm sạch răng chuyên nghiệp ít nhất hai lần một năm.", "clinicalNote": "Thủ thuật làm sạch mảng bám và vôi răng tại phòng khám.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_48", "unit": "Unit 5", "word": "Disease detection", "ipa": "/dɪˈziːz dɪˈtek.ʃən/", "pos": "n.", "meaning": "Phát hiện bệnh", "relatedTerms": ["Diagnosis", "Screening"], "example": "Early disease detection allows for minimally invasive dental procedures.", "exampleVi": "Phát hiện bệnh sớm cho phép thực hiện các thủ thuật nha khoa xâm lấn tối thiểu.", "clinicalNote": "Nhận biết sớm các triệu chứng lâm sàng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_49", "unit": "Unit 5", "word": "Healthy diet", "ipa": "/ˈhel.θi ˈdaɪ.ət/", "pos": "n.", "meaning": "Chế độ ăn lành mạnh", "relatedTerms": ["Nutrition", "Low sugar diet"], "example": "A healthy diet rich in calcium supports strong alveolar bone and teeth.", "exampleVi": "Một chế độ ăn lành mạnh giàu canxi giúp hỗ trợ xương ổ răng và răng chắc khỏe.", "clinicalNote": "Yếu tố dinh dưỡng ảnh hưởng sức khỏe răng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_50", "unit": "Unit 5", "word": "Nutrition", "ipa": "/njuːˈtrɪʃ.ən/", "pos": "n.", "meaning": "Dinh dưỡng", "relatedTerms": ["Diet", "Vitamins"], "example": "Proper nutrition is vital during the tooth development stage in children.", "exampleVi": "Dinh dưỡng hợp lý rất quan trọng trong giai đoạn phát triển răng ở trẻ em.", "clinicalNote": "Tác động đến cấu trúc mô răng hình thành.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_51", "unit": "Unit 5", "word": "Sugary foods", "ipa": "/ˈʃʊɡ.ər.i fuːdz/", "pos": "n.", "meaning": "Thực phẩm có đường", "relatedTerms": ["Sweets", "Confectionery"], "example": "Frequent intake of sugary foods fuels the acid-producing bacteria in plaque.", "exampleVi": "Việc thường xuyên nạp thực phẩm có đường sẽ tiếp nhiên liệu cho vi khuẩn tạo axit trong mảng bám.", "clinicalNote": "Tác nhân chính gây sâu răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_52", "unit": "Unit 5", "word": "Sugary beverages", "ipa": "/ˈʃʊɡ.ər.i ˈbev.ər.ɪdʒ.ɪz/", "pos": "n.", "meaning": "Đồ uống có đường", "relatedTerms": ["Soda", "Soft drinks"], "example": "Sipping sugary beverages throughout the day causes constant acid attacks on enamel.", "exampleVi": "Nhâm nhi đồ uống có đường suốt cả ngày gây ra các cuộc tấn công axit liên tục lên men răng.", "clinicalNote": "Gây giảm pH khoang miệng kéo dài.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_53", "unit": "Unit 5", "word": "Oral tissues", "ipa": "/ˈɔː.rəl ˈtɪʃ.uːz/", "pos": "n.", "meaning": "Mô miệng", "relatedTerms": ["Mucosa", "Periodontium"], "example": "Smoking causes severe damage to both the hard and soft oral tissues.", "exampleVi": "Hút thuốc gây ra thiệt hại nghiêm trọng cho cả mô cứng và mô mềm vùng miệng.", "clinicalNote": "Tất cả các thành phần sinh học trong khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_54", "unit": "Unit 5", "word": "Tooth loss", "ipa": "/tuːθ lɒs/", "pos": "n.", "meaning": "Mất răng", "relatedTerms": ["Edentulism", "Extraction"], "example": "Severe periodontitis is the primary cause of tooth loss among older adults.", "exampleVi": "Viêm nha chu nặng là nguyên nhân hàng đầu gây mất răng ở người lớn tuổi.", "clinicalNote": "Sự rụng hoặc phải nhổ bỏ răng vĩnh viễn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_55", "unit": "Unit 5", "word": "Self-confidence", "ipa": "/ˌselfˈkɒn.fɪ.dəns/", "pos": "n.", "meaning": "Sự tự tin", "relatedTerms": ["Self-esteem", "Psychosocial impact"], "example": "Restoring a missing front tooth can dramatically boost a patient's self-confidence.", "exampleVi": "Phục hồi một chiếc răng cửa bị mất có thể cải thiện đáng kể sự tự tin của bệnh nhân.", "clinicalNote": "Lợi ích tâm lý của phục hình thẩm mỹ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_56", "unit": "Unit 5", "word": "Quality of life", "ipa": "/ˈkwɒl.ə.ti əv laɪf/", "pos": "n.", "meaning": "Chất lượng cuộc sống", "relatedTerms": ["Well-being", "Daily function"], "example": "Oral pain and chewing difficulties severely reduce an individual's quality of life.", "exampleVi": "Đau nhức miệng và khó nhai làm suy giảm nghiêm trọng chất lượng cuộc sống của một cá nhân.", "clinicalNote": "Mục tiêu tối thượng của việc chăm sóc y tế toàn diện.", "srsLevel": 0, "mistakeCount": 0 }
+    ];
+
+    const MEDICAL_ROOT_LEXICON = [
+      { aff: "itis", type: "Hậu tố (-itis)", mean: "Viêm nhiễm", pos: "n.", note: "Bệnh lý viêm tại cơ quan tương ứng." },
+      { aff: "ectomy", type: "Hậu tố (-ectomy)", mean: "Phẫu thuật cắt bỏ", pos: "n.", note: "Thủ thuật ngoại khoa cắt bỏ cấu trúc giải phẫu." },
+      { aff: "odont", type: "Gốc từ (odont-)", mean: "Thuộc về Răng", pos: "n.", note: "Gốc từ Hy Lạp chỉ cấu trúc răng." },
+      { aff: "peri", type: "Tiền tố (peri-)", mean: "Xung quanh", pos: "adj.", note: "Chỉ vị trí xung quanh một cơ quan (VD: Periodontal)." },
+      { aff: "endo", type: "Tiền tố (endo-)", mean: "Bên trong", pos: "adj.", note: "Chỉ vị trí bên trong (VD: Endodontics)." }
+    ];
+
+    // GLOBAL STATES
+    let specialtiesMap = {};
+    let currentSpecialtyId = "dental";
+    let vocabList = [];
+    let selectedUnits = new Set();
+    let expandedUnitDetails = new Set();
+    let onlyMistakesFilter = false;
+    let speechRate = 1.0, autoAudio = true, quizAutoNext = false;
+    let currentActiveTab = "dashboard";
+
+    let quizPool = [], quizIndex = 0, quizScore = 0, quizDirection = "en-vi";
+    let currentQuizItem = null, currentQuizAnswered = false, currentQuizModeType = "en-vi";
+    let fcPool = [], fcIndex = 0;
+    let dictIndex = 0, isDictTransitioning = false;
+
+    let sprintTimer = null, sprintSeconds = 60, sprintScore = 0, sprintCombo = 1, currentSprintItem = null;
+    let sprintBestScore = 0;
+
+    let cbtPool = [], cbtAnswers = {}, cbtFlags = {}, cbtCurrentIndex = 0, cbtTimerInterval = null, cbtTimeLeft = 0, cbtTotalQuestions = 40;
+    let parsedSyllabusWords = [];
+
+    // ================= TIỆN ÍCH HỆ THỐNG =================
+    function showToast(msg, type = "success") {
+      const container = document.getElementById("toastContainer");
+      if (!container) return;
+      const div = document.createElement("div");
+      const color = type === "error" ? "bg-rose-600 border-rose-400" : (type === "info" ? "bg-indigo-600 border-indigo-400" : "bg-teal-600 border-teal-400");
+      div.className = `px-4 py-3 rounded-2xl shadow-xl border text-xs font-bold text-white flex items-center gap-2.5 ${color} transition-all duration-300 pointer-events-auto`;
+      div.innerHTML = `<i class="fa-solid ${type === "error" ? "fa-circle-exclamation" : (type === "info" ? "fa-circle-info" : "fa-circle-check")}"></i><span>${msg}</span>`;
+      container.appendChild(div);
+      setTimeout(() => { div.style.opacity = "0"; setTimeout(() => div.remove(), 300); }, 3200);
+    }
+
+    function triggerHaptic(type = "light") {
+      if (navigator.vibrate) {
+        try { navigator.vibrate(type === "error" ? [60, 40, 60] : 35); } catch (e) {}
+      }
+    }
+
+    let audioCtx = null;
+    function playTone(freq = 660, type = "sine") {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+        osc.type = type; osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.15);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.15);
+      } catch (e) {}
+    }
+
+    function speakText(text) {
+      if (!text) return;
+      const clean = text.split("/")[0].replace(/\([^)]*\)/g, "").trim();
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(clean);
+        u.lang = "en-US";
+        u.rate = speechRate;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    // ================= LƯU TRỮ VÀ KHÔI PHỤC TIẾN TRÌNH =================
+    function saveStudyProgress() {
+      const stateObj = {
+        activeTab: currentActiveTab,
+        selectedUnits: Array.from(selectedUnits),
+        onlyMistakes: onlyMistakesFilter,
+        speechRate,
+        autoAudio,
+        quizAutoNext,
+        quizDirection,
+        quizIndex,
+        quizScore,
+        quizPoolIds: quizPool.map(i => i.id),
+        fcIndex,
+        dictIndex
+      };
+      localStorage.setItem(STORAGE_KEY_APP_SETTINGS, JSON.stringify(stateObj));
+    }
+
+    function restoreStudyProgress() {
+      const saved = localStorage.getItem(STORAGE_KEY_APP_SETTINGS);
+      if (!saved) return false;
+      try {
+        const s = JSON.parse(saved);
+        if (s.speechRate) speechRate = s.speechRate;
+        if (s.autoAudio !== undefined) autoAudio = s.autoAudio;
+        if (s.quizAutoNext !== undefined) quizAutoNext = s.quizAutoNext;
+        if (s.quizDirection) quizDirection = s.quizDirection;
+        if (s.quizIndex !== undefined) quizIndex = s.quizIndex;
+        if (s.quizScore !== undefined) quizScore = s.quizScore;
+        if (s.fcIndex !== undefined) fcIndex = s.fcIndex;
+        if (s.dictIndex !== undefined) dictIndex = s.dictIndex;
+        if (s.onlyMistakes !== undefined) onlyMistakesFilter = s.onlyMistakes;
+        if (Array.isArray(s.selectedUnits) && s.selectedUnits.length > 0) {
+          selectedUnits = new Set(s.selectedUnits);
+        }
+        if (s.quizPoolIds && Array.isArray(s.quizPoolIds)) {
+          quizPool = s.quizPoolIds.map(id => vocabList.find(v => v.id === id)).filter(Boolean);
+        }
+
+        document.getElementById("speedRateText").textContent = `${speechRate}x`;
+        document.getElementById("autoAudioIcon").className = autoAudio ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark";
+        document.getElementById("chkQuizAutoNext").checked = quizAutoNext;
+        document.getElementById("quizDirectionSelect").value = quizDirection;
+        document.getElementById("chkOnlyMistakes").checked = onlyMistakesFilter;
+
+        const tabToOpen = s.activeTab || "dashboard";
+        switchActiveTab(tabToOpen);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function switchActiveTab(tabName) {
+      currentActiveTab = tabName;
+      document.querySelectorAll(".mode-tab").forEach(b => {
+        if (b.getAttribute("data-tab") === tabName) {
+          b.className = "mode-tab active shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 text-white shadow-sm flex items-center gap-1.5 transition";
+        } else {
+          b.className = "mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition";
+        }
+      });
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.add("hidden"));
+      const targetPanel = document.getElementById(`tab-${tabName}`);
+      if (targetPanel) targetPanel.classList.remove("hidden");
+
+      const drawer = document.getElementById("unitDrawerSection");
+      if (drawer) {
+        if (tabName === "dashboard" || tabName === "cbt") drawer.classList.add("hidden");
+        else drawer.classList.remove("hidden");
+      }
+
+      if (tabName === "dashboard") renderDashboard();
+    }
+
+    // ================= STREAK & VERSIONING =================
+    function updateDailyStreak() {
+      const todayStr = new Date().toISOString().slice(0, 10);
+      let streakData = { count: 1, lastDate: todayStr };
+      const raw = localStorage.getItem(STORAGE_KEY_STREAK);
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.lastDate === todayStr) {
+            streakData = parsed;
+          } else {
+            const last = new Date(parsed.lastDate);
+            const today = new Date(todayStr);
+            const diffDays = Math.round((today - last) / (1000 * 60 * 60 * 24));
+            if (diffDays === 1) {
+              streakData = { count: (parsed.count || 0) + 1, lastDate: todayStr };
+            } else {
+              streakData = { count: 1, lastDate: todayStr };
+            }
+          }
+        } catch (e) {}
+      }
+      localStorage.setItem(STORAGE_KEY_STREAK, JSON.stringify(streakData));
+      return streakData.count;
+    }
+
+    function checkNewVersionNotice() {
+      const lastSeen = localStorage.getItem(STORAGE_KEY_SEEN_VERSION);
+      if (lastSeen !== APP_BUILD_VERSION) {
+        const modal = document.getElementById("whatsNewModal");
+        if (modal) modal.classList.remove("hidden");
+      }
+    }
+
+    // ================= KHỞI TẠO CƠ SỞ DỮ LIỆU & ĐỒNG BỘ =================
+    function initDatabase() {
+      if (localStorage.getItem(STORAGE_KEY_THEME) === "dark") {
+        document.documentElement.classList.add("dark");
+        document.getElementById("themeIcon").className = "fa-solid fa-sun text-xs text-amber-400";
+      }
+      sprintBestScore = parseInt(localStorage.getItem(STORAGE_KEY_SPRINT_BEST) || "0", 10);
+      document.getElementById("sprintBestBadge").textContent = `Kỷ lục: ${sprintBestScore}`;
+
+      const rawSpecs = localStorage.getItem(STORAGE_KEY_SPECIALTIES);
+      if (rawSpecs) {
+        try { specialtiesMap = JSON.parse(rawSpecs); } catch (e) { specialtiesMap = {}; }
+      }
+
+      if (!specialtiesMap["dental"] || !Array.isArray(specialtiesMap["dental"].vocab)) {
+        specialtiesMap["dental"] = {
+          id: "dental", name: "Răng Hàm Mặt", icon: "fa-tooth",
+          vocab: SEED_DATA_191.map(i => ({ ...i }))
+        };
+        localStorage.setItem(STORAGE_KEY_SPECIALTIES, JSON.stringify(specialtiesMap));
+      } else {
+        const savedVocab = specialtiesMap["dental"].vocab;
+        const savedMap = new Map(savedVocab.map(v => [v.id, v]));
+        const merged = SEED_DATA_191.map(seed => {
+          if (savedMap.has(seed.id)) {
+            const cur = savedMap.get(seed.id);
+            return {
+              ...seed,
+              srsLevel: cur.srsLevel !== undefined ? cur.srsLevel : seed.srsLevel,
+              mistakeCount: cur.mistakeCount !== undefined ? cur.mistakeCount : seed.mistakeCount
+            };
+          }
+          return { ...seed };
+        });
+        savedVocab.forEach(custom => {
+          if (!merged.some(m => m.id === custom.id)) merged.push(custom);
+        });
+        specialtiesMap["dental"].vocab = merged;
+        localStorage.setItem(STORAGE_KEY_SPECIALTIES, JSON.stringify(specialtiesMap));
+      }
+
+      currentSpecialtyId = localStorage.getItem(STORAGE_KEY_CURRENT_SPEC) || "dental";
+      if (!specialtiesMap[currentSpecialtyId]) currentSpecialtyId = "dental";
+      
+      const spec = specialtiesMap[currentSpecialtyId];
+      vocabList = spec.vocab || [];
+      document.getElementById("currentSpecialtyName").textContent = spec.name;
+      document.getElementById("headerSpecIcon").className = `fa-solid ${spec.icon || "fa-tooth"} text-lg`;
+      
+      selectedUnits = new Set(getAllUnits());
+      
+      const isRestored = restoreStudyProgress();
+      if (!isRestored) {
+          switchActiveTab("dashboard");
+      }
+      
+      restoreCBTState();
+      syncAllViews();
+      renderSpecialtyList();
+    }
+
+    function saveDatabase() {
+      if (specialtiesMap[currentSpecialtyId]) {
+        specialtiesMap[currentSpecialtyId].vocab = vocabList;
+      }
+      localStorage.setItem(STORAGE_KEY_SPECIALTIES, JSON.stringify(specialtiesMap));
+      updateHeaderBadges();
+      saveStudyProgress();
+    }
+
+    function getAllUnits() {
+      const units = [];
+      vocabList.forEach(v => { if (!units.includes(v.unit)) units.push(v.unit); });
+      return units.length > 0 ? units.sort() : ["Unit 1"];
+    }
+
+    function getFilteredVocab() {
+      let active = vocabList.filter(v => selectedUnits.has(v.unit));
+      if (active.length === 0) active = [...vocabList];
+      if (onlyMistakesFilter) {
+        const mistakes = active.filter(v => (v.mistakeCount || 0) > 0 || v.srsLevel === 1);
+        if (mistakes.length > 0) return mistakes;
+        onlyMistakesFilter = false;
+        const chk = document.getElementById("chkOnlyMistakes");
+        if (chk) chk.checked = false;
+        showToast("Hiện chưa có từ nào sai hoặc chưa thuộc trong các Unit đang chọn!", "info");
+      }
+      return active;
+    }
+
+    function updateHeaderBadges() {
+      const allUnits = getAllUnits();
+      const filtered = getFilteredVocab();
+      const masteredCount = vocabList.filter(v => v.srsLevel === 3).length;
+      const mistakeTotal = vocabList.filter(v => (v.mistakeCount || 0) > 0 || v.srsLevel === 1).length;
+
+      document.getElementById("headerDbBadge").textContent = `${vocabList.length} TỪ VỰNG • ${allUnits.length} UNIT`;
+      document.getElementById("activeUnitBadgeCount").textContent = `Đang chọn: ${selectedUnits.size}/${allUnits.length} Unit (${filtered.length} từ)`;
+      document.getElementById("srsSummaryBadge").textContent = `SRS: ${masteredCount}/${vocabList.length} thuộc`;
+      const mistakeLbl = document.getElementById("mistakeCountLabel");
+      if (mistakeLbl) mistakeLbl.textContent = mistakeTotal;
+    }
+
+    // ================= TÍNH NĂNG MỞ RỘNG MÔ TẢ UNIT =================
+    function toggleUnitDetail(unitName, btnElement) {
+        const isExpanded = expandedUnitDetails.has(unitName);
+        const icon = btnElement.querySelector('i');
+        const detailBoxId = `detailBox_${unitName.replace(/\s+/g, '')}`;
+        const box = document.getElementById(detailBoxId);
+        
+        if(isExpanded) {
+            expandedUnitDetails.delete(unitName);
+            icon.style.transform = "rotate(0deg)";
+            if(box) box.classList.remove('expanded');
+        } else {
+            expandedUnitDetails.add(unitName);
+            icon.style.transform = "rotate(180deg)";
+            if(box) box.classList.add('expanded');
+        }
+    }
+
+    function renderUnitAccordion() {
+      const container = document.getElementById("unitAccordionContainer");
+      if (!container) return;
+      container.innerHTML = "";
+      const allUnits = getAllUnits();
+      
+      allUnits.forEach(unitName => {
+        const words = vocabList.filter(v => v.unit === unitName);
+        const uTotal = words.length;
+        const uMastered = words.filter(v => v.srsLevel === 3).length;
+        const isChecked = selectedUnits.has(unitName);
+        const meta = UNIT_METADATA[unitName] || { shortTitle: "Học phần chuyên ngành mở rộng", corePoints: "Nội dung mở rộng từ người dùng." };
+        const boxId = `detailBox_${unitName.replace(/\s+/g, '')}`;
+        const isExp = expandedUnitDetails.has(unitName);
+
+        const div = document.createElement("div");
+        div.className = `flex flex-col p-2.5 rounded-xl border transition ${isChecked ? 'bg-teal-50 dark:bg-teal-900/40 border-teal-300 dark:border-teal-700' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-teal-400'}`;
+        
+        div.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+              <label class="flex items-center gap-2.5 cursor-pointer flex-1 min-w-0">
+                <input type="checkbox" value="${unitName}" class="unit-checkbox w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500" ${isChecked ? 'checked' : ''} />
+                <div class="min-w-0">
+                  <p class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">${unitName}</p>
+                  <p class="text-[10px] text-slate-500 mt-0.5">Đã thuộc: ${uMastered}/${uTotal}</p>
+                </div>
+              </label>
+              <button type="button" class="btn-expand-unit p-2 text-slate-400 hover:text-teal-600 transition" title="Xem chi tiết Unit">
+                  <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300" style="transform: ${isExp ? 'rotate(180deg)' : 'rotate(0deg)'}"></i>
+              </button>
+          </div>
+          <div id="${boxId}" class="collapse-content ${isExp ? 'expanded' : ''} mt-2 text-[10px] text-slate-600 dark:text-slate-400 border-t border-slate-200/60 dark:border-slate-700/60 pt-2 space-y-1">
+              <p><strong><i class="fa-solid fa-tag text-teal-500 mr-1"></i>Chủ đề:</strong> ${meta.shortTitle}</p>
+              <p><strong><i class="fa-solid fa-bullseye text-amber-500 mr-1"></i>Trọng tâm:</strong> ${meta.corePoints}</p>
+          </div>
+        `;
+        
+        div.querySelector(".unit-checkbox").onchange = (e) => {
+          if (e.target.checked) selectedUnits.add(unitName);
+          else {
+            selectedUnits.delete(unitName);
+            if (selectedUnits.size === 0) {
+              e.target.checked = true; selectedUnits.add(unitName);
+              showToast("Phải chọn ít nhất 1 Học phần!", "error"); return;
+            }
+          }
+          saveStudyProgress(); syncAllViews();
+        };
+        
+        div.querySelector(".btn-expand-unit").onclick = function(e) {
+            e.stopPropagation();
+            toggleUnitDetail(unitName, this);
+        };
+
+        container.appendChild(div);
+      });
+    }
+
+    function syncAllViews() {
+      fcPool = getFilteredVocab();
+      updateHeaderBadges();
+      renderDashboard();
+      renderUnitAccordion(); 
+      if (!quizPool.length) resetQuizPool();
+      else loadQuizQuestion();
+      renderFlashcard(true);
+      renderDictation();
+      renderVocabTree(document.getElementById("searchVocabInput")?.value || "");
+    }
+
+    // ================= TÍNH TOÁN & HIỂN THỊ DASHBOARD =================
+    function renderDashboard() {
+      const spec = specialtiesMap[currentSpecialtyId] || { name: "Răng Hàm Mặt" };
+      document.getElementById("dashCurrentSpecialtyTag").textContent = `Chuyên ngành: ${spec.name}`;
+
+      const totalWords = vocabList.length;
+      const mastered = vocabList.filter(v => v.srsLevel === 3).length;
+      const hard = vocabList.filter(v => v.srsLevel === 1 || ((v.mistakeCount || 0) > 0 && v.srsLevel !== 3)).length;
+      const learning = vocabList.filter(v => v.srsLevel === 2 && (v.mistakeCount || 0) === 0).length;
+      const unlearned = totalWords - mastered - hard - learning;
+
+      const masteredPct = totalWords > 0 ? Math.round((mastered / totalWords) * 100) : 0;
+      const learningPct = totalWords > 0 ? Math.round((learning / totalWords) * 100) : 0;
+      const hardPct = totalWords > 0 ? Math.round((hard / totalWords) * 100) : 0;
+      const coveragePct = totalWords > 0 ? Math.round(((mastered + learning) / totalWords) * 100) : 0;
+
+      document.getElementById("dashTotalWords").textContent = totalWords;
+      document.getElementById("dashUnitCountText").textContent = `${getAllUnits().length} Học phần`;
+      document.getElementById("dashMasteredWords").textContent = mastered;
+      document.getElementById("dashMasteredPct").textContent = `${masteredPct}% kho từ vựng`;
+      document.getElementById("dashLearningWords").textContent = learning;
+      document.getElementById("dashMistakeWords").textContent = hard;
+      document.getElementById("dashMistakeQuickBadge").textContent = hard;
+
+      document.getElementById("dashOverallScoreBadge").textContent = `Độ bao phủ: ${coveragePct}%`;
+      document.getElementById("dashSrsRatioText").textContent = `${mastered + learning} / ${totalWords} từ ghi nhớ`;
+      document.getElementById("barSrsMastered").style.width = `${masteredPct}%`;
+      document.getElementById("barSrsLearning").style.width = `${learningPct}%`;
+      document.getElementById("barSrsHard").style.width = `${hardPct}%`;
+
+      document.getElementById("srsLvl3Count").textContent = mastered;
+      document.getElementById("srsLvl2Count").textContent = learning;
+      document.getElementById("srsLvl1Count").textContent = hard;
+      document.getElementById("srsLvl0Count").textContent = unlearned;
+
+      const streakCount = updateDailyStreak();
+      document.getElementById("dashStreakDays").textContent = streakCount;
+      document.getElementById("dashBestSprintText").textContent = `${sprintBestScore} điểm`;
+      document.getElementById("dashQuizScoreCount").textContent = `${quizScore} câu`;
+
+      const lastCbt = localStorage.getItem(STORAGE_KEY_CBT_HISTORY);
+      document.getElementById("dashLastCbtText").textContent = lastCbt ? `${lastCbt}/10 điểm` : "Chưa thi";
+
+      const unitContainer = document.getElementById("dashUnitsProgressList");
+      if (unitContainer) {
+        unitContainer.innerHTML = "";
+        getAllUnits().forEach(unitName => {
+          const uWords = vocabList.filter(v => v.unit === unitName);
+          const uTotal = uWords.length;
+          const uMastered = uWords.filter(v => v.srsLevel === 3).length;
+          const uPct = uTotal > 0 ? Math.round((uMastered / uTotal) * 100) : 0;
+          const meta = UNIT_METADATA[unitName] || { shortTitle: "Học phần chuyên ngành mở rộng", corePoints: "Nội dung mở rộng từ người dùng." };
+          const boxId = `dashDetailBox_${unitName.replace(/\s+/g, '')}`;
+          const isExp = expandedUnitDetails.has(unitName);
+
+          const row = document.createElement("div");
+          row.className = "p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 flex flex-col gap-2.5 hover:border-teal-500/60 transition";
+          
+          row.innerHTML = `
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="min-w-0 flex-1 cursor-pointer" data-dash-toggle-unit="${unitName}">
+                  <div class="flex items-center gap-2">
+                    <button type="button" class="text-teal-600 dark:text-teal-400 p-0.5" title="Mở rộng chi tiết">
+                        <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300" style="transform: ${isExp ? 'rotate(180deg)' : 'rotate(0deg)'}"></i>
+                    </button>
+                    <span class="font-extrabold text-xs text-teal-700 dark:text-teal-300 uppercase">${unitName}</span>
+                    <span class="text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">${meta.shortTitle}</span>
+                  </div>
+                  <div class="flex items-center gap-2 mt-1.5 pl-5">
+                    <div class="flex-1 h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden max-w-md">
+                      <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-300" style="width: ${uPct}%"></div>
+                    </div>
+                    <span class="text-[11px] font-mono font-bold text-slate-500 shrink-0">${uMastered}/${uTotal} từ (${uPct}%)</span>
+                  </div>
+                </div>
+                <button type="button" data-dash-jump-unit="${unitName}" class="px-3 py-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 dark:bg-slate-800 text-teal-700 dark:text-teal-300 text-xs font-bold border border-teal-200 dark:border-teal-800 flex items-center justify-center gap-1.5 shrink-0 transition">
+                  <i class="fa-solid fa-play text-[10px]"></i> Luyện Unit
+                </button>
+            </div>
+            <div id="${boxId}" class="collapse-content ${isExp ? 'expanded' : ''} text-[11px] text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700/60 ml-5 space-y-1.5">
+                <p><strong><i class="fa-solid fa-layer-group text-indigo-500 mr-1"></i>Phạm vi từ vựng:</strong> Học phần bao gồm ${uTotal} thuật ngữ cốt lõi.</p>
+                <p><strong><i class="fa-solid fa-bullseye text-amber-500 mr-1"></i>Trọng tâm ôn tập:</strong> ${meta.corePoints}</p>
+            </div>
+          `;
+          
+          row.querySelector(`[data-dash-toggle-unit="${unitName}"]`).onclick = function(e) {
+              e.stopPropagation();
+              const iconBtn = this.querySelector('button');
+              toggleUnitDetail(unitName, iconBtn);
+              
+              // Sync with drawer if open
+              renderUnitAccordion();
+          };
+
+          row.querySelector("[data-dash-jump-unit]").onclick = (e) => {
+            e.stopPropagation();
+            selectedUnits = new Set([unitName]);
+            onlyMistakesFilter = false;
+            document.getElementById("chkOnlyMistakes").checked = false;
+            saveStudyProgress(); syncAllViews(); switchActiveTab("quiz");
+            showToast(`Đã chọn riêng ${unitName} để luyện tập!`);
+          };
+          unitContainer.appendChild(row);
+        });
+      }
+    }
+
+    function recordStudyOutcome(item, isCorrect) {
+      if (!item) return;
+      if (isCorrect) {
+        if ((item.mistakeCount || 0) > 0) item.mistakeCount--;
+        if ((item.mistakeCount || 0) === 0) {
+          item.srsLevel = Math.min(3, Math.max(2, (item.srsLevel || 0) + 1));
+        }
+      } else {
+        item.mistakeCount = (item.mistakeCount || 0) + 1;
+        item.srsLevel = 1;
+      }
+      saveDatabase();
+    }
+    
+    function updateOutcomeMemoryOnly(item, isCorrect) {
+      if (!item) return;
+      if (isCorrect) {
+        if ((item.mistakeCount || 0) > 0) item.mistakeCount--;
+        if ((item.mistakeCount || 0) === 0) {
+          item.srsLevel = Math.min(3, Math.max(2, (item.srsLevel || 0) + 1));
+        }
+      } else {
+        item.mistakeCount = (item.mistakeCount || 0) + 1;
+        item.srsLevel = 1;
+      }
+    }
+
+    function getDistinctDistractors(targetItem, count = 3) {
+      const dist = [];
+      const usedWords = new Set([targetItem.word.toLowerCase().split("/")[0].trim()]);
+      const usedMeanings = new Set([targetItem.meaning.toLowerCase().trim()]);
+      const candidates = [...vocabList].sort((a, b) => (b.pos === targetItem.pos ? 1 : 0) - (a.pos === targetItem.pos ? 1 : 0) || Math.random() - 0.5);
+      
+      for (const c of candidates) {
+        if (dist.length >= count) break;
+        const w = c.word.toLowerCase().split("/")[0].trim();
+        const m = c.meaning.toLowerCase().trim();
+        if (c.id !== targetItem.id && !usedWords.has(w) && !usedMeanings.has(m)) {
+          dist.push(c); usedWords.add(w); usedMeanings.add(m);
+        }
+      }
+      return dist;
+    }
+
+    function maskWordInSentence(sentence, rawWord) {
+      if (!sentence || !rawWord) return sentence || "";
+      let masked = sentence;
+      const variants = [];
+      rawWord.split("/").forEach(part => {
+        const noParen = part.replace(/\([^)]*\)/g, "").trim();
+        if (noParen) variants.push(noParen);
+        const match = part.match(/\(([^)]+)\)/);
+        if (match && match[1]) variants.push(match[1].trim());
+      });
+      variants.sort((a, b) => b.length - a.length).forEach(v => {
+        if (v.length >= 2) {
+          const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          masked = masked.replace(new RegExp(escaped, "gi"), "[_____]");
+        }
+      });
+      return masked;
+    }
+
+    // ================= QUIZ & FLASHCARD & DICTATION LOGIC =================
+    function resetQuizPool() {
+      quizPool = [...getFilteredVocab()].sort(() => Math.random() - 0.5);
+      if (quizIndex >= quizPool.length) quizIndex = 0;
+      saveStudyProgress();
+      loadQuizQuestion();
+    }
+
+    function loadQuizQuestion() {
+      if (!quizPool.length) quizPool = [...getFilteredVocab()];
+      if (!quizPool.length) return;
+      if (quizIndex >= quizPool.length) quizIndex = 0;
+
+      currentQuizItem = quizPool[quizIndex];
+      currentQuizAnswered = false;
+      document.getElementById("quizCounterText").textContent = `Câu ${quizIndex + 1} / ${quizPool.length}`;
+      document.getElementById("quizUnitBadge").textContent = currentQuizItem.unit;
+      document.getElementById("quizExplanationBox").classList.add("hidden");
+      document.getElementById("quizHintBox").classList.add("hidden");
+
+      if (quizDirection === "mix") {
+        const modes = ["en-vi", "vi-en", "context"];
+        currentQuizModeType = modes[Math.floor(Math.random() * modes.length)];
+      } else {
+        currentQuizModeType = quizDirection;
+      }
+
+      const spkBtn = document.getElementById("btnSpeakQuizPrompt");
+      if (currentQuizModeType === "en-vi") {
+        document.getElementById("quizPromptText").textContent = currentQuizItem.word;
+        document.getElementById("quizIpaText").textContent = currentQuizItem.ipa;
+        document.getElementById("quizPosText").textContent = `(${currentQuizItem.pos})`;
+        spkBtn.classList.remove("opacity-40");
+        if (autoAudio && currentActiveTab === "quiz") speakText(currentQuizItem.word);
+      } else if (currentQuizModeType === "vi-en") {
+        document.getElementById("quizPromptText").textContent = currentQuizItem.meaning;
+        document.getElementById("quizIpaText").textContent = "Chọn thuật ngữ tiếng Anh tương ứng";
+        document.getElementById("quizPosText").textContent = `(${currentQuizItem.pos})`;
+        spkBtn.classList.add("opacity-40");
+      } else {
+        const masked = maskWordInSentence(currentQuizItem.example, currentQuizItem.word);
+        document.getElementById("quizPromptText").textContent = masked;
+        document.getElementById("quizIpaText").textContent = `Nghĩa câu: "${currentQuizItem.exampleVi}"`;
+        document.getElementById("quizPosText").textContent = `Điền thuật ngữ (${currentQuizItem.pos}) phù hợp vào chỗ trống`;
+        spkBtn.classList.add("opacity-40");
+      }
+
+      const dist = getDistinctDistractors(currentQuizItem, 3);
+      const opts = [currentQuizItem, ...dist].sort(() => Math.random() - 0.5);
+      const box = document.getElementById("quizOptionsContainer");
+      box.innerHTML = "";
+
+      opts.forEach((o, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "quiz-opt-btn p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/50 hover:border-teal-500 text-left text-xs sm:text-sm font-semibold transition flex items-center gap-2.5";
+        const optionText = currentQuizModeType === "en-vi" ? o.meaning : o.word;
+        btn.innerHTML = `<span class="w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-teal-600 font-extrabold flex items-center justify-center shrink-0">${i + 1}</span><span>${optionText}</span>`;
+        btn.onclick = () => selectQuizAnswer(o, btn, opts);
+        box.appendChild(btn);
+      });
+      saveStudyProgress();
+    }
+
+    function selectQuizAnswer(selectedOpt, clickedBtn, allOpts) {
+      if (currentQuizAnswered) return;
+      currentQuizAnswered = true;
+      document.querySelectorAll(".quiz-opt-btn").forEach(b => (b.disabled = true));
+      document.getElementById("btnSpeakQuizPrompt").classList.remove("opacity-40");
+
+      const isCorrect = selectedOpt.id === currentQuizItem.id;
+      recordStudyOutcome(currentQuizItem, isCorrect);
+
+      if (isCorrect) {
+        quizScore++;
+        playTone(780, "sine");
+        triggerHaptic("success");
+        clickedBtn.className = "quiz-opt-btn p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 text-left text-xs sm:text-sm font-bold flex items-center gap-2.5";
+      } else {
+        playTone(240, "sawtooth");
+        triggerHaptic("error");
+        clickedBtn.className = "quiz-opt-btn p-3.5 rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/60 text-rose-900 dark:text-rose-200 text-left text-xs sm:text-sm font-bold flex items-center gap-2.5";
+        document.querySelectorAll(".quiz-opt-btn").forEach((b, idx) => {
+          if (allOpts[idx].id === currentQuizItem.id) {
+            b.className = "quiz-opt-btn p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200 text-left text-xs sm:text-sm font-bold flex items-center gap-2.5";
+          }
+        });
+      }
+
+      if (autoAudio && currentQuizModeType !== "en-vi" && currentActiveTab === "quiz") speakText(currentQuizItem.word);
+
+      document.getElementById("quizScoreText").textContent = `Đúng: ${quizScore}`;
+      document.getElementById("quizExplanationBox").classList.remove("hidden");
+      document.getElementById("expStatusIcon").innerHTML = isCorrect
+        ? `<i class="fa-solid fa-circle-check text-emerald-500"></i>`
+        : `<i class="fa-solid fa-circle-xmark text-rose-500"></i>`;
+      document.getElementById("expStatusTitle").textContent = isCorrect
+        ? `Chính xác! ${currentQuizItem.word} (${currentQuizItem.ipa}) — ${currentQuizItem.meaning}`
+        : `Chưa đúng! Đáp án: ${currentQuizItem.word} (${currentQuizItem.ipa}) — ${currentQuizItem.meaning}`;
+      document.getElementById("expClinicalNote").textContent = currentQuizItem.clinicalNote || "Thuật ngữ lâm sàng.";
+      document.getElementById("expExampleEn").textContent = currentQuizItem.example;
+      document.getElementById("expExampleVi").textContent = currentQuizItem.exampleVi;
+
+      const relBox = document.getElementById("expRelatedContainer");
+      relBox.innerHTML = `<span class="text-[11px] font-bold text-slate-400">Từ liên quan:</span>`;
+      (currentQuizItem.relatedTerms || []).forEach(t => {
+        const badge = document.createElement("button");
+        badge.type = "button";
+        badge.className = "px-2 py-0.5 rounded-lg bg-teal-100/70 dark:bg-teal-950 text-teal-800 dark:text-teal-300 text-[11px] font-semibold hover:bg-teal-200 transition";
+        badge.innerHTML = `<i class="fa-solid fa-volume-low mr-1"></i>${t}`;
+        badge.onclick = () => speakText(t);
+        relBox.appendChild(badge);
+      });
+
+      if (isCorrect && quizAutoNext) {
+        setTimeout(() => {
+          if (currentQuizAnswered && currentActiveTab === "quiz") {
+            quizIndex++; loadQuizQuestion();
+          }
+        }, 1200);
+      }
+    }
+
+    function renderFlashcard(instantReset = false) {
+      if (!fcPool.length) return;
+      if (fcIndex >= fcPool.length) fcIndex = 0;
+      if (fcIndex < 0) fcIndex = fcPool.length - 1;
+
+      const card = document.getElementById("fcCardInner");
+      const item = fcPool[fcIndex];
+
+      if (card.classList.contains("rotate-y-180") || instantReset) {
+        card.classList.add("no-transition");
+        card.classList.remove("rotate-y-180");
+        void card.offsetWidth;
+        card.classList.remove("no-transition");
+      }
+
+      document.getElementById("fcProgressText").textContent = `Thẻ ${fcIndex + 1} / ${fcPool.length}`;
+      document.getElementById("fcUnitLabel").textContent = item.unit;
+      document.getElementById("fcWordFront").textContent = item.word;
+      document.getElementById("fcIpaFront").textContent = item.ipa;
+      document.getElementById("fcPosFront").textContent = `(${item.pos})`;
+
+      document.getElementById("fcPosBack").textContent = item.pos;
+      document.getElementById("fcMeaningBack").textContent = item.meaning;
+      document.getElementById("fcClinicalBack").textContent = item.clinicalNote;
+      document.getElementById("fcExEnBack").textContent = item.example;
+      document.getElementById("fcExViBack").textContent = item.exampleVi;
+
+      const srsBadge = document.getElementById("fcSrsStatusBadge");
+      if (item.srsLevel === 3) {
+        srsBadge.textContent = "Thành thạo";
+        srsBadge.className = "px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300";
+      } else if (item.srsLevel === 2) {
+        srsBadge.textContent = "Đang nhớ";
+        srsBadge.className = "px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300";
+      } else if (item.srsLevel === 1) {
+        srsBadge.textContent = "Chưa thuộc";
+        srsBadge.className = "px-2 py-0.5 rounded-md text-[10px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300";
+      } else {
+        srsBadge.textContent = "Chưa học";
+        srsBadge.className = "px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300";
+      }
+
+      const relBack = document.getElementById("fcRelatedBack");
+      relBack.innerHTML = "";
+      (item.relatedTerms || []).forEach(r => {
+        const sp = document.createElement("span");
+        sp.className = "px-2 py-0.5 rounded-full bg-white/10 text-[10px] text-teal-200";
+        sp.textContent = r;
+        relBack.appendChild(sp);
+      });
+      saveStudyProgress();
+    }
+
+    function getAcceptedDictationTargets(rawWord) {
+      const targets = new Set();
+      if (!rawWord) return [""];
+      rawWord.split("/").forEach(part => {
+        const clean = part.replace(/\([^)]*\)/g, "").trim().toLowerCase();
+        if (clean) targets.add(clean);
+        const match = part.match(/\(([^)]+)\)/);
+        if (match && match[1]) targets.add(match[1].trim().toLowerCase());
+      });
+      targets.add(rawWord.replace(/\([^)]*\)/g, "").trim().toLowerCase());
+      return Array.from(targets);
+    }
+
+    function renderDictation() {
+      const list = getFilteredVocab();
+      if (!list.length) return;
+      if (dictIndex >= list.length) dictIndex = 0;
+      const item = list[dictIndex];
+      isDictTransitioning = false;
+
+      document.getElementById("dictProgressText").textContent = `Từ ${dictIndex + 1} / ${list.length} (${item.unit})`;
+      document.getElementById("dictMeaningPrompt").textContent = `Nghĩa: ${item.meaning}`;
+      document.getElementById("dictClinicalHint").textContent = `Gợi ý: ${item.clinicalNote}`;
+
+      const cw = item.word.split("/")[0].replace(/\([^)]*\)/g, "").trim();
+      const masked = cw.split(" ").map(w => {
+          if (w.length <= 1) return "_";
+          if (w.length === 2) return w[0] + "_";
+          return w[0] + "_".repeat(w.length - 2) + w.slice(-1);
+      }).join("  ");
+      document.getElementById("dictWordMask").textContent = masked;
+      document.getElementById("dictInput").value = "";
+      document.getElementById("dictFeedback").textContent = "";
+      saveStudyProgress();
+    }
+
+    // ================= SPRINT & CBT =================
+    function nextSprintQuestion() {
+      const list = getFilteredVocab();
+      if (!list.length) return;
+      currentSprintItem = list[Math.floor(Math.random() * list.length)];
+      document.getElementById("sprintUnitTag").textContent = currentSprintItem.unit;
+      document.getElementById("sprintQuestionWord").textContent = currentSprintItem.word;
+      if (autoAudio && currentActiveTab === "sprint") speakText(currentSprintItem.word);
+
+      const dist = getDistinctDistractors(currentSprintItem, 3);
+      const opts = [currentSprintItem, ...dist].sort(() => Math.random() - 0.5);
+      const box = document.getElementById("sprintOptionsBox");
+      box.innerHTML = "";
+
+      opts.forEach(o => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 hover:border-teal-500 text-xs font-bold transition";
+        btn.textContent = o.meaning;
+        btn.onclick = () => {
+          if (o.id === currentSprintItem.id) {
+            sprintScore += 10 * sprintCombo;
+            sprintCombo = Math.min(5, sprintCombo + 1);
+            if (sprintCombo >= 3) sprintSeconds = Math.min(60, sprintSeconds + 1);
+            playTone(840, "sine");
+            triggerHaptic("success");
+            recordStudyOutcome(currentSprintItem, true);
+          } else {
+            sprintCombo = 1;
+            sprintSeconds = Math.max(0, sprintSeconds - 2);
+            playTone(220, "sawtooth");
+            triggerHaptic("error");
+            recordStudyOutcome(currentSprintItem, false);
+          }
+          document.getElementById("sprintTimeText").textContent = `${sprintSeconds}s`;
+          document.getElementById("sprintScoreText").textContent = `${sprintScore} điểm`;
+          document.getElementById("sprintComboBadge").textContent = `Combo x${sprintCombo}`;
+          if (sprintSeconds <= 0) finishSprintGame();
+          else nextSprintQuestion();
+        };
+        box.appendChild(btn);
+      });
+    }
+
+    function finishSprintGame() {
+      clearInterval(sprintTimer);
+      sprintTimer = null;
+      document.getElementById("sprintPlayView").classList.add("hidden");
+      document.getElementById("btnStopSprintGame").classList.add("hidden");
+      document.getElementById("sprintIntroView").classList.remove("hidden");
+
+      let isNewRecord = false;
+      if (sprintScore > sprintBestScore) {
+        sprintBestScore = sprintScore;
+        localStorage.setItem(STORAGE_KEY_SPRINT_BEST, String(sprintBestScore));
+        document.getElementById("sprintBestBadge").textContent = `Kỷ lục: ${sprintBestScore}`;
+        isNewRecord = true;
+      }
+      const banner = document.getElementById("sprintLastResultBanner");
+      banner.classList.remove("hidden");
+      banner.textContent = isNewRecord
+        ? `🏆 KỶ LỤC MỚI! Bạn đạt ${sprintScore} điểm!`
+        : `⏱️ Hoàn thành lượt đua: ${sprintScore} điểm (Kỷ lục: ${sprintBestScore} điểm)`;
+    }
+
+    // ================= CBT FILE UPLOAD & ANALYZE =================
+    const cbtFileInput = document.getElementById("cbtFileInput");
+    const btnSelectSyllabusFile = document.getElementById("btnSelectSyllabusFile");
+    const btnClearSyllabusFile = document.getElementById("btnClearSyllabusFile");
+    const cbtFileStatusBox = document.getElementById("cbtFileStatusBox");
+    const cbtUploadedFileName = document.getElementById("cbtUploadedFileName");
+    const cbtMatchedCountBadge = document.getElementById("cbtMatchedCountBadge");
+    const cbtMatchedWordsPreview = document.getElementById("cbtMatchedWordsPreview");
+    const cbtFileLoadingOverlay = document.getElementById("cbtFileLoadingOverlay");
+    const chkStrictSyllabusMode = document.getElementById("chkStrictSyllabusMode");
+
+    btnSelectSyllabusFile.onclick = () => cbtFileInput.click();
+    
+    btnClearSyllabusFile.onclick = () => {
+        cbtFileInput.value = "";
+        parsedSyllabusWords = [];
+        cbtFileStatusBox.classList.add("hidden");
+        btnClearSyllabusFile.classList.add("hidden");
+        btnSelectSyllabusFile.classList.remove("hidden");
+        document.getElementById("cbtSyllabusInput").value = "";
+        showToast("Đã xóa file đề cương", "info");
+    };
+
+    cbtFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if(!file) return;
+
+        btnSelectSyllabusFile.classList.add("hidden");
+        btnClearSyllabusFile.classList.remove("hidden");
+        cbtFileStatusBox.classList.remove("hidden");
+        cbtUploadedFileName.textContent = file.name;
+        cbtFileLoadingOverlay.classList.remove("hidden");
+        cbtFileLoadingOverlay.style.display = "flex";
+        cbtMatchedCountBadge.textContent = "Đang quét...";
+        cbtMatchedWordsPreview.textContent = "Hệ thống đang trích xuất văn bản từ tệp tin của bạn...";
+
+        try {
+            let extractedText = "";
+            const ext = file.name.split('.').pop().toLowerCase();
+            
+            if(['txt', 'csv', 'json', 'md'].includes(ext)) {
+                extractedText = await file.text();
+            } else if(ext === 'docx') {
+                const ab = await file.arrayBuffer();
+                const res = await mammoth.extractRawText({arrayBuffer: ab});
+                extractedText = res.value;
+            } else if(ext === 'pdf') {
+                const ab = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({data: ab}).promise;
+                for(let i=1; i<=pdf.numPages; i++){
+                    const page = await pdf.getPage(i);
+                    const content = await page.getTextContent();
+                    extractedText += content.items.map(it => it.str).join(" ") + " ";
+                }
+            } else {
+                throw new Error("Định dạng file không được hỗ trợ.");
+            }
+            
+            document.getElementById("cbtSyllabusInput").value = extractedText.trim();
+            analyzeSyllabus(extractedText);
+            
+        } catch(err) {
+            showToast("Lỗi đọc file: " + err.message, "error");
+            btnClearSyllabusFile.click();
+        } finally {
+            cbtFileLoadingOverlay.classList.add("hidden");
+            cbtFileLoadingOverlay.style.display = "none";
+        }
+    });
+
+    // Thêm chức năng kéo thả (Drag and Drop)
+    const dropZone = document.getElementById("cbtDropZone");
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-indigo-500', 'bg-indigo-100');
+    });
+    dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-indigo-500', 'bg-indigo-100');
+    });
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-indigo-500', 'bg-indigo-100');
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            cbtFileInput.files = e.dataTransfer.files;
+            cbtFileInput.dispatchEvent(new Event('change'));
+        }
+    });
+
+    document.getElementById("cbtSyllabusInput").addEventListener('input', (e) => {
+        if(e.target.value.trim() !== "") {
+            cbtFileStatusBox.classList.remove("hidden");
+            cbtUploadedFileName.textContent = "Văn bản tự nhập";
+            analyzeSyllabus(e.target.value);
+        } else {
+            cbtFileStatusBox.classList.add("hidden");
+            parsedSyllabusWords = [];
+        }
+    });
+
+    function analyzeSyllabus(text) {
+        const lower = text.toLowerCase();
+        
+        parsedSyllabusWords = vocabList.filter(v => {
+            const cleanWord = v.word.toLowerCase().split("/")[0].trim().replace(/\([^)]*\)/g, "").trim();
+            return lower.includes(cleanWord) || lower.includes(v.meaning.toLowerCase());
+        });
+        
+        cbtMatchedCountBadge.textContent = `Khớp ${parsedSyllabusWords.length} thuật ngữ`;
+        if(parsedSyllabusWords.length > 0) {
+            cbtMatchedWordsPreview.textContent = "Các từ nhận diện được: " + parsedSyllabusWords.map(v => v.word).join(", ");
+        } else {
+            cbtMatchedWordsPreview.textContent = "Không tìm thấy thuật ngữ chuyên ngành nào khớp với hệ thống dữ liệu hiện tại.";
+        }
+    }
+
+
+    function saveCBTState() {
+      if (cbtPool.length > 0 && cbtTimeLeft > 0) {
+        localStorage.setItem(STORAGE_KEY_CBT_STATE, JSON.stringify({
+          cbtPool, cbtAnswers, cbtFlags, cbtCurrentIndex, cbtTimeLeft, cbtTotalQuestions
+        }));
+      } else {
+        localStorage.removeItem(STORAGE_KEY_CBT_STATE);
+      }
+    }
+
+    function restoreCBTState() {
+      const raw = localStorage.getItem(STORAGE_KEY_CBT_STATE);
+      if (!raw) return;
+      try {
+        const cbtObj = JSON.parse(raw);
+        if (cbtObj.cbtPool && cbtObj.cbtPool.length > 0 && cbtObj.cbtTimeLeft > 0) {
+          cbtPool = cbtObj.cbtPool;
+          cbtAnswers = cbtObj.cbtAnswers || {};
+          cbtFlags = cbtObj.cbtFlags || {};
+          cbtCurrentIndex = cbtObj.cbtCurrentIndex || 0;
+          cbtTimeLeft = cbtObj.cbtTimeLeft;
+          cbtTotalQuestions = cbtObj.cbtTotalQuestions || cbtPool.length;
+
+          document.getElementById("cbtSetupView").classList.add("hidden");
+          document.getElementById("cbtResultView").classList.add("hidden");
+          document.getElementById("cbtExamView").classList.remove("hidden");
+
+          updateCBTTimerDisplay();
+          clearInterval(cbtTimerInterval);
+          cbtTimerInterval = setInterval(() => {
+            cbtTimeLeft--; updateCBTTimerDisplay(); saveCBTState();
+            if (cbtTimeLeft <= 0) {
+              clearInterval(cbtTimerInterval);
+              showToast("Đã hết thời gian làm bài! Hệ thống tự động thu bài.", "error");
+              submitCBTExam();
+            }
+          }, 1000);
+          renderCBTQuestion();
+        }
+      } catch (e) {}
+    }
+
+    function updateCBTTimerDisplay() {
+      const m = Math.floor(cbtTimeLeft / 60).toString().padStart(2, "0");
+      const s = (cbtTimeLeft % 60).toString().padStart(2, "0");
+      const display = document.getElementById("cbtTimerDisplay");
+      display.textContent = `${m}:${s}`;
+      if (cbtTimeLeft <= 60) display.className = "font-mono font-black text-lg text-rose-400 animate-bounce";
+      else if (cbtTimeLeft <= 300) display.className = "font-mono font-black text-lg text-amber-300";
+      else display.className = "font-mono font-black text-lg text-white";
+    }
+
+    function renderCBTPalette() {
+      const grid = document.getElementById("cbtPaletteGrid");
+      grid.innerHTML = "";
+      const answeredCount = Object.keys(cbtAnswers).length;
+      document.getElementById("cbtAnsweredCountBadge").textContent = `Đã làm: ${answeredCount}/${cbtTotalQuestions}`;
+
+      for (let i = 0; i < cbtTotalQuestions; i++) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = i + 1;
+        let cls = "w-8 h-8 rounded-lg text-[11px] font-extrabold flex items-center justify-center border transition ";
+        if (cbtCurrentIndex === i) cls += "ring-2 ring-indigo-500 ring-offset-1 dark:ring-offset-slate-800 ";
+        if (cbtFlags[i]) cls += "bg-amber-100 text-amber-800 border-amber-400 dark:bg-amber-900/80 dark:text-amber-200";
+        else if (cbtAnswers[i] !== undefined) cls += "bg-indigo-100 text-indigo-800 border-indigo-400 dark:bg-indigo-900/80 dark:text-indigo-200";
+        else cls += "bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300";
+        btn.className = cls;
+        btn.onclick = () => { cbtCurrentIndex = i; renderCBTQuestion(); };
+        grid.appendChild(btn);
+      }
+    }
+
+    function renderCBTQuestion() {
+      const q = cbtPool[cbtCurrentIndex];
+      if (!q) return;
+
+      document.getElementById("cbtCurrentQText").textContent = `Câu ${cbtCurrentIndex + 1} / ${cbtTotalQuestions}`;
+      document.getElementById("cbtCurrentUnitBadge").textContent = q.unit;
+
+      const flagBtn = document.getElementById("btnFlagCBT");
+      if (cbtFlags[cbtCurrentIndex]) {
+        flagBtn.className = "px-2.5 py-1 rounded-lg bg-amber-500 text-white text-xs font-bold transition";
+        flagBtn.innerHTML = `<i class="fa-solid fa-flag mr-1"></i> Đã gắn cờ`;
+      } else {
+        flagBtn.className = "px-2.5 py-1 rounded-lg border border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400 text-xs font-bold transition";
+        flagBtn.innerHTML = `<i class="fa-regular fa-flag mr-1"></i> Gắn cờ xem lại`;
+      }
+
+      if (q.qType === "en-vi") {
+        document.getElementById("cbtQuestionTypeHint").textContent = "Chọn nghĩa tiếng Việt chuẩn xác của thuật ngữ:";
+        document.getElementById("cbtQuestionPrompt").textContent = `${q.word} (${q.pos})`;
+      } else if (q.qType === "vi-en") {
+        document.getElementById("cbtQuestionTypeHint").textContent = "Chọn thuật ngữ tiếng Anh tương ứng với nghĩa:";
+        document.getElementById("cbtQuestionPrompt").textContent = q.meaning;
+      } else {
+        document.getElementById("cbtQuestionTypeHint").textContent = `Điền thuật ngữ phù hợp vào câu lâm sàng (${q.exampleVi}):`;
+        document.getElementById("cbtQuestionPrompt").textContent = maskWordInSentence(q.example, q.word);
+      }
+
+      const container = document.getElementById("cbtOptionsContainer");
+      container.innerHTML = "";
+      q.lockedOptions.forEach((o, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        const isSelected = cbtAnswers[cbtCurrentIndex] === o.id;
+        const label = q.qType === "en-vi" ? o.meaning : o.word;
+        btn.className = `p-3.5 rounded-xl border text-left text-xs sm:text-sm font-semibold transition flex items-center gap-3 ${
+          isSelected ? "bg-indigo-50 border-2 border-indigo-600 text-indigo-900 dark:bg-indigo-950/80 dark:border-indigo-400 dark:text-indigo-200"
+                     : "bg-slate-50 border-slate-200 dark:bg-slate-900/50 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
+        }`;
+        btn.innerHTML = `<span class="w-7 h-7 rounded-full border font-extrabold flex items-center justify-center shrink-0 ${
+          isSelected ? "border-indigo-600 bg-indigo-600 text-white" : "border-slate-300 dark:border-slate-600"
+        }">${String.fromCharCode(65 + i)}</span><span>${label}</span>`;
+        btn.onclick = () => {
+          cbtAnswers[cbtCurrentIndex] = o.id;
+          triggerHaptic("light");
+          saveCBTState(); renderCBTQuestion();
+        };
+        container.appendChild(btn);
+      });
+
+      renderCBTPalette();
+      document.getElementById("btnCBTPrev").disabled = cbtCurrentIndex === 0;
+      document.getElementById("btnCBTNext").disabled = cbtCurrentIndex === cbtTotalQuestions - 1;
+    }
+
+    function submitCBTExam() {
+      clearInterval(cbtTimerInterval);
+      cbtTimerInterval = null;
+      localStorage.removeItem(STORAGE_KEY_CBT_STATE);
+
+      document.getElementById("cbtExamView").classList.add("hidden");
+      document.getElementById("cbtResultView").classList.remove("hidden");
+
+      let correct = 0;
+      const mistakes = [];
+      const unitStats = {};
+      let changesMade = false;
+
+      cbtPool.forEach((q, idx) => {
+        if (!unitStats[q.unit]) unitStats[q.unit] = { total: 0, right: 0 };
+        unitStats[q.unit].total++;
+
+        const realItem = vocabList.find(v => v.id === q.id);
+        const userAnsObj = q.lockedOptions.find(o => o.id === cbtAnswers[idx]);
+        const userAnsText = userAnsObj ? (q.qType === "en-vi" ? userAnsObj.meaning : userAnsObj.word) : "Bỏ trống";
+        const correctAnsText = q.qType === "en-vi" ? q.meaning : q.word;
+
+        if (cbtAnswers[idx] === q.id) {
+          correct++;
+          unitStats[q.unit].right++;
+          if (realItem) { updateOutcomeMemoryOnly(realItem, true); changesMade = true; }
+        } else {
+          mistakes.push({ ...q, userAnsText, correctAnsText });
+          if (realItem) { updateOutcomeMemoryOnly(realItem, false); changesMade = true; }
+        }
+      });
+
+      if (changesMade) saveDatabase();
+
+      const score10 = ((correct / cbtTotalQuestions) * 10).toFixed(1);
+      document.getElementById("cbtFinalScore").textContent = `${score10} / 10 (${correct}/${cbtTotalQuestions} câu)`;
+      localStorage.setItem(STORAGE_KEY_CBT_HISTORY, score10);
+
+      const gradeEl = document.getElementById("cbtGradeBadge");
+      const fbEl = document.getElementById("cbtFeedbackText");
+      if (score10 >= 8.5) {
+        gradeEl.textContent = "Xếp loại: XUẤT SẮC"; fbEl.textContent = "Sẵn sàng cho kỳ thi thật!";
+      } else if (score10 >= 7.0) {
+        gradeEl.textContent = "Xếp loại: KHÁ - GIỎI"; fbEl.textContent = "Nền tảng tốt! Hãy xem lại các lỗi nhỏ bên dưới.";
+      } else if (score10 >= 5.0) {
+        gradeEl.textContent = "Xếp loại: ĐẠT"; fbEl.textContent = "Cần củng cố thêm các học phần có tỷ lệ đúng thấp.";
+      } else {
+        gradeEl.textContent = "Xếp loại: CẦN ÔN LẠI"; fbEl.textContent = "Hãy dùng nút 'Ôn lại ngay' để vá lỗ hổng kiến thức.";
+      }
+
+      const breakdownList = document.getElementById("cbtUnitBreakdownList");
+      breakdownList.innerHTML = "";
+      Object.keys(unitStats).forEach(uName => {
+        const st = unitStats[uName];
+        const pct = Math.round((st.right / st.total) * 100);
+        breakdownList.innerHTML += `
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-bold text-slate-700 dark:text-slate-300">${uName}: ${st.right}/${st.total} câu (${pct}%)</span>
+            <div class="w-36 h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+              <div class="h-full ${pct >= 75 ? "bg-emerald-500" : (pct >= 50 ? "bg-amber-500" : "bg-rose-500")}" style="width:${pct}%"></div>
+            </div>
+          </div>`;
+      });
+
+      const gapBox = document.getElementById("cbtGapAnalysis");
+      const mistakeListEl = document.getElementById("cbtMistakeList");
+      const btnReviewMistakes = document.getElementById("btnCBTReviewMistakes");
+      mistakeListEl.innerHTML = "";
+
+      if (mistakes.length > 0) {
+        gapBox.classList.remove("hidden");
+        btnReviewMistakes.classList.remove("hidden");
+        mistakes.forEach(m => {
+          mistakeListEl.innerHTML += `<li><strong>${m.word}</strong>: Bạn chọn: <span class="text-rose-500 line-through">${m.userAnsText}</span> ➔ Đáp án đúng: <span class="text-emerald-600">${m.correctAnsText}</span> <span class="text-[10px] opacity-75">[${m.unit}]</span></li>`;
+        });
+      } else {
+        gapBox.classList.add("hidden");
+        btnReviewMistakes.classList.add("hidden");
+      }
+    }
+
+    // ================= TRỢ LÝ AI & LÀM GIÀU TỪ VỰNG =================
+    async function queryThreeTierAi(promptText) {
+      const sysPrompt = "Bạn là Trợ lý Nha khoa & Y khoa. Hãy giải thích ngắn gọn, chuẩn xác thuật ngữ lâm sàng, dễ nhớ cho sinh viên.";
+      if (window.ai && window.ai.languageModel) {
+        try {
+          const cap = await window.ai.languageModel.capabilities();
+          if (cap.available === "readily") {
+            const session = await window.ai.languageModel.create({ systemPrompt: sysPrompt });
+            return await session.prompt(promptText);
+          }
+        } catch (e) {}
+      }
+      const apiKey = localStorage.getItem(STORAGE_KEY_AI_KEY);
+      if (apiKey) {
+        const models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-latest"];
+        for (const m of models) {
+          try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
+              method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ contents: [{ parts: [{ text: `${sysPrompt}\n\n${promptText}` }] }] })
+            });
+            const data = await res.json();
+            const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (reply) return reply;
+          } catch (e) {}
+        }
+      }
+      return buildOfflineMedicalAnalysis(promptText);
+    }
+
+    function buildOfflineMedicalAnalysis(q) {
+      const lower = q.toLowerCase();
+      const matchedWords = vocabList.filter(v => lower.includes(v.word.toLowerCase().split("/")[0].trim()) || v.meaning.toLowerCase().includes(lower));
+      if (matchedWords.length >= 2) {
+        const w1 = matchedWords[0], w2 = matchedWords[1];
+        return `🩺 PHÂN TÍCH SO SÁNH LÂM SÀNG:\n\n1️⃣ ${w1.word} (${w1.ipa}): ${w1.meaning}\n   • Lâm sàng: ${w1.clinicalNote}\n\n2️⃣ ${w2.word} (${w2.ipa}): ${w2.meaning}\n   • Lâm sàng: ${w2.clinicalNote}`;
+      }
+      if (matchedWords.length === 1) {
+        const w = matchedWords[0];
+        return `🦷 HỒ SƠ THUẬT NGỮ LÂM SÀNG:\n\n• ${w.word} (${w.ipa}) — ${w.pos}\n• Nghĩa: ${w.meaning}\n• Ghi chú: ${w.clinicalNote}\n• Ví dụ: "${w.example}" (${w.exampleVi})`;
+      }
+      const matchedRoots = MEDICAL_ROOT_LEXICON.filter(r => lower.includes(r.aff));
+      if (matchedRoots.length > 0) {
+        return `🧬 GIẢI MÃ GỐC TỪ & HẬU TỐ:\n\n` + matchedRoots.map(r => `• ${r.type}: ${r.mean}\n  ➔ Ứng dụng: ${r.note}`).join("\n\n");
+      }
+      if (lower.includes("hội thoại") || lower.includes("khám")) {
+        return `💬 MẪU HỘI THOẠI LÂM SÀNG:\n\n👨‍⚕️ Dentist: "What brings you to the clinic?" (Hôm nay bạn đến phòng khám vì vấn đề gì?)\n🧑 Patient: "I have severe throbbing pain." (Tôi bị đau nhức dữ dội.)`;
+      }
+      return `📚 TRỢ LÝ Y KHOA NỘI TUYẾN:\nChưa tìm thấy dữ liệu sâu cho: "${q}". Hãy dán Gemini API Key ở mục Cài đặt để mở rộng trí tuệ nhân tạo.`;
+    }
+
+    async function enrichWordWithAiFallback(word, meaning, unit) {
+        const cleanW = word.trim();
+        const lowerW = cleanW.toLowerCase();
+        let detectedMeaning = meaning ? meaning.trim() : "";
+        let detectedPos = "n.";
+        let detectedNote = "Thuật ngữ chuyên ngành Y - Nha khoa.";
+        const related = ["Clinical practice"];
+
+        for (const entry of MEDICAL_ROOT_LEXICON) {
+            if (lowerW.includes(entry.aff)) {
+            if (!detectedMeaning) detectedMeaning = `${entry.mean} (${cleanW})`;
+            detectedPos = entry.pos;
+            detectedNote = `${entry.type}: ${entry.mean}. ${entry.note}`;
+            related.push(entry.type);
+            break;
+            }
+        }
+        if (!detectedMeaning) detectedMeaning = `Thuật ngữ: ${cleanW}`;
+
+        return {
+            id: "custom_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+            unit: unit || "Unit 5",
+            word: cleanW,
+            ipa: `/${lowerW}/`,
+            pos: detectedPos,
+            meaning: detectedMeaning,
+            relatedTerms: related,
+            example: `Clinical evaluation of ${lowerW} is essential for accurate dental diagnosis.`,
+            exampleVi: `Đánh giá lâm sàng về ${detectedMeaning.toLowerCase()} rất cần thiết để chẩn đoán chính xác.`,
+            clinicalNote: detectedNote,
+            srsLevel: 0,
+            mistakeCount: 0
+        };
+    }
+
+    function renderVocabTree(filterQuery = "") {
+      const container = document.getElementById("vocabTreeContainer");
+      if (!container) return;
+      container.innerHTML = "";
+      const q = filterQuery.toLowerCase().trim();
+      const units = getAllUnits();
+
+      units.forEach(u => {
+        const words = vocabList.filter(v => v.unit === u && (!q || v.word.toLowerCase().includes(q) || v.meaning.toLowerCase().includes(q) || (v.clinicalNote && v.clinicalNote.toLowerCase().includes(q))));
+        if (words.length === 0) return;
+        const meta = UNIT_METADATA[u] || { shortTitle: "Học phần chuyên ngành mở rộng", corePoints: "" };
+        const boxId = `treeDetailBox_${u.replace(/\s+/g, '')}`;
+        const isExp = expandedUnitDetails.has(u);
+
+        const folder = document.createElement("div");
+        folder.className = "rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-800 transition-all";
+        folder.innerHTML = `
+          <div class="bg-teal-50/80 dark:bg-slate-700/70 px-4 py-2.5 flex items-center justify-between cursor-pointer" data-tree-toggle-unit="${u}">
+            <div class="flex items-center gap-2">
+                <button type="button" class="text-teal-600 dark:text-teal-400 p-0.5"><i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300" style="transform: ${isExp ? 'rotate(180deg)' : 'rotate(0deg)'}"></i></button>
+                <span class="font-extrabold text-xs text-teal-800 dark:text-teal-300"><i class="fa-solid fa-folder-open mr-1.5"></i>${u} (${words.length} từ)</span>
+            </div>
+            <span class="text-[11px] text-slate-500 dark:text-slate-400 truncate max-w-[220px]">${meta.shortTitle}</span>
+          </div>
+          <div id="${boxId}" class="collapse-content ${isExp ? 'expanded' : ''} bg-slate-50 dark:bg-slate-900/50 text-[10px] text-slate-600 dark:text-slate-400 px-4 py-2 border-b border-slate-200 dark:border-slate-700">
+             <strong>Trọng tâm:</strong> ${meta.corePoints}
+          </div>
+          <div class="divide-y divide-slate-100 dark:divide-slate-700/60 word-list-container"></div>
+        `;
+
+        folder.querySelector(`[data-tree-toggle-unit="${u}"]`).onclick = function() {
+            const iconBtn = this.querySelector('button');
+            toggleUnitDetail(u, iconBtn);
+        };
+
+        const listDiv = folder.querySelector(".word-list-container");
+        words.forEach(w => {
+          const itemRow = document.createElement("div");
+          itemRow.className = "p-3 flex items-center justify-between gap-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition";
+          const isCustom = String(w.id).startsWith("custom_") || String(w.id).startsWith("auto_");
+          itemRow.innerHTML = `
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="font-bold text-xs text-slate-900 dark:text-white">${w.word}</span>
+                <span class="text-[11px] font-mono text-teal-600 dark:text-teal-400">${w.ipa}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${w.pos}</span>
+              </div>
+              <p class="text-xs font-semibold text-slate-700 dark:text-slate-200 mt-0.5">${w.meaning}</p>
+              <p class="text-[11px] text-slate-400 truncate">${w.clinicalNote || ""}</p>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" data-tree-ai="${w.id}" class="w-8 h-8 rounded-full bg-teal-50 hover:bg-teal-100 dark:bg-slate-700 text-teal-600 dark:text-teal-300 flex items-center justify-center" title="Phân tích AI"><i class="fa-solid fa-wand-magic-sparkles text-xs"></i></button>
+              <button type="button" data-tree-spk="${w.id}" class="w-8 h-8 rounded-full bg-teal-50 hover:bg-teal-100 dark:bg-slate-700 text-teal-600 dark:text-teal-300 flex items-center justify-center" title="Nghe phát âm"><i class="fa-solid fa-volume-high text-xs"></i></button>
+              ${isCustom ? `<button type="button" data-tree-del="${w.id}" class="w-8 h-8 rounded-full bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 text-rose-600 flex items-center justify-center" title="Xóa từ này"><i class="fa-solid fa-trash-can text-xs"></i></button>` : ""}
+            </div>
+          `;
+          listDiv.appendChild(itemRow);
+        });
+        container.appendChild(folder);
+      });
+
+      container.querySelectorAll("[data-tree-spk]").forEach(btn => btn.onclick = () => {
+        const item = vocabList.find(v => v.id === btn.getAttribute("data-tree-spk"));
+        if(item) speakText(item.word);
+      });
+      container.querySelectorAll("[data-tree-ai]").forEach(btn => btn.onclick = async () => {
+        const item = vocabList.find(v => v.id === btn.getAttribute("data-tree-ai"));
+        if(item) {
+          const modal = document.getElementById("aiHubModal");
+          const box = document.getElementById("aiResponseBox");
+          modal.classList.remove("hidden");
+          box.textContent = `⏳ Đang phân tích ngữ cảnh lâm sàng cho thuật ngữ "${item.word}"...`;
+          box.textContent = await queryThreeTierAi(`Phân tích thuật ngữ nha khoa "${item.word}" (${item.meaning}), giải thích cấu trúc gốc từ nếu có và cho 1 ví dụ giao tiếp lâm sàng thực tế.`);
+        }
+      });
+      container.querySelectorAll("[data-tree-del]").forEach(btn => btn.onclick = () => {
+        const delId = btn.getAttribute("data-tree-del");
+        vocabList = vocabList.filter(item => item.id !== delId);
+        saveDatabase(); syncAllViews(); showToast(`Đã xóa từ vựng thành công!`);
+      });
+    }
+
+    function renderSpecialtyList() {
+      const box = document.getElementById("specialtyListContainer");
+      if (!box) return;
+      box.innerHTML = "";
+      Object.values(specialtiesMap).forEach(spec => {
+        const isCurrent = spec.id === currentSpecialtyId;
+        const isDefault = spec.id === "dental";
+        const div = document.createElement("div");
+        div.className = `p-3 rounded-2xl border flex items-center justify-between gap-2 ${isCurrent ? "bg-teal-50 dark:bg-teal-950/60 border-teal-500" : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700"}`;
+        
+        let actionButtons = `<button type="button" data-switch-spec="${spec.id}" class="px-3 py-1.5 rounded-xl text-xs font-bold ${isCurrent ? "bg-teal-600 text-white" : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-teal-100"}">${isCurrent ? "Đang chọn" : "Chuyển sang"}</button>`;
+        if (!isDefault) {
+            actionButtons += `<button type="button" data-delete-spec="${spec.id}" class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 ml-1 flex items-center justify-center shrink-0"><i class="fa-solid fa-trash-can text-xs"></i></button>`;
+        }
+
+        div.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center"><i class="fa-solid ${spec.icon || "fa-tooth"}"></i></div>
+            <div><p class="text-xs font-extrabold">${spec.name}</p><p class="text-[11px] text-slate-500">${(spec.vocab || []).length} thuật ngữ</p></div>
+          </div>
+          <div class="flex items-center">${actionButtons}</div>
+        `;
+        box.appendChild(div);
+      });
+
+      box.querySelectorAll("[data-switch-spec]").forEach(btn => btn.onclick = () => {
+          const specId = btn.getAttribute("data-switch-spec");
+          loadSpecialtyState(specId, true);
+          document.getElementById("specialtyModal").classList.add("hidden");
+          showToast(`Đã chuyển sang: ${specialtiesMap[specId].name}`);
+      });
+      box.querySelectorAll("[data-delete-spec]").forEach(btn => btn.onclick = () => {
+          const specId = btn.getAttribute("data-delete-spec");
+          if (confirm(`Xóa chuyên ngành ${specialtiesMap[specId].name}?`)) {
+              delete specialtiesMap[specId];
+              localStorage.setItem(STORAGE_KEY_SPECIALTIES, JSON.stringify(specialtiesMap));
+              if (currentSpecialtyId === specId) loadSpecialtyState("dental", true);
+              else renderSpecialtyList();
+          }
+      });
+    }
+
+    function loadSpecialtyState(specId, resetProgress = true) {
+      currentSpecialtyId = specId;
+      localStorage.setItem(STORAGE_KEY_CURRENT_SPEC, specId);
+      const spec = specialtiesMap[specId];
+      vocabList = spec.vocab || [];
+      document.getElementById("currentSpecialtyName").textContent = spec.name;
+      document.getElementById("headerSpecIcon").className = `fa-solid ${spec.icon || "fa-tooth"} text-lg`;
+      
+      if (resetProgress) {
+        selectedUnits = new Set(getAllUnits());
+        onlyMistakesFilter = false;
+        document.getElementById("chkOnlyMistakes").checked = false;
+        quizIndex = 0; quizScore = 0; fcIndex = 0; dictIndex = 0; quizPool = [];
+      }
+      syncAllViews();
+      renderSpecialtyList();
+    }
+
+    // ================= EVENT BINDINGS (DOMContentLoaded) =================
+    window.addEventListener("DOMContentLoaded", () => {
+      initDatabase();
+      checkNewVersionNotice();
+
+      // UI Events
+      const btnAck = document.getElementById("btnAcknowledgeUpdate");
+      if (btnAck) {
+        btnAck.onclick = () => {
+          localStorage.setItem(STORAGE_KEY_SEEN_VERSION, APP_BUILD_VERSION);
+          document.getElementById("whatsNewModal").classList.add("hidden");
+          showToast("Chào mừng bạn đến với phiên bản nâng cấp!");
+        };
+      }
+
+      document.querySelectorAll(".mode-tab").forEach(btn => {
+        btn.onclick = () => {
+          const tab = btn.getAttribute("data-tab");
+          if (currentActiveTab === "sprint" && tab !== "sprint" && sprintTimer) {
+            clearInterval(sprintTimer); sprintTimer = null;
+          }
+          triggerHaptic("light");
+          switchActiveTab(tab);
+          saveStudyProgress();
+        };
+      });
+
+      const bindModal = (o, m, c) => {
+        const ob = document.getElementById(o), mod = document.getElementById(m), cb = document.getElementById(c);
+        if (ob && mod) ob.onclick = () => mod.classList.remove("hidden");
+        if (cb && mod) cb.onclick = () => mod.classList.add("hidden");
+        if (mod) mod.addEventListener("click", e => { if (e.target === mod) mod.classList.add("hidden"); });
+      };
+      
+      bindModal("btnFooterAuthor", "authorModal", "btnCloseAuthorModal");
+      document.getElementById("btnAuthorModalDone").onclick = () => document.getElementById("authorModal").classList.add("hidden");
+      
+      bindModal("btnInstallPwa", "pwaModal", "btnClosePwaModal");
+      document.getElementById("btnDonePwaModal").onclick = () => document.getElementById("pwaModal").classList.add("hidden");
+      
+      bindModal("btnOpenSpecialtyModal", "specialtyModal", "btnCloseSpecialtyModal");
+      bindModal("btnOpenAiHub", "aiHubModal", "btnCloseAiHubModal");
+      
+      // Khởi tạo Modal Hướng dẫn (Guide Modal)
+      bindModal("btnOpenGuideModal", "guideModal", "btnCloseGuideModal");
+      bindModal("btnDashOpenFullGuide", "guideModal", "btnCloseGuideModal");
+      document.getElementById("btnGotItGuideModal").onclick = () => document.getElementById("guideModal").classList.add("hidden");
+      
+      document.getElementById("btnOpenJsonModal").onclick = () => {
+        document.getElementById("jsonTextBox").value = JSON.stringify(vocabList, null, 2);
+        document.getElementById("jsonModal").classList.remove("hidden");
+      };
+      document.getElementById("btnCloseJsonModal").onclick = () => document.getElementById("jsonModal").classList.add("hidden");
+
+      document.getElementById("btnTheme").onclick = () => {
+        const isDark = document.documentElement.classList.toggle("dark");
+        localStorage.setItem(STORAGE_KEY_THEME, isDark ? "dark" : "light");
+        document.getElementById("themeIcon").className = isDark ? "fa-solid fa-sun text-xs text-amber-400" : "fa-solid fa-moon text-xs";
+      };
+
+      document.getElementById("btnSpeedRate").onclick = () => {
+        speechRate = speechRate === 1.0 ? 0.75 : 1.0;
+        document.getElementById("speedRateText").textContent = `${speechRate}x`;
+        saveStudyProgress();
+        showToast(`Tốc độ phát âm: ${speechRate}x`, "info");
+      };
+
+      document.getElementById("btnAutoAudioToggle").onclick = () => {
+        autoAudio = !autoAudio;
+        document.getElementById("autoAudioIcon").className = autoAudio ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark";
+        saveStudyProgress();
+        showToast(autoAudio ? "Đã BẬT tự động phát âm" : "Đã TẮT", "info");
+      };
+
+      // Drawer Logic
+      document.getElementById("unitDrawerHeader").onclick = () => {
+        const b = document.getElementById("unitDrawerBody"), c = document.getElementById("unitDrawerChevron"), h = document.getElementById("drawerActionHint");
+        triggerHaptic("light");
+        if (b.classList.contains("hidden")) { b.classList.remove("hidden"); c.classList.add("rotate-180"); if(h) h.textContent = "Thu gọn"; }
+        else { b.classList.add("hidden"); c.classList.remove("rotate-180"); if(h) h.textContent = "Mở danh sách"; }
+      };
+
+      document.getElementById("chkOnlyMistakes").onchange = e => {
+        onlyMistakesFilter = e.target.checked;
+        saveStudyProgress(); syncAllViews();
+      };
+      document.getElementById("btnSelectAllUnits").onclick = e => {
+        e.stopPropagation(); getAllUnits().forEach(u => selectedUnits.add(u));
+        saveStudyProgress(); syncAllViews(); showToast("Đã chọn tất cả!");
+      };
+      document.getElementById("btnDeselectAllUnits").onclick = e => {
+        e.stopPropagation(); selectedUnits = new Set([getAllUnits()[0]]);
+        saveStudyProgress(); syncAllViews(); showToast(`Chỉ chọn ${getAllUnits()[0]}`);
+      };
+
+      // Dashboard Shortcuts
+      document.getElementById("btnDashQuickMistakes").onclick = () => {
+        onlyMistakesFilter = true; document.getElementById("chkOnlyMistakes").checked = true;
+        saveStudyProgress(); syncAllViews(); switchActiveTab("quiz"); showToast("Bật Ôn từ sai!", "info");
+      };
+      document.getElementById("btnDashQuickQuiz").onclick = () => switchActiveTab("quiz");
+      document.getElementById("btnDashQuickCBT").onclick = () => switchActiveTab("cbt");
+      document.getElementById("btnDashQuickFlashcard").onclick = () => switchActiveTab("flashcard");
+      document.getElementById("btnResetProgress").onclick = () => {
+        if(confirm("Bạn muốn xóa toàn bộ lịch sử ôn tập (SRS & Lỗi sai) của chuyên ngành này để học lại từ đầu?")) {
+            vocabList.forEach(v => { v.srsLevel = 0; v.mistakeCount = 0; });
+            saveDatabase(); syncAllViews(); showToast("Đã làm mới tiến độ học tập!");
+        }
+      };
+
+      // Quiz
+      document.getElementById("quizDirectionSelect").onchange = e => { quizDirection = e.target.value; saveStudyProgress(); resetQuizPool(); };
+      document.getElementById("btnShuffleQuiz").onclick = () => { resetQuizPool(); showToast("Đã đảo câu hỏi!"); };
+      document.getElementById("chkQuizAutoNext").onchange = e => { quizAutoNext = e.target.checked; saveStudyProgress(); };
+      document.getElementById("btnNextQuizQuestion").onclick = () => { quizIndex++; saveStudyProgress(); loadQuizQuestion(); };
+      document.getElementById("btnSpeakQuizPrompt").onclick = () => {
+        if (!currentQuizItem) return;
+        if (!currentQuizAnswered && currentQuizModeType !== "en-vi") { showToast("Chọn đáp án trước khi nghe!", "info"); return; }
+        speakText(currentQuizItem.word);
+      };
+      document.getElementById("btnSpeakExample").onclick = () => { if (currentQuizItem) speakText(currentQuizItem.example); };
+      document.getElementById("btnShowQuizHint").onclick = () => {
+        if (!currentQuizItem) return;
+        const hintEl = document.getElementById("quizHintBox");
+        hintEl.textContent = `💡 Ngữ cảnh: "${maskWordInSentence(currentQuizItem.example, currentQuizItem.word)}" (${currentQuizItem.exampleVi})`;
+        hintEl.classList.remove("hidden");
+      };
+      document.getElementById("btnAskAiQuiz").onclick = async () => {
+        if(currentQuizItem) {
+          document.getElementById("aiHubModal").classList.remove("hidden");
+          document.getElementById("aiResponseBox").textContent = `⏳ Đang phân tích "${currentQuizItem.word}"...`;
+          document.getElementById("aiResponseBox").textContent = await queryThreeTierAi(`Phân tích thuật ngữ "${currentQuizItem.word}".`);
+        }
+      };
+
+      // Flashcard
+      document.getElementById("fcCardInner").onclick = function () { triggerHaptic("light"); this.classList.toggle("rotate-y-180"); };
+      document.getElementById("btnFcSpeakFront").onclick = e => { e.stopPropagation(); if (fcPool[fcIndex]) speakText(fcPool[fcIndex].word); };
+      document.getElementById("btnFcAiExplain").onclick = async e => {
+        e.stopPropagation();
+        if (fcPool[fcIndex]) {
+          document.getElementById("aiHubModal").classList.remove("hidden");
+          document.getElementById("aiResponseBox").textContent = `⏳ Đang phân tích "${fcPool[fcIndex].word}"...`;
+          document.getElementById("aiResponseBox").textContent = await queryThreeTierAi(`Phân tích thuật ngữ "${fcPool[fcIndex].word}".`);
+        }
+      };
+      document.getElementById("btnFcShuffle").onclick = () => {
+        fcPool.sort(() => Math.random() - 0.5); fcIndex = 0; renderFlashcard(true); showToast("Đã trộn thẻ!");
+      };
+      document.getElementById("btnFcPrev").onclick = () => { fcIndex--; saveStudyProgress(); renderFlashcard(); };
+      document.getElementById("btnFcNext").onclick = () => { fcIndex++; saveStudyProgress(); renderFlashcard(); };
+      
+      const bindSrs = (id, lvl) => {
+        document.getElementById(id).onclick = () => {
+          const item = fcPool[fcIndex];
+          if (!item) return;
+          item.srsLevel = lvl;
+          if (lvl === 3) item.mistakeCount = 0; else if (lvl === 1) item.mistakeCount = Math.max(1, item.mistakeCount || 0);
+          saveDatabase(); triggerHaptic("success"); fcIndex++; saveStudyProgress(); renderFlashcard();
+          if (autoAudio && fcPool[fcIndex]) speakText(fcPool[fcIndex].word);
+        };
+      };
+      bindSrs("btnSrsHard", 1); bindSrs("btnSrsGood", 2); bindSrs("btnSrsEasy", 3);
+
+      // Dictation
+      document.getElementById("btnDictSpeak").onclick = () => { if (getFilteredVocab()[dictIndex]) speakText(getFilteredVocab()[dictIndex].word); };
+      document.getElementById("btnDictShowAnswer").onclick = () => {
+        const item = getFilteredVocab()[dictIndex];
+        if (!item) return;
+        const fb = document.getElementById("dictFeedback");
+        fb.className = "text-xs font-extrabold text-amber-600 dark:text-amber-400"; fb.textContent = `💡 Đáp án: ${item.word} (${item.ipa})`;
+        speakText(item.word);
+      };
+      document.getElementById("btnDictSkip").onclick = () => { dictIndex++; saveStudyProgress(); renderDictation(); };
+      document.getElementById("dictForm").onsubmit = e => {
+        e.preventDefault();
+        if (isDictTransitioning) return;
+        const item = getFilteredVocab()[dictIndex];
+        if (!item) return;
+        const val = document.getElementById("dictInput").value.trim().toLowerCase();
+        const fb = document.getElementById("dictFeedback");
+
+        if (getAcceptedDictationTargets(item.word).includes(val)) {
+          isDictTransitioning = true; playTone(780, "sine"); triggerHaptic("success"); recordStudyOutcome(item, true);
+          fb.className = "text-xs font-extrabold text-emerald-600 dark:text-emerald-400"; fb.textContent = `✅ Chính xác! ${item.word} (${item.ipa})`;
+          setTimeout(() => { dictIndex++; saveStudyProgress(); renderDictation(); }, 1000);
+        } else {
+          playTone(240, "sawtooth"); triggerHaptic("error"); recordStudyOutcome(item, false);
+          fb.className = "text-xs font-extrabold text-rose-600 dark:text-rose-400"; fb.textContent = `❌ Chưa khớp! Hãy nghe lại hoặc "Xem đáp án"`;
+        }
+      };
+
+      // Sprint
+      document.getElementById("btnStartSprintGame").onclick = () => {
+        sprintSeconds = 60; sprintScore = 0; sprintCombo = 1;
+        document.getElementById("sprintTimeText").textContent = "60s"; document.getElementById("sprintScoreText").textContent = "0 điểm";
+        document.getElementById("sprintComboBadge").textContent = "Combo x1";
+        document.getElementById("sprintIntroView").classList.add("hidden"); document.getElementById("sprintPlayView").classList.remove("hidden");
+        document.getElementById("btnStopSprintGame").classList.remove("hidden");
+        nextSprintQuestion();
+        clearInterval(sprintTimer);
+        sprintTimer = setInterval(() => {
+          sprintSeconds--; document.getElementById("sprintTimeText").textContent = `${sprintSeconds}s`;
+          if (sprintSeconds <= 0) finishSprintGame();
+        }, 1000);
+      };
+      document.getElementById("btnStopSprintGame").onclick = finishSprintGame;
+
+      // Tab 5: Manage & AI
+      document.getElementById("btnToggleSingleAdd").onclick = () => {
+        document.getElementById("addWordForm").classList.remove("hidden"); document.getElementById("batchAddContainer").classList.add("hidden");
+        document.getElementById("btnToggleSingleAdd").className = "px-3 py-1.5 rounded-xl bg-teal-600 text-white text-xs font-bold transition";
+        document.getElementById("btnToggleBatchAdd").className = "px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition";
+      };
+      document.getElementById("btnToggleBatchAdd").onclick = () => {
+        document.getElementById("addWordForm").classList.add("hidden"); document.getElementById("batchAddContainer").classList.remove("hidden");
+        document.getElementById("btnToggleBatchAdd").className = "px-3 py-1.5 rounded-xl bg-teal-600 text-white text-xs font-bold transition";
+        document.getElementById("btnToggleSingleAdd").className = "px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition";
+      };
+
+      document.getElementById("addWordForm").onsubmit = async e => {
+        e.preventDefault();
+        const btn = document.getElementById("btnSubmitSingleWord");
+        btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...';
+        
+        const u = document.getElementById("newUnitInput").value.trim() || "Unit 5";
+        const w = document.getElementById("newWordInput").value.trim();
+        const m = document.getElementById("newMeaningInput").value.trim();
+        
+        if (w) {
+            const enriched = await enrichWordWithAiFallback(w, m, u);
+            vocabList.push(enriched);
+            selectedUnits.add(u);
+            saveDatabase(); syncAllViews(); e.target.reset();
+            showToast(`Đã làm giàu & lưu "${enriched.word}" vào ${u}!`);
+        }
+        btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Lưu & Làm Giàu';
+      };
+
+      document.getElementById("btnRunBatchEnrich").onclick = async () => {
+        const rawText = document.getElementById("batchRawInput").value;
+        const unit = document.getElementById("batchUnitInput").value.trim() || "Unit 5";
+        if (!rawText.trim()) return showToast("Vui lòng dán danh sách từ vựng!", "error");
+        
+        const btn = document.getElementById("btnRunBatchEnrich");
+        btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang xử lý...';
+        
+        const lines = rawText.split("\n").map(l => l.trim()).filter(Boolean);
+        let added = 0;
+        for (const line of lines) {
+          const parts = line.split(/[:\-\t]/);
+          const word = parts[0].trim();
+          const meaning = parts.length > 1 ? parts.slice(1).join(" ").trim() : "";
+          if (word) {
+            const enriched = await enrichWordWithAiFallback(word, meaning, unit);
+            vocabList.push(enriched); added++;
+          }
+        }
+        selectedUnits.add(unit); saveDatabase(); syncAllViews();
+        document.getElementById("batchProgressStatus").textContent = `✅ Đã thêm ${added} từ vào ${unit}!`;
+        document.getElementById("batchRawInput").value = "";
+        showToast(`Đã làm giàu và lưu ${added} từ vào ${unit}!`);
+        btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Tự Làm Giàu & Lưu Hàng Loạt';
+      };
+      document.getElementById("searchVocabInput").oninput = e => renderVocabTree(e.target.value);
+
+      // Tab 6: CBT
+      document.getElementById("btnGenerateCBT").onclick = () => {
+        const requestedCount = parseInt(document.getElementById("cbtQuestionCount").value, 10) || 40;
+        const examDir = document.getElementById("cbtExamDirection").value;
+        const isStrict = document.getElementById("chkStrictSyllabusMode")?.checked;
+        
+        let candidatePool = [];
+        if (parsedSyllabusWords.length > 0 && isStrict) {
+            candidatePool = [...parsedSyllabusWords];
+        } else {
+            const syllabusInput = document.getElementById("cbtSyllabusInput").value.toLowerCase().trim();
+            if (syllabusInput) {
+                candidatePool = vocabList.filter(v => syllabusInput.includes(v.word.toLowerCase().split("/")[0].trim()) || syllabusInput.includes(v.meaning.toLowerCase()) || syllabusInput.includes(v.unit.toLowerCase()));
+            }
+        }
+        
+        if (candidatePool.length < Math.min(5, requestedCount)) {
+            candidatePool = [...getFilteredVocab()];
+            showToast("Số lượng từ vựng trong đề cương quá ít, hệ thống đã bù thêm từ ngẫu nhiên!", "info");
+        }
+
+        const shuffled = [...candidatePool].sort(() => Math.random() - 0.5).slice(0, requestedCount);
+        cbtTotalQuestions = shuffled.length; cbtTimeLeft = cbtTotalQuestions * 45;
+
+        cbtPool = shuffled.map(q => {
+          const dist = getDistinctDistractors(q, 3);
+          const lockedOptions = [q, ...dist].sort(() => Math.random() - 0.5);
+          let qType = examDir;
+          if (examDir === "mix") qType = ["en-vi", "vi-en", "context"][Math.floor(Math.random() * 3)];
+          return { ...q, qType, lockedOptions };
+        });
+
+        cbtAnswers = {}; cbtFlags = {}; cbtCurrentIndex = 0;
+        document.getElementById("cbtSetupView").classList.add("hidden"); document.getElementById("cbtResultView").classList.add("hidden");
+        document.getElementById("cbtExamView").classList.remove("hidden");
+
+        updateCBTTimerDisplay(); clearInterval(cbtTimerInterval);
+        cbtTimerInterval = setInterval(() => {
+          cbtTimeLeft--; updateCBTTimerDisplay(); saveCBTState();
+          if (cbtTimeLeft <= 0) { clearInterval(cbtTimerInterval); showToast("Hết giờ! Tự động thu bài.", "error"); submitCBTExam(); }
+        }, 1000);
+        renderCBTQuestion(); saveCBTState();
+      };
+
+      document.getElementById("btnCBTPrev").onclick = () => { if (cbtCurrentIndex > 0) { cbtCurrentIndex--; saveCBTState(); renderCBTQuestion(); }};
+      document.getElementById("btnCBTNext").onclick = () => { if (cbtCurrentIndex < cbtTotalQuestions - 1) { cbtCurrentIndex++; saveCBTState(); renderCBTQuestion(); }};
+      document.getElementById("btnFlagCBT").onclick = () => { cbtFlags[cbtCurrentIndex] = !cbtFlags[cbtCurrentIndex]; saveCBTState(); renderCBTQuestion(); };
+      document.getElementById("btnSubmitCBT").onclick = () => {
+          const answered = Object.keys(cbtAnswers).length;
+          if (answered < cbtTotalQuestions && cbtTimeLeft > 0) {
+              if (!confirm(`Bạn mới làm ${answered}/${cbtTotalQuestions} câu. Bạn có chắc chắn muốn nộp bài sớm?`)) return;
+          }
+          submitCBTExam();
+      };
+      document.getElementById("btnCBTRetry").onclick = () => {
+        localStorage.removeItem(STORAGE_KEY_CBT_STATE);
+        document.getElementById("cbtResultView").classList.add("hidden"); document.getElementById("cbtSetupView").classList.remove("hidden");
+      };
+      document.getElementById("btnCBTReviewMistakes").onclick = () => {
+        onlyMistakesFilter = true; document.getElementById("chkOnlyMistakes").checked = true;
+        saveStudyProgress(); syncAllViews(); switchActiveTab("quiz"); showToast("Bật Ôn tập câu sai!", "info");
+      };
+
+      // AI & Specialty Modals
+      document.getElementById("createSpecialtyForm").onsubmit = e => {
+        e.preventDefault();
+        const name = document.getElementById("newSpecName").value.trim(), icon = document.getElementById("newSpecIcon").value;
+        if (!name) return;
+        const newId = "spec_" + Date.now();
+        specialtiesMap[newId] = { id: newId, name, icon, vocab: [] };
+        saveDatabase(); loadSpecialtyState(newId, true); e.target.reset();
+        document.getElementById("specialtyModal").classList.add("hidden"); showToast(`Đã tạo chuyên ngành "${name}"!`);
+      };
+
+      document.querySelectorAll("[data-quick-ai]").forEach(btn => {
+        btn.onclick = async () => {
+          const q = btn.getAttribute("data-quick-ai");
+          document.getElementById("aiCustomPromptInput").value = q;
+          document.getElementById("aiResponseBox").textContent = "⏳ Đang phân tích dữ liệu lâm sàng...";
+          document.getElementById("aiResponseBox").textContent = await queryThreeTierAi(q);
+        };
+      });
+
+      document.getElementById("aiCustomPromptForm").onsubmit = async e => {
+        e.preventDefault();
+        const q = document.getElementById("aiCustomPromptInput").value.trim();
+        if (!q) return;
+        document.getElementById("aiResponseBox").textContent = "⏳ Đang phân tích dữ liệu lâm sàng...";
+        document.getElementById("aiResponseBox").textContent = await queryThreeTierAi(q);
+      };
+
+      document.getElementById("btnSaveAiKey").onclick = () => {
+        const k = document.getElementById("userGeminiKeyInput").value.trim();
+        if (!k) return showToast("Vui lòng dán API Key!", "error");
+        localStorage.setItem(STORAGE_KEY_AI_KEY, k); showToast("Đã lưu Gemini API Key!");
+      };
+      document.getElementById("btnClearAiKey").onclick = () => {
+        localStorage.removeItem(STORAGE_KEY_AI_KEY); document.getElementById("userGeminiKeyInput").value = ""; showToast("Đã xóa API Key.", "info");
+      };
+
+      // JSON Export/Import
+      document.getElementById("btnExportJsonText").onclick = () => { document.getElementById("jsonTextBox").value = JSON.stringify(vocabList, null, 2); showToast("Đã xuất JSON!"); };
+      document.getElementById("btnResetDefaultData").onclick = () => {
+        vocabList = SEED_DATA_191.map(i => ({ ...i })); selectedUnits = new Set(getAllUnits());
+        saveDatabase(); syncAllViews(); document.getElementById("jsonModal").classList.add("hidden"); showToast("Đã khôi phục dữ liệu gốc!");
+      };
+      document.getElementById("btnImportJsonReplace").onclick = () => {
+        try {
+          const parsed = JSON.parse(document.getElementById("jsonTextBox").value);
+          const arr = Array.isArray(parsed) ? parsed : (parsed.vocab || []);
+          if (arr.length > 0) {
+            vocabList = arr; selectedUnits = new Set(getAllUnits());
+            saveDatabase(); syncAllViews(); document.getElementById("jsonModal").classList.add("hidden"); showToast(`Đã ghi đè ${arr.length} từ vựng!`);
+          }
+        } catch (e) { showToast("Lỗi định dạng JSON!", "error"); }
+      };
+      document.getElementById("btnImportJsonMerge").onclick = () => {
+        try {
+          const parsed = JSON.parse(document.getElementById("jsonTextBox").value);
+          const arr = Array.isArray(parsed) ? parsed : (parsed.vocab || []);
+          const existingIds = new Set(vocabList.map(v => v.id)); let added = 0;
+          arr.forEach(item => {
+            if (item && item.word && !existingIds.has(item.id)) { vocabList.push(item); if (item.unit) selectedUnits.add(item.unit); added++; }
+          });
+          saveDatabase(); syncAllViews(); document.getElementById("jsonModal").classList.add("hidden"); showToast(`Đã hợp nhất thêm ${added} từ mới!`);
+        } catch (e) { showToast("Lỗi định dạng JSON!", "error"); }
+      };
+
+      // Keyboard Shortcuts
+      window.addEventListener("keydown", e => {
+        if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
+        if (currentActiveTab === "quiz") {
+          if (["1", "2", "3", "4"].includes(e.key) && !currentQuizAnswered) {
+            const btns = document.querySelectorAll(".quiz-opt-btn");
+            if (btns[parseInt(e.key, 10) - 1]) btns[parseInt(e.key, 10) - 1].click();
+          } else if ((e.key === "Enter" || e.key === "ArrowRight") && currentQuizAnswered) {
+            document.getElementById("btnNextQuizQuestion").click();
+          } else if (e.code === "Space") {
+            e.preventDefault(); document.getElementById("btnSpeakQuizPrompt").click();
+          }
+        } else if (currentActiveTab === "flashcard") {
+          if (e.code === "Space") {
+            e.preventDefault(); document.getElementById("btnFcSpeakFront").click();
+          } else if (e.key === "ArrowRight") { document.getElementById("btnFcNext").click();
+          } else if (e.key === "ArrowLeft") { document.getElementById("btnFcPrev").click();
+          } else if (["ArrowUp", "ArrowDown", "Enter"].includes(e.key)) { e.preventDefault(); document.getElementById("fcCardInner").click(); }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

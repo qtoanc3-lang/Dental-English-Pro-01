@@ -1,0 +1,6 @@
+{
+  "name": "Dental English Pro — Tác giả: Quốc Toản",
+  "description": "Ứng dụng được xây dựng nhằm hỗ trợ học tập, nâng cao vốn thuật ngữ tiếng Anh chuyên ngành Răng Hàm Mặt và Y khoa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

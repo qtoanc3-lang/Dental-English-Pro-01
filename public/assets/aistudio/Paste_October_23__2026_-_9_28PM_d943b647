@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="author" content="Quốc Toản" />
+  <meta name="specialty" content="Răng Hàm Mặt" />
+  <meta name="copyright" content="© 2026 Quốc Toản" />
+  <meta name="description" content="Ứng dụng được xây dựng nhằm hỗ trợ học tập, nâng cao vốn thuật ngữ tiếng Anh chuyên ngành Răng Hàm Mặt và Y khoa." />
+  <meta name="theme-color" content="#0d9488" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Dental English Pro" />
+  <title>Dental English Pro — Tác giả: Quốc Toản</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dental: {
+              50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6',
+              600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Thư viện hỗ trợ đọc file .DOCX và .PDF trực tiếp trên trình duyệt -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script>
+    // Thiết lập worker cho PDF.js
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+  </script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+    .perspective-1000 { perspective: 1000px; }
+    .transform-style-3d { transform-style: preserve-3d; }
+    .backface-hidden { backface-visibility: hidden; }
+    .rotate-y-180 { transform: rotateY(180deg); }
+    .no-transition { transition: none !important; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.45); }
+      50% { box-shadow: 0 0 0 6px rgba(20, 184, 166, 0); }
+    }
+    .pulse-arrow { animation: pulseGlow 2s infinite; }
+    .collapse-content { overflow: hidden; transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; max-height: 0; opacity: 0; }
+    .collapse-content.expanded { max-height: 500px; opacity: 1; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- HỆ THỐNG TOAST THÔNG BÁO -->
+  <div id="toastContainer" class="fixed top-4 right-4 z-[60] flex flex-col gap-2 max-w-sm w-[90%] pointer-events-none"></div>
+
+  <!-- HEADER CHÍNH -->
+  <header class="bg-white/95 dark:bg-slate-800/95 backdrop-blur sticky top-0 z-40 border-b border-slate-200 dark:border-slate-700 shadow-sm">
+    <div class="max-w-5xl mx-auto px-3.5 sm:px-6 py-2.5">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <div id="headerSpecIconBox" class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-teal-600 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-teal-500/20 shrink-0">
+            <i id="headerSpecIcon" class="fa-solid fa-tooth text-lg"></i>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">Dental English Pro</h1>
+              <button id="btnOpenSpecialtyModal" title="Đổi hoặc thêm chuyên ngành mới" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-50 hover:bg-cyan-100 text-cyan-800 dark:bg-cyan-950/80 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-800 transition">
+                <span id="currentSpecialtyName">Răng Hàm Mặt</span>
+                <i class="fa-solid fa-chevron-down text-[9px]"></i>
+              </button>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
+              <span id="headerDbBadge" class="inline-block text-[11px] font-bold px-2 py-0.5 rounded-md bg-teal-100/80 dark:bg-teal-900/50 text-teal-800 dark:text-teal-300">
+                Đang tải...
+              </span>
+              <span id="srsSummaryBadge" class="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-md bg-amber-100/80 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300">
+                SRS: 0 thuộc
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5 ml-auto">
+          <button id="btnOpenGuideModal" title="Cẩm nang hướng dẫn sử dụng toàn bộ chế độ & tính năng" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/80 dark:hover:bg-indigo-900/70 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-book-open-reader"></i>
+            <span class="hidden sm:inline">Hướng dẫn</span>
+          </button>
+          <button id="btnOpenAiHub" title="Trợ lý AI Toàn diện (3 tầng chống lỗi)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-teal-600 to-cyan-600 hover:brightness-110 text-white shadow-sm flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-robot"></i>
+            <span class="hidden sm:inline">Trợ lý AI</span>
+            <span id="aiStatusDot" class="w-2 h-2 rounded-full bg-emerald-300"></span>
+          </button>
+          <button id="btnSpeedRate" title="Tốc độ đọc âm thanh" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-teal-50 dark:hover:bg-slate-600 transition flex items-center gap-1">
+            <i class="fa-solid fa-gauge-high text-teal-600 dark:text-teal-400"></i>
+            <span id="speedRateText">1.0x</span>
+          </button>
+          <button id="btnAutoAudioToggle" title="Bật/Tắt tự động phát âm" class="p-2 rounded-xl text-xs font-bold bg-teal-50 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 border border-teal-200 dark:border-teal-800 transition">
+            <i id="autoAudioIcon" class="fa-solid fa-volume-high"></i>
+          </button>
+          <button id="btnInstallPwa" title="Hướng dẫn cài App ra màn hình chính" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/80 hover:bg-amber-100 transition flex items-center gap-1">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+            <span class="hidden md:inline">Cài App</span>
+          </button>
+          <button id="btnOpenJsonModal" title="Sao lưu / Nạp JSON" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-amber-600 dark:text-amber-400 hover:bg-slate-200 transition">
+            <i class="fa-solid fa-database text-xs"></i>
+          </button>
+          <button id="btnTheme" title="Chế độ Sáng / Tối" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition">
+            <i id="themeIcon" class="fa-solid fa-moon text-xs"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Thanh Tabs Chế Độ Học -->
+      <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto pt-2.5 mt-2 border-t border-slate-100 dark:border-slate-700/70 no-scrollbar">
+        <button class="mode-tab active shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 text-white shadow-sm flex items-center gap-1.5 transition" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i> 0. Tổng Quan & Tiến Trình
+        </button>
+        <button class="mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition" data-tab="quiz">
+          <i class="fa-solid fa-list-check"></i> 1. Trắc Nghiệm
+        </button>
+        <button class="mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition" data-tab="flashcard">
+          <i class="fa-solid fa-clone"></i> 2. Flashcard 3D (SRS)
+        </button>
+        <button class="mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition" data-tab="dictation">
+          <i class="fa-solid fa-headphones"></i> 3. Chép Chính Tả
+        </button>
+        <button class="mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition" data-tab="sprint">
+          <i class="fa-solid fa-bolt"></i> 4. Đua Tốc Độ 60s
+        </button>
+        <button class="mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition" data-tab="manage">
+          <i class="fa-solid fa-folder-tree"></i> 5. Cây Thư Mục & Nhập Liệu
+        </button>
+        <button class="mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition" data-tab="cbt">
+          <i class="fa-solid fa-laptop-medical"></i> 6. Thi Thử CBT
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN APP -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-3.5 sm:px-6 py-4 space-y-4">
+    <!-- TAB 0: TỔNG QUAN & TIẾN TRÌNH HỌC TẬP (DASHBOARD CHÍNH) -->
+    <section id="tab-dashboard" class="tab-panel space-y-4">
+      <!-- Thẻ chào mừng & Chuỗi ngày học liên tục (Streak) -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-teal-700 via-teal-800 to-slate-900 text-white p-5 sm:p-7 shadow-lg">
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="space-y-1.5 max-w-lg">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur text-teal-200 text-xs font-bold border border-white/10">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="dashCurrentSpecialtyTag">Chuyên ngành: Răng Hàm Mặt</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white">Trung Tâm Quản Lý & Tiến Trình Học Tập</h2>
+            <p class="text-xs sm:text-sm text-teal-100/90 leading-relaxed">
+              Theo dõi độ ghi nhớ theo thuật toán lặp lại ngắt quãng (SRS), chuỗi ngày học tập, khám phá chi tiết từng học phần và hướng dẫn sử dụng toàn diện.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3 bg-white/10 backdrop-blur border border-white/15 px-4 py-3 rounded-2xl shrink-0">
+            <div class="w-12 h-12 rounded-2xl bg-amber-400/20 text-amber-300 flex items-center justify-center text-2xl">
+              <i class="fa-solid fa-fire-flame-curved animate-pulse"></i>
+            </div>
+            <div>
+              <p class="text-[10px] font-extrabold uppercase tracking-wider text-teal-200">Chuỗi Ngày Học (Streak)</p>
+              <div class="flex items-baseline gap-1.5">
+                <span id="dashStreakDays" class="text-2xl font-black text-white">1</span>
+                <span class="text-xs text-amber-300 font-bold">ngày liên tục</span>
+              </div>
+              <p id="dashStreakHint" class="text-[10px] text-teal-100/80">Học mỗi ngày để giữ ngọn lửa!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute -right-8 -bottom-10 opacity-10 text-9xl text-white pointer-events-none select-none">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+      </div>
+
+      <!-- 4 Khối Chỉ Số Tổng Quan (Metrics Grid) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-teal-50 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <div class="min-w-0">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Tổng Thuật Ngữ</p>
+            <h3 id="dashTotalWords" class="text-xl font-black text-slate-900 dark:text-white">0</h3>
+            <p id="dashUnitCountText" class="text-[11px] text-slate-500 truncate">0 Học phần</p>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div class="min-w-0">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Đã Thuộc Lầu (SRS)</p>
+            <h3 id="dashMasteredWords" class="text-xl font-black text-emerald-600 dark:text-emerald-400">0</h3>
+            <p id="dashMasteredPct" class="text-[11px] text-slate-500 font-semibold">0% kho từ vựng</p>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-amber-50 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-hourglass-half"></i>
+          </div>
+          <div class="min-w-0">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400">Đang Ghi Nhớ</p>
+            <h3 id="dashLearningWords" class="text-xl font-black text-amber-600 dark:text-amber-400">0</h3>
+            <p class="text-[11px] text-slate-500">Cần ôn định kỳ</p>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-rose-50 dark:bg-rose-950/80 text-rose-600 dark:text-rose-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div class="min-w-0">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider text-rose-600 dark:text-rose-400">Từ Chưa Thuộc / Sai</p>
+            <h3 id="dashMistakeWords" class="text-xl font-black text-rose-600 dark:text-rose-400">0</h3>
+            <p class="text-[11px] text-slate-500">Cần cấp cứu ôn tập</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phân Tích Ma Trận Bộ Nhớ SRS & Phím Tắt Luyện Tập Nhanh -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Ma trận cấp độ nhớ SRS -->
+        <div class="md:col-span-2 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700">
+            <h3 class="font-extrabold text-sm flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-teal-600"></i> Phân Bổ Mức Độ Thuộc Bài (SRS Memory Levels)
+            </h3>
+            <div class="flex items-center gap-2">
+              <button id="btnResetProgress" class="hidden sm:flex text-[10px] font-bold px-2 py-1 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 hover:bg-rose-100 transition items-center gap-1">
+                <i class="fa-solid fa-rotate-left"></i> Đặt lại
+              </button>
+              <span id="dashOverallScoreBadge" class="text-xs font-black px-2.5 py-0.5 rounded-full bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300">
+                Độ bao phủ: 0%
+              </span>
+            </div>
+          </div>
+
+          <!-- Thanh tiến độ tổng hợp nhiều màu -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <span>Tiến độ ghi nhớ toàn diện</span>
+              <span id="dashSrsRatioText">0 / 0 từ</span>
+            </div>
+            <div class="w-full h-3.5 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden flex">
+              <div id="barSrsMastered" class="bg-emerald-500 h-full transition-all duration-500" style="width: 0%" title="Thành thạo"></div>
+              <div id="barSrsLearning" class="bg-amber-400 h-full transition-all duration-500" style="width: 0%" title="Đang nhớ"></div>
+              <div id="barSrsHard" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%" title="Chưa thuộc"></div>
+            </div>
+          </div>
+
+          <!-- Chi tiết 4 trạng thái SRS -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
+            <div class="p-2.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60">
+              <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Cấp 3: Thành thạo
+              </span>
+              <p id="srsLvl3Count" class="text-base font-black text-emerald-800 dark:text-emerald-200 mt-1">0</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60">
+              <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span> Cấp 2: Đang nhớ
+              </span>
+              <p id="srsLvl2Count" class="text-base font-black text-amber-800 dark:text-amber-200 mt-1">0</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-rose-50/70 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60">
+              <span class="text-[10px] font-bold text-rose-700 dark:text-rose-300 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Cấp 1: Chưa thuộc
+              </span>
+              <p id="srsLvl1Count" class="text-base font-black text-rose-800 dark:text-rose-200 mt-1">0</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+              <span class="text-[10px] font-bold text-slate-500 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-slate-400"></span> Cấp 0: Chưa học
+              </span>
+              <p id="srsLvl0Count" class="text-base font-black text-slate-700 dark:text-slate-300 mt-1">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Khung hành động học tập nhanh -->
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-3">
+          <div>
+            <h3 class="font-extrabold text-sm flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-bolt text-amber-500"></i> Lối Tắt Học Nhanh
+            </h3>
+            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Tiếp tục phiên học theo mục tiêu của bạn:</p>
+          </div>
+
+          <div class="space-y-2">
+            <button id="btnDashQuickMistakes" type="button" class="w-full py-2.5 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 text-xs font-bold border border-rose-200 dark:border-rose-800 flex items-center justify-between transition">
+              <span class="flex items-center gap-2"><i class="fa-solid fa-fire text-rose-500"></i> Ôn ngay các từ hay sai</span>
+              <span id="dashMistakeQuickBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-rose-200 dark:bg-rose-800 text-rose-900 dark:text-white font-extrabold">0</span>
+            </button>
+            <button id="btnDashQuickQuiz" type="button" class="w-full py-2.5 px-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold flex items-center justify-between shadow-sm transition">
+              <span class="flex items-center gap-2"><i class="fa-solid fa-list-check"></i> Làm trắc nghiệm theo Unit</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+            <button id="btnDashQuickCBT" type="button" class="w-full py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold border border-indigo-200 dark:border-indigo-800 flex items-center justify-between transition">
+              <span class="flex items-center gap-2"><i class="fa-solid fa-laptop-medical text-indigo-500"></i> Vào phòng thi thử CBT (Up file)</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+            <button id="btnDashQuickFlashcard" type="button" class="w-full py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 text-xs font-bold flex items-center justify-between transition">
+              <span class="flex items-center gap-2"><i class="fa-solid fa-clone text-teal-600"></i> Lật thẻ Flashcard 3D</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tiến Độ Chi Tiết Từng Học Phần & Mô Tả Mở Rộng (Unit Breakdown) -->
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-700">
+          <div>
+            <h3 class="font-extrabold text-sm flex items-center gap-2">
+              <i class="fa-solid fa-diagram-project text-teal-600"></i> Tiến Trình & Mô Tả Chi Tiết Từng Học Phần (Units)
+            </h3>
+            <p class="text-xs text-slate-500">Xem tóm tắt ngắn gọn hoặc nhấn vào <strong>mũi tên mở rộng</strong> để đọc đề cương chi tiết của từng Unit</p>
+          </div>
+          <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400">Nhấn mũi tên <i class="fa-solid fa-chevron-down"></i> để xem chi tiết</span>
+        </div>
+        <div id="dashUnitsProgressList" class="space-y-3 pt-1"></div>
+      </div>
+
+      <!-- Bảng Thành Tích & Kỷ Lục Lâm Sàng -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <div>
+            <p class="text-[10px] font-extrabold uppercase text-slate-400">Kỷ Lục Đua Tốc Độ</p>
+            <p id="dashBestSprintText" class="text-base font-black text-slate-900 dark:text-white">0 điểm</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <p class="text-[10px] font-extrabold uppercase text-slate-400">Thi CBT Gần Nhất</p>
+            <p id="dashLastCbtText" class="text-base font-black text-slate-900 dark:text-white">Chưa thi</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <div>
+            <p class="text-[10px] font-extrabold uppercase text-slate-400">Đúng Trắc Nghiệm</p>
+            <p id="dashQuizScoreCount" class="text-base font-black text-slate-900 dark:text-white">0 câu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CẨM NANG HƯỚNG DẪN TẤT CẢ CHẾ ĐỘ & TÍNH NĂNG TRỰC QUAN -->
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-700">
+          <div>
+            <h3 class="font-extrabold text-sm flex items-center gap-2">
+              <i class="fa-solid fa-book-open-reader text-indigo-600 dark:text-indigo-400"></i> Hướng Dẫn & Mô Tả Toàn Bộ Chế Độ - Tính Năng Ứng Dụng
+            </h3>
+            <p class="text-xs text-slate-500">Nắm rõ cách vận hành của 7 phân hệ học tập và các công cụ thông minh tích hợp sẵn</p>
+          </div>
+          <button id="btnDashOpenFullGuide" type="button" class="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 text-xs font-bold border border-indigo-200 dark:border-indigo-800 transition">
+            <i class="fa-solid fa-expand mr-1"></i> Mở Cẩm Nang Chi Tiết
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-1">
+            <p class="font-extrabold text-teal-700 dark:text-teal-300 flex items-center gap-1.5"><i class="fa-solid fa-list-check"></i> 1. Trắc Nghiệm Đa Chiều</p>
+            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Hỗ trợ 4 chiều hỏi (Anh➔Việt, Việt➔Anh, Điền khuyết câu lâm sàng, Hỗn hợp). Có gợi ý ngữ cảnh, giải thích lâm sàng và bấm nghe từ liên quan.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-1">
+            <p class="font-extrabold text-teal-700 dark:text-teal-300 flex items-center gap-1.5"><i class="fa-solid fa-clone"></i> 2. Flashcard 3D & SRS</p>
+            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Thẻ lật 3D kèm phiên âm IPA, từ loại, ví dụ song ngữ. Tự đánh giá 3 mức <em>(Chưa thuộc / Đang nhớ / Thành thạo)</em> để thuật toán lặp lại ngắt quãng SRS phân loại.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-1">
+            <p class="font-extrabold text-teal-700 dark:text-teal-300 flex items-center gap-1.5"><i class="fa-solid fa-headphones"></i> 3. Chép Chính Tả (Dictation)</p>
+            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Luyện nghe phát âm chuẩn kết hợp khuôn chữ gợi ý để gõ lại thuật ngữ chính xác. Hệ thống thông minh chấp nhận mọi từ đồng nghĩa hoặc từ trong ngoặc.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-1">
+            <p class="font-extrabold text-amber-600 dark:text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-bolt"></i> 4. Đua Tốc Độ 60s (Sprint)</p>
+            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Phản xạ thuật ngữ thần tốc trong 60 giây. Đúng liên tiếp đạt Combo từ x3 trở lên được cộng thêm +1 giây; chọn sai bị phạt -2 giây và đặt lại Combo.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-1">
+            <p class="font-extrabold text-cyan-700 dark:text-cyan-300 flex items-center gap-1.5"><i class="fa-solid fa-folder-tree"></i> 5. Cây Thư Mục & Nhập Liệu AI</p>
+            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Quản lý kho từ theo thư mục Unit, tìm kiếm tức thì. Hỗ trợ thêm từ đơn hoặc dán hàng loạt để AI tự động bổ sung phiên âm, gốc từ và câu ví dụ lâm sàng.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800 space-y-1">
+            <p class="font-extrabold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5"><i class="fa-solid fa-laptop-medical"></i> 6. Phòng Thi CBT & Up File Đề Cương</p>
+            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Tải lên file đề cương (<code>.txt</code>, <code>.docx</code>, <code>.pdf</code>, <code>.csv</code>, <code>.json</code>, <code>.md</code>) để tạo bài thi trắc nghiệm máy tính có đếm ngược, gắn cờ câu hỏi và phân tích lỗ hổng.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DRAWER BỘ LỌC UNIT ĐA CẤP (Tự ẩn ở Tab 0) -->
+    <section id="unitDrawerSection" class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-teal-500/30 dark:border-teal-500/20 overflow-hidden transition-all duration-300 hidden">
+      <div id="unitDrawerHeader" class="px-4 py-3 flex items-center justify-between cursor-pointer select-none hover:bg-teal-50/40 dark:hover:bg-slate-700/50 transition">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center shadow-sm shrink-0">
+            <i class="fa-solid fa-layer-group text-sm"></i>
+          </div>
+          <div class="truncate">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200">Chọn Học Phần (Units) & Xem Mô Tả</span>
+              <span id="activeUnitBadgeCount" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/70 text-teal-800 dark:text-teal-300">Đang tải...</span>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">Chạm vào đây để bật/tắt Unit, bấm mũi tên xem chi tiết nội dung từng Unit hoặc lọc ôn từ hay sai</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0 ml-2">
+          <span id="drawerActionHint" class="text-[11px] font-semibold text-teal-600 dark:text-teal-400 hidden sm:inline">Mở danh sách</span>
+          <div id="unitDrawerChevron" class="w-8 h-8 rounded-full bg-teal-50 dark:bg-teal-950 border border-teal-300 dark:border-teal-700 flex items-center justify-center text-teal-600 dark:text-teal-300 pulse-arrow transition-transform duration-300">
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </div>
+        </div>
+      </div>
+
+      <div id="unitDrawerBody" class="hidden border-t border-slate-100 dark:border-slate-700 px-3.5 py-3 bg-slate-50/70 dark:bg-slate-900/40 space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2 px-1 text-xs">
+          <div class="flex items-center gap-2">
+            <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 font-bold cursor-pointer">
+              <input type="checkbox" id="chkOnlyMistakes" class="rounded text-rose-600 focus:ring-rose-500" />
+              <span><i class="fa-solid fa-fire-flame-curved mr-1"></i>Ôn từ hay sai / Chưa thuộc (<span id="mistakeCountLabel">0</span>)</span>
+            </label>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnSelectAllUnits" type="button" class="px-2.5 py-1 rounded-lg bg-teal-100/80 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 font-bold hover:bg-teal-200 transition">Chọn tất cả</button>
+            <button id="btnDeselectAllUnits" type="button" class="px-2.5 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-300 transition">Chỉ chọn Unit 1</button>
+          </div>
+        </div>
+        <div id="unitAccordionContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         CHẾ ĐỘ 1: TRẮC NGHIỆM (CUSTOM QUIZ)
+         ========================================== -->
+    <section id="tab-quiz" class="tab-panel hidden space-y-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+        <!-- Hướng dẫn nhanh chế độ 1 -->
+        <details class="mb-3 p-2.5 rounded-xl bg-teal-50/60 dark:bg-slate-900/60 border border-teal-200/60 dark:border-slate-700 text-xs">
+          <summary class="cursor-pointer font-bold text-teal-800 dark:text-teal-300 flex items-center justify-between">
+            <span><i class="fa-solid fa-circle-info mr-1.5"></i>Hướng dẫn Chế độ 1: Trắc Nghiệm Đa Chiều</span>
+            <span class="text-[10px] text-teal-600">Nhấn để xem / ẩn</span>
+          </summary>
+          <p class="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+            Chọn chiều câu hỏi (Anh➔Việt, Việt➔Anh, Điền khuyết câu lâm sàng hoặc Hỗn hợp). Bạn có thể nhấn phím số <strong>1 - 4</strong> trên bàn phím để chọn nhanh đáp án, phím <strong>Space</strong> để nghe phát âm, và phím <strong>Enter / Mũi tên phải</strong> để sang câu kế tiếp. Trả lời đúng sẽ nâng cấp độ nhớ SRS, trả lời sai từ sẽ được đưa vào danh sách cần ôn tập.
+          </p>
+        </details>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-slate-100 dark:border-slate-700">
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="quizDirectionSelect" class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-200 focus:outline-none">
+              <option value="en-vi">Chiều: Anh ➔ Việt</option>
+              <option value="vi-en">Chiều: Việt ➔ Anh</option>
+              <option value="context">Chiều: Điền khuyết câu lâm sàng</option>
+              <option value="mix">Chiều: Hỗn hợp ngẫu nhiên</option>
+            </select>
+            <button id="btnShuffleQuiz" type="button" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 hover:bg-teal-50 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition flex items-center gap-1">
+              <i class="fa-solid fa-shuffle text-teal-600"></i> Đảo câu
+            </button>
+            <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer ml-1">
+              <input type="checkbox" id="chkQuizAutoNext" class="rounded text-teal-600" />
+              <span>Tự qua câu khi đúng</span>
+            </label>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span id="quizCounterText" class="text-xs font-bold text-slate-500 dark:text-slate-400">Câu 1 / ...</span>
+            <span id="quizScoreText" class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300">Đúng: 0</span>
+          </div>
+        </div>
+
+        <div class="text-center py-4 sm:py-6 px-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-bold bg-teal-50 dark:bg-teal-950/80 text-teal-700 dark:text-teal-300 border border-teal-200/60 dark:border-teal-800 mb-2">
+            <i class="fa-solid fa-bookmark text-[10px]"></i>
+            <span id="quizUnitBadge">Unit ...</span>
+          </div>
+          <div class="flex items-center justify-center gap-2.5 my-1">
+            <h2 id="quizPromptText" class="text-xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight max-w-2xl">...</h2>
+            <button id="btnSpeakQuizPrompt" type="button" title="Nghe phát âm" class="w-10 h-10 rounded-full bg-teal-50 hover:bg-teal-100 dark:bg-teal-950 dark:hover:bg-teal-900 text-teal-600 dark:text-teal-400 flex items-center justify-center shadow-sm transition shrink-0">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+          </div>
+          <p id="quizIpaText" class="text-sm font-mono text-teal-600 dark:text-teal-400"></p>
+          <p id="quizPosText" class="text-xs text-slate-400 mt-0.5"></p>
+
+          <div class="mt-2.5 flex flex-wrap items-center justify-center gap-3">
+            <button id="btnShowQuizHint" type="button" class="text-[11px] font-semibold text-amber-600 dark:text-amber-400 hover:underline">
+              <i class="fa-regular fa-lightbulb mr-1"></i>Xem gợi ý ngữ cảnh lâm sàng
+            </button>
+            <button id="btnAskAiQuiz" type="button" class="text-[11px] font-bold text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>Hỏi AI về từ này
+            </button>
+          </div>
+          <p id="quizHintBox" class="hidden mt-2 text-xs italic text-amber-800 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/40 py-2 px-3.5 rounded-xl max-w-lg mx-auto border border-amber-200/60 dark:border-amber-800/50"></p>
+        </div>
+
+        <div id="quizOptionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-2xl mx-auto"></div>
+
+        <div id="quizExplanationBox" class="hidden mt-5 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 space-y-3">
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span id="expStatusIcon" class="text-lg"></span>
+              <h4 id="expStatusTitle" class="font-extrabold text-sm"></h4>
+            </div>
+            <button id="btnNextQuizQuestion" type="button" class="px-4 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold shadow flex items-center gap-1.5 transition shrink-0">
+              Câu tiếp theo <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="text-xs space-y-1.5 text-slate-600 dark:text-slate-300">
+            <p><strong class="text-slate-800 dark:text-white">Ghi chú lâm sàng:</strong> <span id="expClinicalNote"></span></p>
+            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700">
+              <div class="flex items-center justify-between">
+                <p id="expExampleEn" class="font-semibold text-teal-800 dark:text-teal-300"></p>
+                <button id="btnSpeakExample" type="button" class="text-teal-600 hover:text-teal-800 p-1"><i class="fa-solid fa-volume-low"></i></button>
+              </div>
+              <p id="expExampleVi" class="text-slate-500 dark:text-slate-400 italic mt-0.5"></p>
+            </div>
+            <div class="pt-1 flex flex-wrap items-center gap-1.5" id="expRelatedContainer"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         CHẾ ĐỘ 2: FLASHCARD 3D & SRS
+         ========================================== -->
+    <section id="tab-flashcard" class="tab-panel hidden space-y-4">
+      <div class="max-w-xl mx-auto">
+        <details class="mb-3 p-2.5 rounded-xl bg-teal-50/60 dark:bg-slate-800 border border-teal-200/60 dark:border-slate-700 text-xs">
+          <summary class="cursor-pointer font-bold text-teal-800 dark:text-teal-300 flex items-center justify-between">
+            <span><i class="fa-solid fa-circle-info mr-1.5"></i>Hướng dẫn Chế độ 2: Flashcard 3D & Đánh giá SRS</span>
+            <span class="text-[10px] text-teal-600">Nhấn để xem / ẩn</span>
+          </summary>
+          <p class="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+            Nhấp trực tiếp vào thẻ (hoặc nhấn phím <strong>Mũi tên Lên/Xuống/Enter</strong>) để lật mặt trước và mặt sau. Sau khi xem nghĩa, hãy bấm 1 trong 3 nút <strong>Chưa thuộc (Cấp 1)</strong>, <strong>Đang nhớ (Cấp 2)</strong> hoặc <strong>Thành thạo (Cấp 3)</strong> để lưu vào biểu đồ tiến trình SRS.
+          </p>
+        </details>
+
+        <div class="flex flex-wrap justify-between items-center mb-2 px-1 text-xs gap-1">
+          <div class="flex items-center gap-2">
+            <span id="fcProgressText" class="font-bold text-teal-600 dark:text-teal-400">Thẻ 1 / ...</span>
+            <span id="fcSrsStatusBadge" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-200 dark:bg-slate-700">Chưa học</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnFcShuffle" type="button" class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold hover:bg-teal-50 transition">
+              <i class="fa-solid fa-shuffle text-teal-600 mr-1"></i>Trộn thẻ
+            </button>
+            <span class="text-slate-400 text-[11px] hidden sm:inline">Space: nghe • Mũi tên: lật/chuyển</span>
+          </div>
+        </div>
+
+        <div class="perspective-1000">
+          <div id="fcCardInner" class="relative w-full h-80 sm:h-96 rounded-3xl shadow-lg cursor-pointer transform-style-3d transition-transform duration-500">
+            <!-- Mặt trước -->
+            <div class="absolute inset-0 bg-white dark:bg-slate-800 rounded-3xl p-6 flex flex-col justify-between backface-hidden border-2 border-teal-500/25">
+              <div class="flex justify-between items-center text-xs">
+                <span id="fcUnitLabel" class="px-2.5 py-0.5 rounded-full bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-bold">Unit ...</span>
+                <div class="flex items-center gap-1.5">
+                  <button id="btnFcAiExplain" type="button" class="px-2.5 py-1 rounded-full bg-teal-50 hover:bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 font-bold flex items-center gap-1 transition">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI
+                  </button>
+                  <button id="btnFcSpeakFront" type="button" class="w-9 h-9 rounded-full bg-teal-50 hover:bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center transition">
+                    <i class="fa-solid fa-volume-high"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="text-center my-auto px-2">
+                <h3 id="fcWordFront" class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white mb-2">...</h3>
+                <p id="fcIpaFront" class="text-base font-mono text-teal-600 dark:text-teal-400">...</p>
+                <p id="fcPosFront" class="text-xs text-slate-400 mt-1">...</p>
+              </div>
+              <div class="text-center text-[11px] text-slate-400"><i class="fa-solid fa-rotate mr-1 text-teal-500"></i> Nhấp vào thẻ để xem nghĩa & ví dụ lâm sàng</div>
+            </div>
+
+            <!-- Mặt sau -->
+            <div class="absolute inset-0 bg-gradient-to-br from-teal-900 via-slate-900 to-slate-900 text-white rounded-3xl p-6 flex flex-col justify-between backface-hidden rotate-y-180 border-2 border-teal-400/30">
+              <div class="flex justify-between items-center text-xs text-teal-300">
+                <span class="font-bold uppercase tracking-wider">Nghĩa & Lâm Sàng</span>
+                <span id="fcPosBack" class="px-2 py-0.5 rounded bg-white/10 text-white">...</span>
+              </div>
+              <div class="text-center space-y-2.5 my-auto">
+                <h4 id="fcMeaningBack" class="text-2xl font-extrabold text-teal-300">...</h4>
+                <p id="fcClinicalBack" class="text-xs text-slate-200 px-2">...</p>
+                <div class="p-3 rounded-2xl bg-white/10 text-left text-xs space-y-1 border border-white/10">
+                  <p id="fcExEnBack" class="font-semibold text-teal-100">...</p>
+                  <p id="fcExViBack" class="text-slate-300 italic">...</p>
+                </div>
+                <div id="fcRelatedBack" class="flex flex-wrap justify-center gap-1 pt-1"></div>
+              </div>
+              <div class="text-center text-[11px] text-teal-200/70">Đánh giá mức độ nhớ bên dưới để lưu tiến độ (SRS)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between gap-2 mt-4">
+          <button id="btnFcPrev" type="button" class="px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:bg-slate-100 transition"><i class="fa-solid fa-chevron-left mr-1"></i> Trước</button>
+          <div class="flex gap-1.5">
+            <button id="btnSrsHard" type="button" class="px-3 py-2 rounded-xl bg-rose-100 dark:bg-rose-950/70 text-rose-700 dark:text-rose-300 text-xs font-bold hover:brightness-95 transition">Chưa thuộc</button>
+            <button id="btnSrsGood" type="button" class="px-3 py-2 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 text-xs font-bold hover:brightness-95 transition">Đang nhớ</button>
+            <button id="btnSrsEasy" type="button" class="px-3 py-2 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 text-xs font-bold hover:brightness-95 transition">Thành thạo</button>
+          </div>
+          <button id="btnFcNext" type="button" class="px-3.5 py-2.5 rounded-xl bg-teal-600 text-white text-xs font-bold hover:bg-teal-700 transition">Tiếp <i class="fa-solid fa-chevron-right ml-1"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         CHẾ ĐỘ 3: CHÉP CHÍNH TẢ (DICTATION)
+         ========================================== -->
+    <section id="tab-dictation" class="tab-panel hidden space-y-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 max-w-xl mx-auto shadow-sm border border-slate-200 dark:border-slate-700 text-center space-y-4">
+        <details class="text-left p-2.5 rounded-xl bg-teal-50/60 dark:bg-slate-900/60 border border-teal-200/60 dark:border-slate-700 text-xs">
+          <summary class="cursor-pointer font-bold text-teal-800 dark:text-teal-300 flex items-center justify-between">
+            <span><i class="fa-solid fa-circle-info mr-1.5"></i>Hướng dẫn Chế độ 3: Chép Chính Tả Thuật Ngữ</span>
+            <span class="text-[10px] text-teal-600">Nhấn để xem / ẩn</span>
+          </summary>
+          <p class="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+            Bấm vào biểu tượng Loa lớn để nghe phát âm tiếng Anh, kết hợp nghĩa tiếng Việt và gợi ý chữ cái đầu/cuối để gõ lại chính xác thuật ngữ. Nếu thuật ngữ có nhiều cách gọi (ngăn cách bởi dấu <code>/</code> hoặc trong ngoặc đơn), bạn chỉ cần gõ đúng 1 trong các cách gọi đó đều được tính điểm!
+          </p>
+        </details>
+
+        <div class="flex items-center justify-between text-xs border-b border-slate-100 dark:border-slate-700 pb-2.5">
+          <span class="font-extrabold uppercase tracking-wider text-teal-600 dark:text-teal-400">Luyện Nghe & Gõ Thuật Ngữ</span>
+          <span id="dictProgressText" class="font-bold text-slate-400">Từ 1 / ...</span>
+        </div>
+        <div class="py-2">
+          <button id="btnDictSpeak" type="button" class="w-20 h-20 rounded-full bg-gradient-to-tr from-teal-600 to-cyan-500 text-white text-2xl shadow-lg hover:scale-105 transition flex items-center justify-center mx-auto">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <p class="text-[11px] text-slate-400 mt-2">Nhấn vào loa để nghe (Chấp nhận mọi từ đồng nghĩa hoặc từ trong ngoặc)</p>
+        </div>
+        <div class="space-y-1">
+          <p id="dictMeaningPrompt" class="text-base font-extrabold text-slate-800 dark:text-slate-100">...</p>
+          <p id="dictWordMask" class="font-mono text-sm tracking-widest text-teal-600 dark:text-teal-400">...</p>
+          <p id="dictClinicalHint" class="text-xs text-slate-400 italic">...</p>
+        </div>
+        <form id="dictForm" class="flex gap-2 max-w-md mx-auto">
+          <input id="dictInput" type="text" placeholder="Gõ thuật ngữ tiếng Anh..." autocomplete="off" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+          <button id="btnDictSubmit" type="submit" class="px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition">Kiểm tra</button>
+        </form>
+        <div id="dictFeedback" class="text-xs font-bold min-h-[24px]"></div>
+        <div class="flex justify-center gap-4">
+          <button id="btnDictShowAnswer" type="button" class="text-xs text-amber-600 dark:text-amber-400 font-semibold hover:underline">Xem đáp án</button>
+          <button id="btnDictSkip" type="button" class="text-xs text-slate-400 hover:text-teal-600 underline">Câu tiếp theo ➔</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         CHẾ ĐỘ 4: ĐUA TỐC ĐỘ 60S (SPEED SPRINT)
+         ========================================== -->
+    <section id="tab-sprint" class="tab-panel hidden space-y-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 max-w-xl mx-auto shadow-sm border border-slate-200 dark:border-slate-700 text-center space-y-4">
+        <details class="text-left p-2.5 rounded-xl bg-amber-50/70 dark:bg-slate-900/60 border border-amber-200/70 dark:border-slate-700 text-xs">
+          <summary class="cursor-pointer font-bold text-amber-800 dark:text-amber-300 flex items-center justify-between">
+            <span><i class="fa-solid fa-circle-info mr-1.5"></i>Hướng dẫn Chế độ 4: Đua Phản Xạ 60 Giây</span>
+            <span class="text-[10px] text-amber-600">Nhấn để xem / ẩn</span>
+          </summary>
+          <p class="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+            Bạn có 60 giây để trả lời nhanh nhiều câu hỏi nhất có thể. Mỗi câu đúng nhân điểm theo hệ số <strong>Combo (tối đa x5)</strong>. Khi đạt chuỗi đúng từ 3 câu trở lên, mỗi câu đúng tiếp theo sẽ được thưởng <strong>+1 giây</strong>. Nếu chọn sai sẽ bị trừ <strong>-2 giây</strong> và mất chuỗi Combo.
+          </p>
+        </details>
+
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-stopwatch text-amber-500 text-lg"></i>
+            <span id="sprintTimeText" class="text-xl font-black font-mono text-amber-500">60s</span>
+          </div>
+          <span id="sprintComboBadge" class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">Combo x1</span>
+          <div class="flex items-center gap-2">
+            <span id="sprintScoreText" class="text-base font-black text-teal-600 dark:text-teal-400">0 điểm</span>
+            <span id="sprintBestBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Kỷ lục: 0</span>
+            <button id="btnStopSprintGame" type="button" class="hidden px-2.5 py-1 rounded-lg bg-rose-100 text-rose-600 text-xs font-bold">Dừng</button>
+          </div>
+        </div>
+        <div id="sprintIntroView" class="py-6 space-y-4">
+          <i class="fa-solid fa-bolt text-4xl text-amber-400"></i>
+          <h3 class="text-lg font-extrabold">Đua Phản Xạ Thuật Ngữ 60 Giây</h3>
+          <p class="text-xs text-slate-500 max-w-sm mx-auto">Đúng liên tiếp đạt Combo từ 3 trở lên được thưởng <strong>+1 giây</strong>. Chọn sai bị phạt <strong>-2 giây</strong> và mất chuỗi Combo!</p>
+          <p id="sprintLastResultBanner" class="hidden text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 py-2.5 px-4 rounded-xl max-w-sm mx-auto border border-emerald-200 dark:border-emerald-800"></p>
+          <button id="btnStartSprintGame" type="button" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-extrabold text-xs shadow-lg hover:brightness-110 transition">BẮT ĐẦU ĐUA NGAY</button>
+        </div>
+        <div id="sprintPlayView" class="hidden space-y-4 py-2">
+          <span id="sprintUnitTag" class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300">Unit ...</span>
+          <h3 id="sprintQuestionWord" class="text-2xl font-black text-slate-900 dark:text-white">...</h3>
+          <div id="sprintOptionsBox" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         CHẾ ĐỘ 5: CÂY THƯ MỤC & NHẬP LIỆU TỰ LÀM GIÀU
+         ========================================== -->
+    <section id="tab-manage" class="tab-panel hidden space-y-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+        <details class="p-2.5 rounded-xl bg-teal-50/60 dark:bg-slate-900/60 border border-teal-200/60 dark:border-slate-700 text-xs">
+          <summary class="cursor-pointer font-bold text-teal-800 dark:text-teal-300 flex items-center justify-between">
+            <span><i class="fa-solid fa-circle-info mr-1.5"></i>Hướng dẫn Chế độ 5: Cây Thư Mục & Nhập Liệu Tự Làm Giàu AI</span>
+            <span class="text-[10px] text-teal-600">Nhấn để xem / ẩn</span>
+          </summary>
+          <p class="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+            Tra cứu toàn bộ từ vựng theo từng Unit (nhấn vào mũi tên cạnh tên Unit để xem mô tả chi tiết học phần). Bạn có thể thêm từ mới bằng <strong>"+ Thêm đơn"</strong> hoặc <strong>"📋 Dán hàng loạt (AI)"</strong> — hệ thống sẽ tự động phân tích gốc từ Y khoa để sinh phiên âm, từ loại và câu ví dụ lâm sàng.
+          </p>
+        </details>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-700">
+          <div>
+            <h3 class="font-extrabold text-sm sm:text-base flex items-center gap-2">
+              <i class="fa-solid fa-folder-tree text-teal-600"></i> Cây Thư Mục & Nhập Liệu Thông Minh
+            </h3>
+            <p class="text-xs text-slate-500">Tự động phân tích gốc từ Y khoa, phiên âm IPA & câu ví dụ lâm sàng</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnToggleSingleAdd" type="button" class="px-3 py-1.5 rounded-xl bg-teal-600 text-white text-xs font-bold transition">+ Thêm đơn</button>
+            <button id="btnToggleBatchAdd" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition">📋 Dán hàng loạt (AI)</button>
+          </div>
+        </div>
+
+        <form id="addWordForm" class="p-3.5 rounded-2xl bg-teal-50/50 dark:bg-slate-900/60 border border-teal-200/70 dark:border-slate-700 grid grid-cols-1 sm:grid-cols-4 gap-2.5">
+          <input id="newUnitInput" type="text" placeholder="Tên Unit (VD: Unit 5)" required class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs" />
+          <input id="newWordInput" type="text" placeholder="Thuật ngữ Tiếng Anh *" required class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs" />
+          <input id="newMeaningInput" type="text" placeholder="Nghĩa Tiếng Việt (Để trống AI tự dịch)" class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs" />
+          <button id="btnSubmitSingleWord" type="submit" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Lưu & Làm Giàu
+          </button>
+        </form>
+
+        <div id="batchAddContainer" class="hidden p-4 rounded-2xl bg-cyan-50/50 dark:bg-slate-900/70 border border-cyan-200 dark:border-slate-700 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <input id="batchUnitInput" type="text" value="Unit 5" placeholder="Tên Unit đích" class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs font-semibold" />
+            <div class="sm:col-span-2 text-[11px] text-slate-500 flex items-center">
+              Mỗi dòng 1 từ theo định dạng: <strong>Từ tiếng Anh : Nghĩa tiếng Việt</strong> (hoặc chỉ gõ tiếng Anh để AI tự dịch)
+            </div>
+          </div>
+          <textarea id="batchRawInput" rows="5" placeholder="Ví dụ:&#10;Pulpitis : Viêm tủy răng&#10;Apicoectomy : Cắt chóp chân răng&#10;Xerostomia" class="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs font-mono"></textarea>
+          <div class="flex items-center justify-between gap-2">
+            <span id="batchProgressStatus" class="text-xs font-bold text-teal-600"></span>
+            <button id="btnRunBatchEnrich" type="button" class="px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold shadow transition">
+              <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Tự Làm Giàu & Lưu Hàng Loạt
+            </button>
+          </div>
+        </div>
+
+        <div class="relative flex-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input id="searchVocabInput" type="text" placeholder="Tìm nhanh từ vựng, nghĩa hoặc ghi chú lâm sàng..." class="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div id="vocabTreeContainer" class="space-y-2.5 max-h-[460px] overflow-y-auto pr-1"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         CHẾ ĐỘ 6: MÔ PHỎNG THI TRẮC NGHIỆM MÁY TÍNH (CBT EXAM) & TẢI FILE ĐỀ CƯƠNG
+         ========================================== -->
+    <section id="tab-cbt" class="tab-panel hidden space-y-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+        <!-- Khung thiết lập đề thi -->
+        <div id="cbtSetupView" class="space-y-4">
+          <details class="p-2.5 rounded-xl bg-indigo-50/70 dark:bg-slate-900/60 border border-indigo-200/70 dark:border-slate-700 text-xs">
+            <summary class="cursor-pointer font-bold text-indigo-800 dark:text-indigo-300 flex items-center justify-between">
+              <span><i class="fa-solid fa-circle-info mr-1.5"></i>Hướng dẫn Chế độ 6: Phòng Thi Máy Tính CBT & Tạo Đề Từ File Đề Cương</span>
+              <span class="text-[10px] text-indigo-600">Nhấn để xem / ẩn</span>
+            </summary>
+            <p class="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+              Bạn có thể tải trực tiếp <strong>File đề cương ôn tập</strong> lên hệ thống (hỗ trợ <code>.txt</code>, <code>.docx</code>, <code>.pdf</code>, <code>.csv</code>, <code>.json</code>, <code>.md</code>) hoặc dán nội dung đề cương vào ô văn bản. Hệ thống sẽ quét và trích xuất danh sách thuật ngữ xuất hiện trong file để tạo bài thi sát hạch có đồng hồ đếm ngược, bảng ma trận câu hỏi, gắn cờ xem lại và báo cáo phân tích lỗ hổng kiến thức sau khi nộp bài.
+            </p>
+          </details>
+
+          <div class="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-lg shrink-0">
+              <i class="fa-solid fa-laptop-medical"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm sm:text-base">Phòng Thi Trắc Nghiệm Máy Tính (CBT Simulator)</h3>
+              <p class="text-xs text-slate-500">Tải file đề cương học tập hoặc thi sát hạch theo các Unit đang chọn</p>
+            </div>
+          </div>
+
+          <!-- TÍNH NĂNG MỚI: KHU VỰC TẢI FILE ĐỀ CƯƠNG -->
+          <div id="cbtDropZone" class="p-4 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-700 bg-indigo-50/40 dark:bg-indigo-950/20 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/40 transition space-y-3 relative">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-base shrink-0 shadow-sm">
+                  <i class="fa-solid fa-file-arrow-up"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-100">
+                    Tải Lên File Đề Cương Để Tạo Bài Kiểm Tra Riêng
+                  </h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                    Kéo thả file vào khung này hoặc nhấn nút <strong>"Chọn File Đề Cương"</strong> bên cạnh.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                <input id="cbtFileInput" type="file" accept=".txt,.docx,.pdf,.csv,.json,.md" class="hidden" />
+                <button id="btnSelectSyllabusFile" type="button" class="flex-1 sm:flex-initial px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shadow-sm transition flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-folder-open"></i> Chọn File Đề Cương
+                </button>
+                <button id="btnClearSyllabusFile" type="button" class="hidden px-2.5 py-2 rounded-xl bg-rose-100 dark:bg-rose-950/80 text-rose-600 dark:text-rose-300 text-xs font-bold hover:bg-rose-200 transition" title="Xóa file đã nạp">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Danh sách các định dạng file mà App hỗ trợ cho người dùng biết -->
+            <div class="pt-2 border-t border-indigo-200/60 dark:border-indigo-800/60 flex flex-wrap items-center gap-1.5 text-[11px]">
+              <span class="font-extrabold text-indigo-800 dark:text-indigo-300 mr-1">
+                <i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i>Định dạng hỗ trợ:
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 font-bold text-slate-700 dark:text-slate-200">.TXT <span class="font-normal text-[10px] text-slate-400"></span></span>
+              <span class="px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 font-bold text-blue-700 dark:text-blue-300">.DOCX <span class="font-normal text-[10px] text-slate-400"></span></span>
+              <span class="px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 font-bold text-rose-700 dark:text-rose-300">.PDF <span class="font-normal text-[10px] text-slate-400"></span></span>
+              <span class="px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 font-bold text-emerald-700 dark:text-emerald-300">.CSV <span class="font-normal text-[10px] text-slate-400"></span></span>
+              <span class="px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 font-bold text-amber-700 dark:text-amber-300">.JSON <span class="font-normal text-[10px] text-slate-400"></span></span>
+              <span class="px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 font-bold text-purple-700 dark:text-purple-300">.MD <span class="font-normal text-[10px] text-slate-400"></span></span>
+            </div>
+
+            <!-- Trạng thái nhận diện file đề cương -->
+            <div id="cbtFileStatusBox" class="hidden p-3 rounded-xl bg-white dark:bg-slate-800 border border-emerald-300 dark:border-emerald-700/80 space-y-2 mt-2">
+              <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div class="flex items-center gap-2 font-extrabold text-emerald-700 dark:text-emerald-300">
+                  <i class="fa-solid fa-file-circle-check text-base"></i>
+                  <span id="cbtUploadedFileName">de_cuong_on_tap.docx</span>
+                </div>
+                <span id="cbtMatchedCountBadge" class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 font-extrabold text-[11px]">
+                  Khớp 0 thuật ngữ
+                </span>
+              </div>
+              <p id="cbtMatchedWordsPreview" class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2"></p>
+              <label class="inline-flex items-center gap-2 text-xs font-bold text-indigo-700 dark:text-indigo-300 cursor-pointer pt-1">
+                <input type="checkbox" id="chkStrictSyllabusMode" checked class="rounded text-indigo-600 focus:ring-indigo-500" />
+                <span>Chế độ riêng đề cương: Chỉ tạo câu hỏi thuộc các từ nhận diện trong File</span>
+              </label>
+            </div>
+            
+            <!-- Trạng thái Loading lúc đang đọc file -->
+            <div id="cbtFileLoadingOverlay" class="absolute inset-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm hidden items-center justify-center z-10 rounded-2xl">
+              <div class="text-indigo-600 dark:text-indigo-400 font-bold text-xs flex flex-col items-center gap-2">
+                <i class="fa-solid fa-spinner fa-spin text-2xl"></i>
+                <span id="cbtFileLoadingText">Đang trích xuất nội dung...</span>
+              </div>
+            </div>
+          </div>
+
+          <textarea id="cbtSyllabusInput" rows="3" placeholder="Hoặc dán nội dung đề cương, danh sách thuật ngữ trực tiếp vào đây...&#10;Nếu để trống, hệ thống sẽ tự động ra đề ngẫu nhiên từ các Unit đang chọn." class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <select id="cbtQuestionCount" class="px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none">
+              <option value="10">10 Câu (8 phút - Kiểm tra nhanh)</option>
+              <option value="20">20 Câu (15 phút - Giữa kỳ)</option>
+              <option value="40" selected>40 Câu (30 phút - Chuẩn CBT)</option>
+              <option value="60">60 Câu (45 phút - Hết môn)</option>
+            </select>
+            <select id="cbtExamDirection" class="px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none">
+              <option value="mix">Đề kết hợp: Thuật ngữ + Điền khuyết</option>
+              <option value="en-vi">Chiều: Thuật ngữ Anh ➔ Nghĩa Việt</option>
+              <option value="vi-en">Chiều: Nghĩa Việt ➔ Thuật ngữ Anh</option>
+            </select>
+            <button id="btnGenerateCBT" type="button" class="py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-play"></i> Phân Tích & Bắt Đầu Thi
+            </button>
+          </div>
+        </div>
+
+        <!-- Khung đang làm bài thi -->
+        <div id="cbtExamView" class="hidden space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-900 text-white p-3.5 rounded-xl shadow-inner">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-clock text-rose-400 animate-pulse"></i>
+              <span id="cbtTimerDisplay" class="font-mono font-black text-lg">30:00</span>
+              <span id="cbtAnsweredCountBadge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/10 text-slate-200 font-semibold">Đã làm: 0/40</span>
+            </div>
+            <button id="btnSubmitCBT" type="button" class="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-xs font-extrabold transition">
+              <i class="fa-solid fa-paper-plane mr-1"></i> Nộp Bài & Chấm Điểm
+            </button>
+          </div>
+
+          <div class="flex flex-col md:flex-row gap-4">
+            <!-- Khu vực câu hỏi -->
+            <div class="flex-1 space-y-4">
+              <div class="flex justify-between items-center text-xs font-bold text-slate-500 border-b border-slate-100 dark:border-slate-700 pb-2">
+                <div class="flex items-center gap-2">
+                  <span id="cbtCurrentQText" class="text-indigo-600 dark:text-indigo-400 font-extrabold">Câu 1 / 40</span>
+                  <span id="cbtCurrentUnitBadge" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-[10px]">Unit 1</span>
+                </div>
+                <button id="btnFlagCBT" type="button" class="px-2.5 py-1 rounded-lg border border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400 hover:bg-amber-50 transition">
+                  <i class="fa-regular fa-flag mr-1"></i> Gắn cờ xem lại
+                </button>
+              </div>
+
+              <div class="py-2">
+                <p id="cbtQuestionTypeHint" class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Chọn đáp án chính xác nhất:</p>
+                <h2 id="cbtQuestionPrompt" class="text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight"></h2>
+              </div>
+
+              <div id="cbtOptionsContainer" class="grid grid-cols-1 gap-2.5"></div>
+
+              <div class="flex justify-between pt-2">
+                <button id="btnCBTPrev" type="button" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-xs font-bold transition"><i class="fa-solid fa-arrow-left mr-1"></i> Câu trước</button>
+                <button id="btnCBTNext" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition">Câu tiếp <i class="fa-solid fa-arrow-right ml-1"></i></button>
+              </div>
+            </div>
+
+            <!-- Bảng ma trận câu hỏi (Palette) -->
+            <div class="w-full md:w-52 shrink-0 border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-700 pt-4 md:pt-0 md:pl-4">
+              <p class="text-[10px] font-extrabold text-slate-500 uppercase mb-2">Ma trận câu hỏi</p>
+              <div id="cbtPaletteGrid" class="grid grid-cols-5 gap-1.5 max-h-64 overflow-y-auto pr-1"></div>
+              <div class="mt-3 space-y-1 text-[10px] text-slate-500">
+                <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-indigo-100 border border-indigo-400 inline-block"></span> Đã chọn đáp án</div>
+                <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-100 border border-amber-400 inline-block"></span> Đã gắn cờ xem lại</div>
+                <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-slate-100 border border-slate-300 inline-block"></span> Chưa trả lời</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Khung kết quả thi & Phân tích lỗ hổng -->
+        <div id="cbtResultView" class="hidden space-y-4 py-4">
+          <div class="text-center space-y-2">
+            <i class="fa-solid fa-award text-5xl text-amber-400"></i>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white">Điểm số: <span id="cbtFinalScore" class="text-indigo-600 dark:text-indigo-400"></span></h3>
+            <p id="cbtGradeBadge" class="inline-block px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300"></p>
+            <p id="cbtFeedbackText" class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 max-w-lg mx-auto"></p>
+          </div>
+
+          <!-- Thống kê theo từng Unit (Syllabus Gap Analysis) -->
+          <div id="cbtUnitBreakdownBox" class="max-w-xl mx-auto p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 space-y-2">
+            <p class="text-xs font-extrabold text-slate-700 dark:text-slate-200"><i class="fa-solid fa-chart-pie text-indigo-500 mr-1"></i> Phân tích tỷ lệ đúng theo Học phần:</p>
+            <div id="cbtUnitBreakdownList" class="space-y-1.5 text-xs"></div>
+          </div>
+
+          <div id="cbtGapAnalysis" class="text-left text-xs bg-rose-50 dark:bg-rose-950/40 p-4 rounded-2xl border border-rose-200 dark:border-rose-800 hidden max-w-xl mx-auto">
+            <p class="font-extrabold text-rose-700 dark:text-rose-300 mb-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Danh sách câu cần ôn lại (Đã tự động lưu vào Ngân hàng lỗi sai):</p>
+            <ul id="cbtMistakeList" class="list-disc pl-5 space-y-2 text-rose-700 dark:text-rose-300 max-h-48 overflow-y-auto"></ul>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-2.5 pt-2">
+            <button id="btnCBTReviewMistakes" type="button" class="hidden px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-extrabold shadow transition">
+              <i class="fa-solid fa-fire-flame-curved mr-1"></i> Ôn lại ngay các từ sai ở Quiz
+            </button>
+            <button id="btnCBTRetry" type="button" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shadow transition">
+              <i class="fa-solid fa-rotate-right mr-1"></i> Làm đề thi mới
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- CHÂN TRANG BẢN QUYỀN CỐ ĐỊNH -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 py-3.5 text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2 justify-center sm:justify-start">
+        <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+        <span><strong>Dental English Quiz App Pro</strong> • Dành cho sinh viên Y Nha khoa</span>
+      </div>
+      <div>
+        Tác giả: <button id="btnFooterAuthor" type="button" class="font-extrabold text-teal-600 dark:text-teal-400 hover:underline">Quốc Toản</button> • © 2026
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL 0: CẨM NANG HƯỚNG DẪN CHI TIẾT -->
+  <div id="guideModal" class="fixed inset-0 z-[80] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full shadow-2xl relative max-h-[92vh] flex flex-col overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between shrink-0 bg-slate-50 dark:bg-slate-900/50">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg"><i class="fa-solid fa-book-open-reader"></i></div>
+          <div>
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Cẩm Nang Hướng Dẫn Sử Dụng</h3>
+            <p class="text-[11px] text-slate-500">Khám phá toàn bộ 6 Chế độ và Tính năng hệ thống</p>
+          </div>
+        </div>
+        <button id="btnCloseGuideModal" type="button" class="text-slate-400 hover:text-rose-500 transition p-1.5"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-6 text-sm text-slate-700 dark:text-slate-300">
+        <section class="space-y-2">
+          <h4 class="font-extrabold text-teal-600 dark:text-teal-400 flex items-center gap-2"><i class="fa-solid fa-chart-pie"></i> Chế độ 0: Tổng Quan (Dashboard)</h4>
+          <p class="text-xs leading-relaxed">Trạm điều khiển trung tâm. Theo dõi thuật toán bộ nhớ <strong>Spaced Repetition (SRS)</strong> để biết bạn thuộc bao nhiêu phần trăm từ vựng. Đếm chuỗi ngày học liên tục (Streak). Bấm vào <strong>mũi tên mở rộng</strong> ở danh sách Học phần (Unit) để xem tóm tắt nội dung chi tiết của từng bài.</p>
+        </section>
+        <section class="space-y-2">
+          <h4 class="font-extrabold text-teal-600 dark:text-teal-400 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> Chế độ 1: Trắc Nghiệm Tùy Chỉnh (Quiz)</h4>
+          <ul class="text-xs leading-relaxed space-y-1 list-disc pl-5">
+            <li>Hỗ trợ 4 chế độ hỏi: Anh ➔ Việt, Việt ➔ Anh, Điền khuyết câu ví dụ, và Hỗn hợp.</li>
+            <li><strong>Phím tắt:</strong> Nhấn số <code>1, 2, 3, 4</code> để chọn nhanh đáp án. Nhấn <code>Space</code> để nghe loa. Nhấn <code>Enter</code> hoặc <code>Mũi tên Phải</code> để qua câu.</li>
+            <li>Khi chọn sai, từ vựng sẽ bị đẩy về cấp độ <em>"Chưa thuộc"</em> để bạn ôn lại.</li>
+          </ul>
+        </section>
+        <section class="space-y-2">
+          <h4 class="font-extrabold text-teal-600 dark:text-teal-400 flex items-center gap-2"><i class="fa-solid fa-clone"></i> Chế độ 2: Flashcard 3D & SRS</h4>
+          <p class="text-xs leading-relaxed">Nhấn trực tiếp vào thẻ hoặc dùng phím <code>Lên / Xuống / Enter</code> để lật mặt xem nghĩa, ví dụ và phiên âm. Sau khi lật thẻ, bạn phải tự chấm điểm độ nhớ của bản thân qua 3 nút bên dưới để thuật toán ghi nhận tiến độ thuộc bài.</p>
+        </section>
+        <section class="space-y-2">
+          <h4 class="font-extrabold text-teal-600 dark:text-teal-400 flex items-center gap-2"><i class="fa-solid fa-headphones"></i> Chế độ 3: Chép Chính Tả (Dictation)</h4>
+          <p class="text-xs leading-relaxed">Nghe âm thanh và gõ lại thuật ngữ tiếng Anh. <strong>Mẹo:</strong> Ứng dụng hỗ trợ nhận diện các từ đồng nghĩa được chia bằng dấu gạch chéo (<code>/</code>) hoặc trong ngoặc đơn <code>()</code>. Chỉ cần gõ chuẩn xác 1 trong các cách viết là bạn được tính đúng!</p>
+        </section>
+        <section class="space-y-2">
+          <h4 class="font-extrabold text-amber-500 flex items-center gap-2"><i class="fa-solid fa-bolt"></i> Chế độ 4: Đua Tốc Độ 60s (Sprint)</h4>
+          <p class="text-xs leading-relaxed">Trò chơi phản xạ nhanh 60 giây. Nếu bạn trả lời đúng liên tiếp, hệ số điểm Combo sẽ tăng (tối đa x5). Từ Combo x3 trở đi, mỗi câu đúng sẽ được tặng thêm <strong>+1 giây</strong>. Nếu trả lời sai, bạn sẽ bị phạt <strong>-2 giây</strong> và mất toàn bộ chuỗi Combo.</p>
+        </section>
+        <section class="space-y-2">
+          <h4 class="font-extrabold text-cyan-600 dark:text-cyan-400 flex items-center gap-2"><i class="fa-solid fa-folder-tree"></i> Chế độ 5: Quản Lý & Nhập Liệu Tự Làm Giàu AI</h4>
+          <p class="text-xs leading-relaxed">Bạn có thể dán 1 danh sách từ vựng vào (Ví dụ: <code>Pulpitis: Viêm tủy</code>). Hệ thống Trợ lý AI sẽ tự động phân tích cấu tạo gốc từ (vd: đuôi <em>-itis</em>), tra cứu IPA và tự động sinh câu ví dụ chuẩn giao tiếp y khoa nội khoa cho bạn.</p>
+        </section>
+        <section class="space-y-2">
+          <h4 class="font-extrabold text-indigo-600 dark:text-indigo-400 flex items-center gap-2"><i class="fa-solid fa-laptop-medical"></i> Chế độ 6: Thi Trắc Nghiệm CBT & Tải Đề Cương</h4>
+          <ul class="text-xs leading-relaxed space-y-1 list-disc pl-5">
+            <li>Bạn có thể tải thẳng 1 File đề cương, giáo trình của trường (.docx, .pdf, .txt, .csv) vào khung <strong>File Đề Cương</strong>.</li>
+            <li>Hệ thống sẽ trích xuất văn bản trong File, đối chiếu với cơ sở dữ liệu và đếm số lượng từ vựng xuất hiện.</li>
+            <li>Bật <strong>Chế độ riêng đề cương</strong> để App tạo bài thi trắc nghiệm CHỈ TỪ NHỮNG TỪ có trong file bạn vừa tải lên.</li>
+          </ul>
+        </section>
+      </div>
+      <div class="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50">
+        <button id="btnGotItGuideModal" type="button" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs transition">Đã Nắm Rõ Cẩm Nang</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 1: THÔNG TIN TÁC GIẢ QUỐC TOẢN -->
+  <div id="authorModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative">
+      <button id="btnCloseAuthorModal" type="button" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white p-1.5">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div class="flex items-center gap-4 pb-4 border-b border-slate-100 dark:border-slate-700">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-teal-600 to-cyan-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-teal-500/20 shrink-0">
+          <i class="fa-solid fa-user-doctor"></i>
+        </div>
+        <div>
+          <span class="text-[11px] uppercase tracking-wider font-extrabold text-teal-600 dark:text-teal-400">Nhà phát triển & Tác giả</span>
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">Quốc Toản</h3>
+          <p class="text-xs font-semibold text-slate-500 dark:text-slate-300 mt-0.5">
+            <i class="fa-solid fa-tooth text-teal-500 mr-1"></i> Chuyên ngành: Răng Hàm Mặt
+          </p>
+        </div>
+      </div>
+      <div class="py-4 space-y-3 text-xs leading-relaxed">
+        <div class="p-3.5 rounded-2xl bg-teal-50 dark:bg-teal-950/50 border border-teal-200/70 dark:border-teal-800/70 text-teal-900 dark:text-teal-200 font-medium">
+          <i class="fa-solid fa-quote-left text-teal-500 mr-1"></i>
+          Ứng dụng được xây dựng nhằm hỗ trợ học tập, nâng cao vốn thuật ngữ tiếng Anh chuyên ngành Răng Hàm Mặt và mở rộng đa chuyên ngành Y khoa.
+          <i class="fa-solid fa-quote-right text-teal-500 ml-1"></i>
+        </div>
+        <div class="space-y-1.5 text-slate-600 dark:text-slate-300">
+          <p class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-500"></i> Hỗ trợ ghi nhớ bằng thuật toán Spaced Repetition (SRS).</p>
+          <p class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-500"></i> Trợ lý AI phân tích bệnh án lâm sàng chuyên sâu.</p>
+          <p class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-500"></i> Thi trắc nghiệm CBT trực tuyến với báo cáo lỗ hổng kiến thức.</p>
+        </div>
+      </div>
+      <button id="btnAuthorModalDone" type="button" class="w-full py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs transition">
+        Đóng cửa sổ
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CHUYỂN ĐỔI & THÊM CHUYÊN NGÀNH MỚI -->
+  <div id="specialtyModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      <button id="btnCloseSpecialtyModal" type="button" class="absolute top-4 right-4 text-slate-400 p-1.5"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div class="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-teal-600 to-cyan-500 text-white flex items-center justify-center text-lg shadow-md"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <h3 class="font-extrabold text-base">Chuyển Đổi & Thêm Chuyên Ngành</h3>
+          <p class="text-xs text-slate-500">Mỗi chuyên ngành sở hữu kho Unit và tiến độ học độc lập</p>
+        </div>
+      </div>
+      <div id="specialtyListContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
+      <form id="createSpecialtyForm" class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 space-y-2.5">
+        <p class="text-xs font-extrabold text-teal-700 dark:text-teal-400">+ Tạo Chuyên Ngành / Môn Học Mới</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <input id="newSpecName" type="text" placeholder="Tên (VD: Nội Khoa, Giải Phẫu)" required class="sm:col-span-2 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs" />
+          <select id="newSpecIcon" class="px-2.5 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs">
+            <option value="fa-tooth">🦷 Răng Hàm Mặt</option>
+            <option value="fa-stethoscope">🩺 Y Khoa Lâm Sàng</option>
+            <option value="fa-heart-pulse">🫀 Nội Tim Mạch</option>
+            <option value="fa-pills">💊 Dược Lý Học</option>
+            <option value="fa-microscope">🔬 Giải Phẫu Bệnh</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold transition">Tạo & Chuyển Sang Chuyên Ngành Này</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: TRỢ LÝ AI TOÀN DIỆN -->
+  <div id="aiHubModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
+      <button id="btnCloseAiHubModal" type="button" class="absolute top-4 right-4 text-slate-400 p-1.5"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div class="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-slate-700 shrink-0">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-teal-600 to-cyan-500 text-white flex items-center justify-center text-lg shadow-md"><i class="fa-solid fa-robot"></i></div>
+        <div>
+          <h3 class="font-extrabold text-base">Trợ Lý AI Y - Nha Khoa Toàn Diện</h3>
+          <p class="text-[11px] font-semibold text-teal-600 dark:text-teal-400">3 Tầng chống lỗi: Chrome AI ➔ Gemini Cloud ➔ Từ điển Gốc từ Nội tuyến</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-1.5 shrink-0">
+        <button type="button" data-quick-ai="Phân biệt Gingivitis và Periodontitis về triệu chứng lâm sàng và tiêu xương ổ răng" class="px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-slate-700 text-teal-700 dark:text-teal-300 text-[11px] font-semibold hover:bg-teal-100 transition">🔍 Gingivitis vs Periodontitis</button>
+        <button type="button" data-quick-ai="Tạo đoạn hội thoại tiếng Anh ngắn giữa Nha sĩ và Bệnh nhân khám đau răng khôn (Third molar)" class="px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-slate-700 text-teal-700 dark:text-teal-300 text-[11px] font-semibold hover:bg-teal-100 transition">💬 Hội thoại khám răng khôn</button>
+        <button type="button" data-quick-ai="Giải thích các gốc từ và hậu tố Y khoa phổ biến: -itis, -ectomy, -otomy, -pathy, odont-,gingiv-" class="px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-slate-700 text-teal-700 dark:text-teal-300 text-[11px] font-semibold hover:bg-teal-100 transition">🧬 Giải mã gốc từ Y khoa</button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto space-y-3 pr-1">
+        <form id="aiCustomPromptForm" class="flex gap-2">
+          <input id="aiCustomPromptInput" type="text" placeholder="Nhập thuật ngữ hoặc câu hỏi lâm sàng cần giải thích..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+          <button id="btnSendCustomAi" type="submit" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold shrink-0 transition">Hỏi AI</button>
+        </form>
+        <div id="aiResponseBox" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap min-h-[140px]">👋 Xin chào! Tôi là Trợ lý AI Chuyên ngành (Tác giả: Quốc Toản). Bạn có thể bấm vào các gợi ý phía trên hoặc nhập bất kỳ thuật ngữ nào để phân tích lâm sàng.</div>
+        <details class="p-3.5 rounded-2xl bg-teal-50/50 dark:bg-slate-900/50 border border-teal-200/60 dark:border-slate-700 text-xs">
+          <summary class="cursor-pointer font-extrabold text-teal-800 dark:text-teal-300">⚙️ Cài đặt Gemini API Key cá nhân (Tùy chọn nâng cao)</summary>
+          <div class="mt-3 space-y-2.5">
+            <p class="text-[11px] text-slate-500">Ngay cả khi không nhập Key, ứng dụng vẫn luôn hoạt động 100% nhờ Bộ phân tích Gốc từ & Lâm sàng Nội tuyến.</p>
+            <input id="userGeminiKeyInput" type="password" placeholder="Dán Gemini API Key từ Google AI Studio..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs" />
+            <div class="flex gap-2">
+              <button id="btnSaveAiKey" type="button" class="flex-1 py-2 rounded-xl bg-teal-600 text-white font-bold text-xs">Lưu Key</button>
+              <button id="btnClearAiKey" type="button" class="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-xs font-semibold">Xóa Key</button>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: HƯỚNG DẪN CÀI APP PWA -->
+  <div id="pwaModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative space-y-4">
+      <button id="btnClosePwaModal" type="button" class="absolute top-4 right-4 text-slate-400 p-1.5"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+        </div>
+        <div>
+          <h3 class="font-extrabold text-base">Đưa App Ra Màn Hình Chính</h3>
+          <p class="text-xs text-slate-500">Sử dụng toàn màn hình mượt mà như ứng dụng gốc</p>
+        </div>
+      </div>
+      <div class="text-xs space-y-2.5 text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700">
+        <p><strong>🍎 Trên iPhone / iPad (Safari):</strong><br/>Nhấn nút <strong>Chia sẻ (Share)</strong> <i class="fa-solid fa-arrow-up-from-bracket text-teal-600"></i> ở thanh dưới trình duyệt ➔ Chọn <strong>"Thêm vào MH chính" (Add to Home Screen)</strong>.</p>
+        <p><strong>🤖 Trên Android (Chrome / Cốc Cốc):</strong><br/>Nhấn biểu tượng <strong>3 chấm (⋮)</strong> ở góc phải trình duyệt ➔ Chọn <strong>"Thêm vào màn hình chính"</strong> hoặc <strong>"Cài đặt ứng dụng"</strong>.</p>
+      </div>
+      <button id="btnDonePwaModal" type="button" class="w-full py-2.5 rounded-xl bg-teal-600 text-white font-bold text-xs">Đã hiểu</button>
+    </div>
+  </div>
+
+  <!-- MODAL 5: SAO LƯU & NẠP DỮ LIỆU JSON -->
+  <div id="jsonModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative space-y-3">
+      <button id="btnCloseJsonModal" type="button" class="absolute top-4 right-4 text-slate-400 p-1.5"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <h3 class="font-extrabold text-base flex items-center gap-2"><i class="fa-solid fa-database text-teal-600"></i> Sao Lưu / Nạp Cơ Sở Dữ Liệu JSON</h3>
+      <p class="text-xs text-slate-500">Sao lưu tiến trình học tập hoặc nạp/khôi phục bộ từ vựng chuẩn.</p>
+      <textarea id="jsonTextBox" rows="7" class="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-xs font-mono" placeholder="Dán mảng JSON vào đây..."></textarea>
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+        <div class="flex gap-1.5">
+          <button id="btnExportJsonText" type="button" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-xs font-bold hover:bg-slate-200 transition">Xuất JSON</button>
+          <button id="btnResetDefaultData" type="button" class="px-3 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-xs font-bold hover:bg-rose-100 transition">Khôi phục gốc</button>
+        </div>
+        <div class="flex gap-1.5">
+          <button id="btnImportJsonReplace" type="button" class="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-extrabold transition">Ghi đè</button>
+          <button id="btnImportJsonMerge" type="button" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold transition">Hợp nhất</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 6: THÔNG BÁO BẢN CẬP NHẬT MỚI -->
+  <div id="whatsNewModal" class="fixed inset-0 z-[70] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-teal-500/30 relative space-y-4 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-600 to-cyan-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-teal-500/20 shrink-0">
+          <i class="fa-solid fa-sparkles"></i>
+        </div>
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-teal-100 dark:bg-teal-900/60 text-teal-800 dark:text-teal-300">Bản Cập Nhật Mới</span>
+          <h3 id="whatsNewTitle" class="text-lg font-black text-slate-900 dark:text-white">Dental English Pro — v7.2</h3>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+        <div class="p-3.5 rounded-2xl bg-teal-50/70 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/80 space-y-1">
+          <p class="font-extrabold text-teal-900 dark:text-teal-200 flex items-center gap-2">
+            <i class="fa-solid fa-chart-pie text-teal-600 dark:text-teal-400"></i> 1. Tính năng Phân tích File Đề Cương (CBT)
+          </p>
+          <p class="text-[11px] text-teal-800 dark:text-teal-300">
+            Hỗ trợ kéo thả/đọc trực tiếp các file <code>.txt</code>, <code>.docx</code>, <code>.pdf</code>, <code>.csv</code> để đối chiếu, lọc từ vựng và tự động thiết kế bài kiểm tra trắc nghiệm bám sát 100% đề cương của bạn.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/80 space-y-1">
+          <p class="font-extrabold text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
+            <i class="fa-solid fa-book-open text-indigo-600 dark:text-indigo-400"></i> 2. Mô Tả Chi Tiết Unit & Cẩm Nang
+          </p>
+          <p class="text-[11px] text-indigo-800 dark:text-indigo-300">
+            Khám phá <strong>nút Hướng dẫn</strong> trên Header và các <strong>mũi tên bung rộng</strong> tại Dashboard để đọc tóm tắt trọng tâm nội dung của từng Học phần.
+          </p>
+        </div>
+        
+        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 space-y-1">
+          <p class="font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+            <i class="fa-solid fa-folder-tree text-amber-500"></i> 3. Cập nhật Dữ liệu Cơ sở
+          </p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">
+            Cập nhật kho từ vựng từ Unit 1 đến Unit 4. (Unit 5 sẽ được bổ sung tự động ở các bản vá tiếp theo).
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button id="btnAcknowledgeUpdate" type="button" class="w-full py-3 rounded-2xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:brightness-110 text-white font-extrabold text-xs shadow-lg shadow-teal-500/20 transition">
+          Đã Hiểu & Bắt Đầu Học Ngay
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+     * DENTAL ENGLISH PRO — BẢN V7.2 (CẬP NHẬT MÔ TẢ, HƯỚNG DẪN & ĐỌC FILE)
+     * Tác giả & Bản quyền: Quốc Toản (© 2026)
+     * ========================================================================= */
+    const APP_AUTHOR = "Quốc Toản";
+    const APP_BUILD_VERSION = "v7.2_SYLLABUS_UPDATE";
+    const STORAGE_KEY_SEEN_VERSION = "dental_pro_last_seen_ver_v7_2";
+    const STORAGE_KEY_SPECIALTIES = "dental_pro_specs_v7_2";
+    const STORAGE_KEY_CURRENT_SPEC = "dental_pro_current_spec_v7_2";
+    const STORAGE_KEY_THEME = "dental_pro_theme_v7_2";
+    const STORAGE_KEY_AI_KEY = "DENTAL_AI_USER_KEY";
+    const STORAGE_KEY_SPRINT_BEST = "dental_pro_sprint_best_v7_2";
+    const STORAGE_KEY_APP_SETTINGS = "dental_pro_settings_v7_2";
+    const STORAGE_KEY_CBT_STATE = "dental_pro_cbt_state_v7_2";
+    const STORAGE_KEY_STREAK = "dental_pro_streak_record_v7_2";
+    const STORAGE_KEY_CBT_HISTORY = "dental_pro_cbt_last_score_v7_2";
+
+    const UNIT_METADATA = {
+      "Unit 1": {
+        shortTitle: "Thuật ngữ chung, Cấu trúc răng & Giải phẫu cơ bản",
+        corePoints: "Men răng, ngà, tủy, xê măng, dây chằng nha chu, hệ thống đánh số răng FDI và các nhóm răng."
+      },
+      "Unit 2": {
+        shortTitle: "Sự phát triển, mọc răng & Bất thường cung răng",
+        corePoints: "Quá trình mọc răng, tiêu chân răng sinh lý, sự thay răng, răng ngầm, khớp cắn."
+      },
+      "Unit 3": {
+        shortTitle: "Giải phẫu tổng quan khoang miệng & Chức năng",
+        corePoints: "Khẩu cái cứng/mềm, lưỡi gà, amidan, chức năng nhai, nuốt và hệ miễn dịch miệng."
+      },
+      "Unit 4": {
+        shortTitle: "Các chuyên khoa nha khoa & Quy trình điều trị",
+        corePoints: "Chỉnh nha, Nội nha, Nha chu, Phục hình, Phẫu thuật hàm mặt và Chẩn đoán hình ảnh."
+      },
+      "Unit 5": {
+        shortTitle: "Sức khỏe răng miệng, Bệnh lý & Vệ sinh dự phòng",
+        corePoints: "Các bệnh lý thường gặp (sâu răng, viêm nướu, nha chu), dụng cụ vệ sinh và các biện pháp dự phòng."
+      }
+    };
+
+    const SEED_DATA_191 = [
+      { "id": "u1_01", "unit": "Unit 1", "word": "Dental nomenclature", "ipa": "/ˈdɛn.təl ˈnoʊ.mən.kleɪ.tʃər/", "pos": "n.", "meaning": "Danh pháp nha khoa", "relatedTerms": [ "FDI notation", "Universal system", "Tooth numbering" ], "example": "Dental nomenclature allows precise documentation across clinical teams.", "exampleVi": "Danh pháp nha khoa cho phép ghi chép chính xác giữa các đội ngũ lâm sàng.", "clinicalNote": "Hệ thống chuẩn hóa tên gọi và ký hiệu răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_02", "unit": "Unit 1", "word": "Tooth / teeth", "ipa": "/tuːθ / tiːθ/", "pos": "n.", "meaning": "Răng", "relatedTerms": [ "Dentition", "Crown", "Root" ], "example": "Adult humans typically develop thirty-two permanent teeth.", "exampleVi": "Người trưởng thành thường phát triển 32 chiếc răng vĩnh viễn.", "clinicalNote": "Dạng số nhiều bất quy tắc: tooth -> teeth.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_03", "unit": "Unit 1", "word": "Tooth structure", "ipa": "/tuːθ ˈstrʌk.tʃər/", "pos": "n.", "meaning": "Cấu trúc răng", "relatedTerms": [ "Enamel", "Dentin", "Pulp" ], "example": "Caries destroys both organic and inorganic tooth structure.", "exampleVi": "Sâu răng phá hủy cả cấu trúc răng hữu cơ lẫn vô cơ.", "clinicalNote": "Gồm men, ngà, tủy và xê-măng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_04", "unit": "Unit 1", "word": "Oral tissue", "ipa": "/ˈɔːr.əl ˈtɪʃ.uː/", "pos": "n.", "meaning": "Mô miệng", "relatedTerms": [ "Mucosa", "Gingiva", "Periodontium" ], "example": "Healthy oral tissue acts as a vital protective barrier.", "exampleVi": "Mô miệng khỏe mạnh hoạt động như một hàng rào bảo vệ quan trọng.", "clinicalNote": "Bao gồm cả mô cứng và mô mềm vùng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_05", "unit": "Unit 1", "word": "Anatomical feature", "ipa": "/ˌæn.əˈtɒm.ɪ.kəl ˈfiː.tʃər/", "pos": "n.", "meaning": "Đặc điểm giải phẫu", "relatedTerms": [ "Cusp", "Fossa", "Ridge" ], "example": "Each tooth class presents distinct anatomical features.", "exampleVi": "Mỗi nhóm răng đều có các đặc điểm giải phẫu riêng biệt.", "clinicalNote": "Được tái tạo chính xác khi phục hình.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_06", "unit": "Unit 1", "word": "Oral cavity", "ipa": "/ˈɔːr.əl ˈkæv.ɪ.ti/", "pos": "n.", "meaning": "Khoang miệng", "relatedTerms": [ "Vestibule", "Palate", "Floor of mouth" ], "example": "The oral cavity is the entrance to the human digestive tract.", "exampleVi": "Khoang miệng là lối vào của đường tiêu hóa ở người.", "clinicalNote": "Giới hạn từ môi trước đến eo họng phía sau.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_07", "unit": "Unit 1", "word": "Enable", "ipa": "/ɪˈneɪ.bəl/", "pos": "v.", "meaning": "Cho phép", "relatedTerms": [ "Facilitate", "Permit", "Allow" ], "example": "Healthy teeth enable effective chewing and distinct speech.", "exampleVi": "Răng khỏe mạnh cho phép ăn nhai hiệu quả và phát âm rõ ràng.", "clinicalNote": "Thường đi với cấu trúc enable someone to do something.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_08", "unit": "Unit 1", "word": "Accurate communication", "ipa": "/ˈæk.jə.rət kəˌmjuː.nɪˈkeɪ.ʃən/", "pos": "n.", "meaning": "Giao tiếp chính xác", "relatedTerms": [ "Clinical handover", "Standardized terminology" ], "example": "Accurate communication between dentists and technicians prevents prosthetic errors.", "exampleVi": "Giao tiếp chính xác giữa nha sĩ và kỹ thuật viên giúp tránh lỗi phục hình.", "clinicalNote": "Đảm bảo sự an toàn điều trị cho bệnh nhân.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_09", "unit": "Unit 1", "word": "Dental professionals", "ipa": "/ˈdɛn.təl prəˈfɛʃ.ən.əlz/", "pos": "n.", "meaning": "Đội ngũ chuyên môn nha khoa", "relatedTerms": [ "Dentist", "Dental hygienist", "Dental assistant" ], "example": "Dental professionals collaborate closely during complex oral surgeries.", "exampleVi": "Đội ngũ chuyên môn nha khoa phối hợp chặt chẽ trong các ca phẫu thuật miệng phức tạp.", "clinicalNote": "Bao gồm nha sĩ, phụ tá, chuyên viên vệ sinh và kỹ thuật viên.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_10", "unit": "Unit 1", "word": "Dental record", "ipa": "/ˈdɛn.təl ˈrɛk.ɔːrd/", "pos": "n.", "meaning": "Bệnh án nha khoa", "relatedTerms": [ "Dental chart", "Medical history", "Charting" ], "example": "Every finding and treatment is documented in the dental record.", "exampleVi": "Mọi phát hiện và quá trình điều trị đều được ghi lại trong bệnh án nha khoa.", "clinicalNote": "Văn bản y tế có giá trị pháp lý cao.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_11", "unit": "Unit 1", "word": "Procedure", "ipa": "/prəˈsiː.dʒər/", "pos": "n.", "meaning": "Quy trình / Thủ thuật", "relatedTerms": [ "Surgical procedure", "Protocol", "Technique" ], "example": "Sterilization protocol is followed before every dental procedure.", "exampleVi": "Quy trình vô trùng được tuân thủ nghiêm ngặt trước mỗi thủ thuật nha khoa.", "clinicalNote": "Các bước kỹ thuật can thiệp lâm sàng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_12", "unit": "Unit 1", "word": "Treatment", "ipa": "/ˈtriːt.mənt/", "pos": "n.", "meaning": "Điều trị", "relatedTerms": [ "Treatment plan", "Therapy", "Intervention" ], "example": "Endodontic treatment saves teeth with irreversibly inflamed pulps.", "exampleVi": "Điều trị nội nha giúp giữ lại các răng bị viêm tủy không hồi phục.", "clinicalNote": "Kế hoạch điều trị: Treatment plan.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_13", "unit": "Unit 1", "word": "Dentition", "ipa": "/dɛnˈtɪʃ.ən/", "pos": "n.", "meaning": "Bộ răng", "relatedTerms": [ "Primary dentition", "Permanent dentition", "Mixed dentition" ], "example": "Humans develop two natural dentitions over their lifespan.", "exampleVi": "Con người phát triển hai bộ răng tự nhiên trong suốt cuộc đời.", "clinicalNote": "Chỉ toàn bộ hệ thống răng tự nhiên trong xương hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_14", "unit": "Unit 1", "word": "Arrangement", "ipa": "/əˈreɪndʒ.mənt/", "pos": "n.", "meaning": "Sự sắp xếp", "relatedTerms": [ "Alignment", "Dental arch layout" ], "example": "Orthodontics corrects the irregular arrangement of teeth.", "exampleVi": "Chỉnh nha giúp sửa chữa sự sắp xếp lệch lạc của các răng.", "clinicalNote": "Thế sắp xếp răng trên cung hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_15", "unit": "Unit 1", "word": "Particular", "ipa": "/pərˈtɪk.jə.lər/", "pos": "adj.", "meaning": "Cụ thể / Đặc thù", "relatedTerms": [ "Specific", "Individual" ], "example": "Each particular tooth has a specialized chewing function.", "exampleVi": "Mỗi chiếc răng cụ thể đều có chức năng nhai chuyên biệt.", "clinicalNote": "Dùng để chỉ định răng hoặc nhóm răng riêng biệt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_16", "unit": "Unit 1", "word": "Stage", "ipa": "/steɪdʒ/", "pos": "n.", "meaning": "Giai đoạn", "relatedTerms": [ "Developmental stage", "Phase" ], "example": "The mixed dentition stage lasts from approximately age six to twelve.", "exampleVi": "Giai đoạn bộ răng hỗn hợp kéo dài từ khoảng sáu đến mười hai tuổi.", "clinicalNote": "Phân chia các mốc phát triển sinh học.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_17", "unit": "Unit 1", "word": "Development", "ipa": "/dɪˈvɛl.əp.mənt/", "pos": "n.", "meaning": "Sự phát triển", "relatedTerms": [ "Odontogenesis", "Growth", "Maturation" ], "example": "Disturbances during tooth development cause enamel hypoplasia.", "exampleVi": "Những rối loạn trong quá trình phát triển răng sẽ gây thiểu sản men.", "clinicalNote": "Quá trình hình thành mô và hình thể răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_18", "unit": "Unit 1", "word": "Develop", "ipa": "/dɪˈvɛl.əp/", "pos": "v.", "meaning": "Phát triển", "relatedTerms": [ "Form", "Erupt", "Calcify" ], "example": "Permanent teeth develop beneath the roots of primary teeth.", "exampleVi": "Các răng vĩnh viễn phát triển bên dưới chân các răng sữa.", "clinicalNote": "Động từ gốc chỉ sự hình thành.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_19", "unit": "Unit 1", "word": "Primary teeth / Deciduous teeth / Baby teeth / Milk teeth", "ipa": "/ˈpraɪ.mɛr.i tiːθ/", "pos": "n.", "meaning": "Răng sữa", "relatedTerms": [ "Exfoliation", "Deciduous dentition" ], "example": "A child has twenty primary teeth in total.", "exampleVi": "Một đứa trẻ có tổng cộng hai mươi chiếc răng sữa.", "clinicalNote": "Gồm 20 răng, bắt đầu mọc lúc 6 tháng tuổi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_20", "unit": "Unit 1", "word": "Permanent teeth", "ipa": "/ˈpɜːr.mə.nənt tiːθ/", "pos": "n.", "meaning": "Răng vĩnh viễn", "relatedTerms": [ "Adult teeth", "Succedaneous teeth" ], "example": "Permanent teeth are intended to remain for a lifetime.", "exampleVi": "Răng vĩnh viễn được định sẵn để tồn tại suốt cả cuộc đời.", "clinicalNote": "Bộ răng thứ hai gồm 32 chiếc.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_21", "unit": "Unit 1", "word": "Mixed dentition", "ipa": "/mɪkst dɛnˈtɪʃ.ən/", "pos": "n.", "meaning": "Bộ răng hỗn hợp", "relatedTerms": [ "Transitional dentition", "Leeway space" ], "example": "Mixed dentition features both primary and permanent teeth in the mouth.", "exampleVi": "Bộ răng hỗn hợp có sự hiện diện đồng thời của cả răng sữa và răng vĩnh viễn.", "clinicalNote": "Giai đoạn chuyển tiếp từ 6 đến 12 tuổi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_22", "unit": "Unit 1", "word": "Keep space", "ipa": "/kiːp speɪs/", "pos": "v.", "meaning": "Giữ chỗ", "relatedTerms": [ "Space maintainer", "Arch perimeter" ], "example": "Primary molars keep space for erupting premolars.", "exampleVi": "Răng cối sữa giữ khoảng cho các răng tiền hàm mọc lên.", "clinicalNote": "Nếu mất răng sữa sớm cần dùng hàm giữ chỗ (space maintainer).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_23", "unit": "Unit 1", "word": "Fall out / Exfoliate", "ipa": "/fɔːl aʊt / ɛksˈfoʊ.li.eɪt/", "pos": "v.", "meaning": "Rụng", "relatedTerms": [ "Shedding", "Physiologic loss" ], "example": "Baby teeth fall out as permanent successors push upward.", "exampleVi": "Răng sữa rụng đi khi các răng vĩnh viễn kế nhiệm đội lên.", "clinicalNote": "Hiện tượng rụng tự nhiên của răng sữa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_24", "unit": "Unit 1", "word": "Tooth exfoliation", "ipa": "/tuːθ ɛksˌfoʊ.liˈeɪ.ʃən/", "pos": "n.", "meaning": "Sự thay răng / sự rụng răng", "relatedTerms": [ "Root resorption", "Shedding pattern" ], "example": "Tooth exfoliation is preceded by osteoclastic root resorption.", "exampleVi": "Sự thay răng diễn ra sau khi chân răng bị tiêu bởi hủy cốt bào.", "clinicalNote": "Quá trình rụng răng sinh lý.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_25", "unit": "Unit 1", "word": "Incisor", "ipa": "/ɪnˈsaɪ.zər/", "pos": "n.", "meaning": "Răng cửa", "relatedTerms": [ "Central incisor", "Lateral incisor", "Incisal edge" ], "example": "Incisors have a sharp edge designed for biting food.", "exampleVi": "Răng cửa có cạnh sắc được thiết kế để cắn thức ăn.", "clinicalNote": "Mỗi hàm có 4 răng cửa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_26", "unit": "Unit 1", "word": "Central incisor", "ipa": "/ˈsɛn.trəl ɪnˈsaɪ.zər/", "pos": "n.", "meaning": "Răng cửa giữa", "relatedTerms": [ "Maxillary central", "Midline" ], "example": "The maxillary central incisor is crucial for dental smile aesthetics.", "exampleVi": "Răng cửa giữa hàm trên đóng vai trò then chốt cho thẩm mỹ nụ cười.", "clinicalNote": "Răng số 1 trên cung hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_27", "unit": "Unit 1", "word": "Lateral incisor", "ipa": "/ˈlæt.ər.əl ɪnˈsaɪ.zər/", "pos": "n.", "meaning": "Răng cửa bên", "relatedTerms": [ "Peg lateral", "Microdontia" ], "example": "The lateral incisor is located adjacent to the central incisor.", "exampleVi": "Răng cửa bên nằm kế cận răng cửa giữa.", "clinicalNote": "Răng số 2, thường có biến thể hình hạt gạo (peg-shaped).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_28", "unit": "Unit 1", "word": "Cut", "ipa": "/kʌt/", "pos": "v.", "meaning": "Cắt", "relatedTerms": [ "Shear", "Incision" ], "example": "Anterior incisors cut food into manageable pieces.", "exampleVi": "Các răng cửa phía trước cắt thức ăn thành từng miếng vừa miệng.", "clinicalNote": "Chức năng cơ học chính của răng cửa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_29", "unit": "Unit 1", "word": "Canine", "ipa": "/ˈkeɪ.naɪn/", "pos": "n.", "meaning": "Răng nanh", "relatedTerms": [ "Cuspid", "Canine guidance", "Canine eminence" ], "example": "The canine has the longest and strongest root in the dental arch.", "exampleVi": "Răng nanh có chân răng dài nhất và vững chắc nhất trên cung hàm.", "clinicalNote": "Răng số 3, còn gọi là Cuspid.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_30", "unit": "Unit 1", "word": "Tear", "ipa": "/tɛər/", "pos": "v.", "meaning": "Xé", "relatedTerms": [ "Ripping", "Pointed cusp" ], "example": "Canines tear tough food with their pointed single cusps.", "exampleVi": "Răng nanh xé thức ăn dai nhờ vào múi răng nhọn đơn lẻ.", "clinicalNote": "Chức năng nhai cơ học đặc thù của răng nanh.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_31", "unit": "Unit 1", "word": "Premolar", "ipa": "/ˌpriːˈmoʊ.lər/", "pos": "n.", "meaning": "Răng tiền hàm / Răng hàm nhỏ", "relatedTerms": [ "Bicuspid", "First premolar", "Second premolar" ], "example": "Premolars assist both in tearing and grinding food particles.", "exampleVi": "Răng tiền hàm hỗ trợ cả việc xé lẫn nghiền nát thức ăn.", "clinicalNote": "Răng số 4 và 5, chỉ có ở bộ răng vĩnh viễn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_32", "unit": "Unit 1", "word": "Molar", "ipa": "/ˈmoʊ.lər/", "pos": "n.", "meaning": "Răng hàm / Răng hàm lớn", "relatedTerms": [ "First molar", "Second molar", "Third molar" ], "example": "Molars possess broad occlusal surfaces for crushing food.", "exampleVi": "Răng hàm lớn sở hữu mặt nhai rộng để nghiền vụn thức ăn.", "clinicalNote": "Răng số 6, 7 và 8; chịu lực nhai chính.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_33", "unit": "Unit 1", "word": "Crush", "ipa": "/krʌʃ/", "pos": "v.", "meaning": "Nghiền vụn", "relatedTerms": [ "Pulverize", "Compressive force" ], "example": "Posterior molars crush food boluses with heavy biting force.", "exampleVi": "Các răng hàm lớn phía sau nghiền vụn viên thức ăn bằng lực cắn lớn.", "clinicalNote": "Chức năng phân rã thức ăn của mặt nhai.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_34", "unit": "Unit 1", "word": "Grind", "ipa": "/ɡraɪnd/", "pos": "v.", "meaning": "Nghiền nát", "relatedTerms": [ "Mastication", "Bruxism", "Attrition" ], "example": "Teeth grind food together during lateral chewing excursions.", "exampleVi": "Răng nghiền nát thức ăn trong các vận động nhai sang bên.", "clinicalNote": "Chuyển động nghiền qua lại của khớp cắn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_35", "unit": "Unit 1", "word": "Third molar (Wisdom tooth)", "ipa": "/θɜːrd ˈmoʊ.lər (ˈwɪz.dəm tuːθ)/", "pos": "n.", "meaning": "Răng hàm thứ ba / Răng khôn", "relatedTerms": [ "Impaction", "Pericoronitis", "Odontectomy" ], "example": "The third molar frequently becomes impacted due to lack of space.", "exampleVi": "Răng hàm thứ ba thường xuyên bị mọc ngầm do thiếu khoảng trống trên cung hàm.", "clinicalNote": "Răng số 8, thường mọc ở tuổi 17 - 25.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_36", "unit": "Unit 1", "word": "Crown", "ipa": "/kraʊn/", "pos": "n.", "meaning": "Thân răng", "relatedTerms": [ "Anatomical crown", "Clinical crown", "Prosthetic crown" ], "example": "The crown is visible above the gingival margin in a healthy mouth.", "exampleVi": "Thân răng nhìn thấy được ở phía trên viền nướu trong miệng khỏe mạnh.", "clinicalNote": "Bao phủ bởi men răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_37", "unit": "Unit 1", "word": "Neck of the tooth (Cervix)", "ipa": "/nɛk əv ðə tuːθ (ˈsɜːr.vɪks)/", "pos": "n.", "meaning": "Cổ răng", "relatedTerms": [ "Cementoenamel junction", "Cervical line" ], "example": "The neck of the tooth connects the crown to the root.", "exampleVi": "Cổ răng nối liền phần thân răng với chân răng.", "clinicalNote": "Vùng thắt hẹp tương ứng đường CEJ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_38", "unit": "Unit 1", "word": "Root", "ipa": "/ruːt/", "pos": "n.", "meaning": "Chân răng", "relatedTerms": [ "Root canal", "Apex", "Cementum" ], "example": "The tooth root is firmly anchored within the alveolar bone socket.", "exampleVi": "Chân răng được neo giữ vững chắc bên trong huyệt xương ổ răng.", "clinicalNote": "Bao phủ bởi xê-măng, chứa ống tủy.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_39", "unit": "Unit 1", "word": "Enamel", "ipa": "/ɪˈnæm.əl/", "pos": "n.", "meaning": "Men răng", "relatedTerms": [ "Ameloblast", "Demineralization", "Fluoride" ], "example": "Enamel is the most highly mineralized and hardest tissue in the human body.", "exampleVi": "Men răng là mô khoáng hóa cao nhất và cứng nhất trong cơ thể con người.", "clinicalNote": "96% vô cơ, không có tế bào sống tái tạo.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_40", "unit": "Unit 1", "word": "Dentin", "ipa": "/ˈdɛn.tɪn/", "pos": "n.", "meaning": "Ngà răng", "relatedTerms": [ "Dentinal tubules", "Odontoblast", "Sensitivity" ], "example": "Dentin lies underneath the enamel and surrounds the pulp cavity.", "exampleVi": "Ngà răng nằm bên dưới lớp men và bao quanh hốc tủy.", "clinicalNote": "Chiếm thể tích lớn nhất của răng, có ống ngà cảm giác.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_41", "unit": "Unit 1", "word": "Pulp", "ipa": "/pʌlp/", "pos": "n.", "meaning": "Tủy răng", "relatedTerms": [ "Pulpitis", "Nerve tissue", "Blood supply" ], "example": "Inflammation of the dental pulp produces severe throbbing pain.", "exampleVi": "Tình trạng viêm của tủy răng gây ra cơn đau buốt nhức dữ dội.", "clinicalNote": "Mô liên kết lỏng lẻo chứa thần kinh và mạch máu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_42", "unit": "Unit 1", "word": "Cementum", "ipa": "/sɪˈmɛn.təm/", "pos": "n.", "meaning": "Xê măng răng", "relatedTerms": [ "Periodontal fibers", "Acellular cementum" ], "example": "Cementum provides attachment for the periodontal ligament fibers.", "exampleVi": "Xê-măng răng tạo điểm bám cho các bó sợi của dây chằng nha chu.", "clinicalNote": "Lớp mô khoáng hóa mỏng phủ bề mặt chân răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_43", "unit": "Unit 1", "word": "Gingiva (Gums)", "ipa": "/ˈdʒɪn.dʒɪ.və (ɡʌmz)/", "pos": "n.", "meaning": "Lợi / Nướu", "relatedTerms": [ "Attached gingiva", "Gingivitis", "Sulcus" ], "example": "Healthy gingiva displays a pale pink hue and stippled texture.", "exampleVi": "Nướu khỏe mạnh có màu hồng nhạt và bề mặt lấm tấm da cam.", "clinicalNote": "Mô mềm niêm mạc bao quanh cổ răng và xương ổ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_44", "unit": "Unit 1", "word": "Periodontal ligament", "ipa": "/ˌpɛr.i.oʊˈdɒn.təl ˈlɪɡ.ə.mənt/", "pos": "n.", "meaning": "Dây chằng nha chu", "relatedTerms": [ "PDL fibers", "Shock absorber", "Mobility" ], "example": "The periodontal ligament absorbs mechanical forces during chewing.", "exampleVi": "Dây chằng nha chu hấp thụ các lực cơ học tác động trong khi nhai.", "clinicalNote": "Giảm xóc sinh học, cảm nhận áp lực cắn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_45", "unit": "Unit 1", "word": "Alveolar bone", "ipa": "/ælˈviː.ə.lər boʊn/", "pos": "n.", "meaning": "Xương ổ răng", "relatedTerms": [ "Bone resorption", "Lamina dura", "Socket" ], "example": "Severe periodontitis results in the progressive destruction of alveolar bone.", "exampleVi": "Viêm nha chu nặng dẫn đến sự tiêu hủy dần dần của xương ổ răng.", "clinicalNote": "Tiêu dần nếu mất răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_46", "unit": "Unit 1", "word": "Quadrant", "ipa": "/ˈkwɒd.rənt/", "pos": "n.", "meaning": "Góc phần tư hàm răng / Phần tư cung răng", "relatedTerms": [ "Upper right", "Lower left", "Dental arch" ], "example": "The human dentition is clinically divided into four quadrants.", "exampleVi": "Bộ răng người được chia thành bốn góc phần tư trên lâm sàng.", "clinicalNote": "Chia bởi đường giữa và mặt phẳng khớp cắn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_47", "unit": "Unit 1", "word": "Adulthood", "ipa": "/əˈdʌlt.hʊd/", "pos": "n.", "meaning": "Tuổi trưởng thành", "relatedTerms": [ "Permanent dentition", "Maturity" ], "example": "Full permanent dentition is completed in early adulthood with the eruption of wisdom teeth.", "exampleVi": "Bộ răng vĩnh viễn đầy đủ được hoàn tất ở đầu tuổi trưởng thành khi răng khôn mọc.", "clinicalNote": "Mốc kết thúc quá trình mọc răng tự nhiên.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_48", "unit": "Unit 1", "word": "Approximately", "ipa": "/əˈprɒk.sɪ.mət.li/", "pos": "adv.", "meaning": "Xấp xỉ", "relatedTerms": [ "Around", "Roughly" ], "example": "Primary teeth begin to erupt at approximately six months of age.", "exampleVi": "Răng sữa bắt đầu mọc vào khoảng xấp xỉ sáu tháng tuổi.", "clinicalNote": "Dùng để mô tả mốc thời gian trung bình trong mọc răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_49", "unit": "Unit 1", "word": "Shape", "ipa": "/ʃeɪp/", "pos": "n.", "meaning": "Hình dạng", "relatedTerms": [ "Morphology", "Anatomy", "Contour" ], "example": "The shape of each tooth reflects its role in chewing mechanics.", "exampleVi": "Hình dạng của mỗi chiếc răng phản ánh vai trò của nó trong cơ chế ăn nhai.", "clinicalNote": "Hình thể giải phẫu của thân và chân răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_50", "unit": "Unit 1", "word": "Oral hygiene", "ipa": "/ˈɔːr.əl ˈhaɪ.dʒiːn/", "pos": "n.", "meaning": "Vệ sinh răng miệng", "relatedTerms": [ "Brushing", "Flossing", "Plaque control" ], "example": "Proper oral hygiene prevents dental decay and gingivitis.", "exampleVi": "Vệ sinh răng miệng đúng cách giúp ngăn ngừa sâu răng và viêm nướu.", "clinicalNote": "Chăm sóc cơ học và hóa học khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_51", "unit": "Unit 1", "word": "Position", "ipa": "/pəˈzɪʃ.ən/", "pos": "n.", "meaning": "Vị trí", "relatedTerms": [ "Alignment", "Location", "Displacement" ], "example": "Crowded teeth are displaced from their normal anatomical position.", "exampleVi": "Các răng chen chúc bị lệch khỏi vị trí giải phẫu bình thường của chúng.", "clinicalNote": "Tọa độ răng trên xương hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_52", "unit": "Unit 1", "word": "Divide", "ipa": "/dɪˈvaɪd/", "pos": "v.", "meaning": "Chia", "relatedTerms": [ "Segment", "Separate", "Bifurcate" ], "example": "The midline divides the dental arch into right and left halves.", "exampleVi": "Đường giữa chia cung răng thành hai nửa phải và trái bằng nhau.", "clinicalNote": "Dùng khi phân cung phần tư hoặc phân nhánh chân răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_53", "unit": "Unit 1", "word": "Visible", "ipa": "/ˈvɪz.ə.bəl/", "pos": "adj.", "meaning": "Nhìn thấy", "relatedTerms": [ "Clinical crown", "Exposed" ], "example": "Only the clinical crown is visible inside the oral cavity.", "exampleVi": "Chỉ có thân răng lâm sàng là nhìn thấy được bên trong khoang miệng.", "clinicalNote": "Phần răng không bị nướu hay xương che khuất.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_54", "unit": "Unit 1", "word": "Gumline", "ipa": "/ˈɡʌm.laɪn/", "pos": "n.", "meaning": "Đường viền lợi", "relatedTerms": [ "Gingival margin", "Cervical contour" ], "example": "Plaque accumulation along the gumline triggers localized gingivitis.", "exampleVi": "Sự tích tụ mảng bám dọc theo đường viền lợi kích hoạt viêm nướu khu trú.", "clinicalNote": "Bờ tự do của nướu tiếp xúc với men răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_55", "unit": "Unit 1", "word": "Substance", "ipa": "/ˈsʌb.stəns/", "pos": "n.", "meaning": "Chất", "relatedTerms": [ "Material", "Compound", "Tooth substance" ], "example": "Tooth enamel is the hardest biological substance found in vertebrates.", "exampleVi": "Men răng là chất sinh học cứng nhất được tìm thấy ở động vật có xương sống.", "clinicalNote": "Thành phần mô hoặc vật liệu nha khoa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_56", "unit": "Unit 1", "word": "Protect", "ipa": "/prəˈtɛkt/", "pos": "v.", "meaning": "Bảo vệ", "relatedTerms": [ "Shield", "Preserve", "Barrier" ], "example": "Enamel protects the sensitive underlying dentin and pulp.", "exampleVi": "Men răng bảo vệ lớp ngà và tủy nhạy cảm nằm ở bên dưới.", "clinicalNote": "Chức năng che chở sinh học.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_57", "unit": "Unit 1", "word": "FDI Tooth Numbering System", "ipa": "/ˌɛf.diːˈaɪ tuːθ ˈnʌm.bər.ɪŋ ˈsɪs.təm/", "pos": "n.", "meaning": "Hệ thống đánh số răng FDI", "relatedTerms": [ "Two-digit system", "ISO 3950", "Universal system" ], "example": "The FDI tooth numbering system uses two digits to identify each tooth.", "exampleVi": "Hệ thống đánh số răng FDI sử dụng hai chữ số để định danh từng chiếc răng.", "clinicalNote": "Quy chuẩn quốc tế: số đầu là cung hàm, số sau là vị trí răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_58", "unit": "Unit 1", "word": "Digit", "ipa": "/ˈdɪdʒ.ɪt/", "pos": "n.", "meaning": "Chữ số", "relatedTerms": [ "First digit", "Second digit", "Number" ], "example": "The first digit denotes the quadrant and the second denotes the tooth position.", "exampleVi": "Chữ số thứ nhất biểu thị cung hàm và chữ số thứ hai biểu thị vị trí răng.", "clinicalNote": "Ví dụ: Răng 11, 26, 47.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_59", "unit": "Unit 1", "word": "Dental chart", "ipa": "/ˈdɛn.təl tʃɑːrt/", "pos": "n.", "meaning": "Phiếu ghi nhận tình trạng răng / Sơ đồ răng", "relatedTerms": [ "Odontogram", "Periodontal chart" ], "example": "Existing restorations and caries are recorded on the dental chart.", "exampleVi": "Các mối hàn hiện có và vết sâu răng đều được ghi trên sơ đồ răng.", "clinicalNote": "Sơ đồ giải phẫu đồ họa tình trạng răng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_60", "unit": "Unit 1", "word": "Wear", "ipa": "/wɛər/", "pos": "n.", "meaning": "Mòn / Sự mòn răng", "relatedTerms": [ "Attrition", "Abrasion", "Erosion" ], "example": "Severe tooth wear may expose sensitive dentin and shorten crown height.", "exampleVi": "Sự mòn răng nặng có thể làm lộ ngà nhạy cảm và giảm chiều cao thân răng.", "clinicalNote": "Mất chất men ngà không do sâu răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_61", "unit": "Unit 1", "word": "Decay", "ipa": "/dɪˈkeɪ/", "pos": "n.", "meaning": "Sâu răng", "relatedTerms": [ "Dental caries", "Cavity", "Demineralization" ], "example": "Bacterial acids cause tooth decay by demineralizing enamel crystals.", "exampleVi": "Axit vi khuẩn gây sâu răng bằng cách khử khoáng các tinh thể men răng.", "clinicalNote": "Đồng nghĩa phổ biến của Dental caries.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_62", "unit": "Unit 1", "word": "Anchor", "ipa": "/ˈæŋ.kər/", "pos": "v.", "meaning": "Cố định / Neo giữ", "relatedTerms": [ "Attachment", "Embed", "PDL insertion" ], "example": "Collagen fibers firmly anchor the tooth root into the jawbone.", "exampleVi": "Các sợi collagen neo giữ vững chắc chân răng vào trong xương hàm.", "clinicalNote": "Chức năng bám dính của dây chằng và xê-măng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_63", "unit": "Unit 1", "word": "Damage", "ipa": "/ˈdæm.ɪdʒ/", "pos": "n.", "meaning": "Tổn thương / Sự phá hủy", "relatedTerms": [ "Trauma", "Injury", "Fracture" ], "example": "Traumatic impact can cause irreversible damage to the neurovascular bundle.", "exampleVi": "Va đập chấn thương có thể gây tổn thương không hồi phục cho bó mạch thần kinh.", "clinicalNote": "Hư hại cấu trúc răng hoặc mô quanh răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_64", "unit": "Unit 1", "word": "Connective tissue", "ipa": "/kəˈnɛk.tɪv ˈtɪʃ.uː/", "pos": "n.", "meaning": "Mô liên kết", "relatedTerms": [ "Fibroblast", "Collagen", "Pulp stroma" ], "example": "The dental pulp is a specialized loose connective tissue.", "exampleVi": "Tủy răng là một mô liên kết lỏng lẻo chuyên biệt.", "clinicalNote": "Chứa tế bào, sợi collagen và chất nền ngoại bào.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_65", "unit": "Unit 1", "word": "Supply", "ipa": "/səˈplaɪ/", "pos": "v.", "meaning": "Cung cấp", "relatedTerms": [ "Vascular supply", "Blood vessels", "Innervate" ], "example": "Apical vessels supply oxygen and vital nutrients to the pulp.", "exampleVi": "Các mạch máu vùng chóp cung cấp oxy và dưỡng chất thiết yếu cho tủy.", "clinicalNote": "Tuần hoàn dinh dưỡng cho tủy và nha chu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_66", "unit": "Unit 1", "word": "Nutrient", "ipa": "/ˈnjuː.tri.ənt/", "pos": "n.", "meaning": "Chất dinh dưỡng", "relatedTerms": [ "Nutrition", "Metabolism" ], "example": "Cells of the odontoblast layer depend on nutrients from pulp capillaries.", "exampleVi": "Các tế bào của lớp nguyên bào ngà phụ thuộc vào chất dinh dưỡng từ mao mạch tủy.", "clinicalNote": "Duy trì sự sống cho phức hợp tủy - ngà.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_67", "unit": "Unit 1", "word": "Sensation", "ipa": "/sɛnˈseɪ.ʃən/", "pos": "n.", "meaning": "Cảm giác", "relatedTerms": [ "Pain perception", "Thermal stimulus", "Proprioception" ], "example": "Fluid movement in dentinal tubules triggers pain sensation.", "exampleVi": "Sự di chuyển dịch trong ống ngà kích hoạt cảm giác đau.", "clinicalNote": "Cảm nhận nhiệt độ, xúc giác và cơn đau.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_68", "unit": "Unit 1", "word": "Tooth alignment", "ipa": "/tuːθ əˈlaɪn.mənt/", "pos": "n.", "meaning": "Sự sắp xếp thẳng hàng của răng", "relatedTerms": [ "Ideal occlusion", "Arch form", "Orthodontic alignment" ], "example": "Proper tooth alignment promotes easy cleaning and balanced bite forces.", "exampleVi": "Sự sắp xếp thẳng hàng của răng giúp làm sạch dễ dàng và cân bằng lực nhai.", "clinicalNote": "Đều đặn trên cung hàm, không chen chúc xoay lệch.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_69", "unit": "Unit 1", "word": "Aligned", "ipa": "/əˈlaɪnd/", "pos": "adj.", "meaning": "Thẳng hàng", "relatedTerms": [ "Straight", "Evenly spaced" ], "example": "Well-aligned teeth enhance smile esthetics and function.", "exampleVi": "Những chiếc răng thẳng hàng làm tăng tính thẩm mỹ nụ cười và chức năng.", "clinicalNote": "Trạng thái các răng nằm đúng vị trí sinh lý.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_70", "unit": "Unit 1", "word": "Anterior", "ipa": "/ænˈtɪr.i.ər/", "pos": "adj.", "meaning": "Phía trước", "relatedTerms": [ "Front teeth", "Incisors", "Canines" ], "example": "The anterior teeth include incisors and canines in both dental arches.", "exampleVi": "Nhóm răng phía trước gồm có răng cửa và răng nanh ở cả hai cung hàm.", "clinicalNote": "Hướng về phía trước khuôn mặt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u1_71", "unit": "Unit 1", "word": "Posterior", "ipa": "/pɒsˈtɪr.i.ər/", "pos": "adj.", "meaning": "Phía sau", "relatedTerms": [ "Back teeth", "Premolars", "Molars" ], "example": "Posterior teeth are designed for heavy masticatory forces.", "exampleVi": "Nhóm răng phía sau được thiết kế để chịu lực ăn nhai lớn.", "clinicalNote": "Hướng về phía sau khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_01", "unit": "Unit 2", "word": "Tooth development", "ipa": "/tuːθ dɪˈvɛl.əp.mənt/", "pos": "n.", "meaning": "Sự phát triển của răng", "relatedTerms": [ "Odontogenesis", "Bud stage", "Bell stage" ], "example": "Tooth development begins during early embryonic life in the womb.", "exampleVi": "Sự phát triển của răng bắt đầu từ giai đoạn phôi thai sớm trong tử cung.", "clinicalNote": "Thuật ngữ đồng nghĩa y khoa là Odontogenesis.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_02", "unit": "Unit 2", "word": "Tooth eruption", "ipa": "/tuːθ ɪˈrʌp.ʃən/", "pos": "n.", "meaning": "Sự mọc răng", "relatedTerms": [ "Emergence", "Eruption path" ], "example": "Tooth eruption is the axial movement of a tooth into the oral cavity.", "exampleVi": "Sự mọc răng là chuyển động dọc trục của chiếc răng đi vào trong khoang miệng.", "clinicalNote": "Di chuyển từ trong xương hàm ra mặt phẳng nhai.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_03", "unit": "Unit 2", "word": "Erupt", "ipa": "/ɪˈrʌpt/", "pos": "v.", "meaning": "Mọc răng, trồi lên", "relatedTerms": [ "Emerge", "Break through" ], "example": "The first permanent molar usually erupts around six years of age.", "exampleVi": "Răng cối lớn vĩnh viễn thứ nhất thường mọc vào khoảng sáu tuổi.", "clinicalNote": "Hiện tượng răng xuyên qua nướu vào khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_04", "unit": "Unit 2", "word": "Eruption sequence", "ipa": "/ɪˈrʌp.ʃən ˈsiː.kwəns/", "pos": "n.", "meaning": "Trình tự mọc răng", "relatedTerms": [ "Order of emergence", "Chronology" ], "example": "A normal eruption sequence is more important than the exact eruption age.", "exampleVi": "Một trình tự mọc răng bình thường quan trọng hơn độ tuổi mọc răng chính xác.", "clinicalNote": "Thứ tự mọc giữa các nhóm răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_05", "unit": "Unit 2", "word": "Eruption age", "ipa": "/ɪˈrʌp.ʃən eɪdʒ/", "pos": "n.", "meaning": "Độ tuổi mọc răng", "relatedTerms": [ "Dental age", "Chronological age" ], "example": "Variations in eruption age can be influenced by genetic factors.", "exampleVi": "Sự biến thiên về độ tuổi mọc răng có thể chịu ảnh hưởng bởi yếu tố di truyền.", "clinicalNote": "Độ tuổi trung bình khi răng xuất hiện trong miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_06", "unit": "Unit 2", "word": "Pre-eruptive stage", "ipa": "/priː ɪˈrʌp.tɪv steɪdʒ/", "pos": "n.", "meaning": "Giai đoạn trước khi răng mọc", "relatedTerms": [ "Tooth germ", "Intraosseous movement" ], "example": "During the pre-eruptive stage, tooth buds grow and adjust within the jaws.", "exampleVi": "Trong giai đoạn trước khi răng mọc, mầm răng phát triển và tự điều chỉnh trong xương hàm.", "clinicalNote": "Diễn ra hoàn toàn trong xương ổ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_07", "unit": "Unit 2", "word": "Eruptive stage", "ipa": "/ɪˈrʌp.tɪv steɪdʒ/", "pos": "n.", "meaning": "Giai đoạn mọc răng", "relatedTerms": [ "Active eruption", "Mucosal penetration" ], "example": "The eruptive stage involves movement of the tooth toward the functional plane.", "exampleVi": "Giai đoạn mọc răng bao gồm sự dịch chuyển của răng về phía mặt phẳng chức năng.", "clinicalNote": "Răng di chuyển xuyên qua niêm mạc nướu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_08", "unit": "Unit 2", "word": "Post-eruptive stage", "ipa": "/poʊst ɪˈrʌp.tɪv steɪdʒ/", "pos": "n.", "meaning": "Giai đoạn sau khi răng mọc", "relatedTerms": [ "Functional eruption", "Occlusal compensation" ], "example": "In the post-eruptive stage, teeth adjust to compensate for ongoing occlusal wear.", "exampleVi": "Trong giai đoạn sau khi răng mọc, răng tự điều chỉnh để bù đắp cho sự mòn mặt nhai.", "clinicalNote": "Duy trì vị trí khớp cắn suốt đời.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_09", "unit": "Unit 2", "word": "Mixed dentition", "ipa": "/mɪkst dɛnˈtɪʃ.ən/", "pos": "n.", "meaning": "Bộ răng hỗn hợp", "relatedTerms": [ "Transitional phase", "Exfoliation" ], "example": "Orthodontic monitoring is essential during the mixed dentition period.", "exampleVi": "Việc theo dõi chỉnh nha là cần thiết trong giai đoạn bộ răng hỗn hợp.", "clinicalNote": "Giai đoạn từ 6 đến 12 tuổi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_10", "unit": "Unit 2", "word": "Root resorption", "ipa": "/ruːt rɪˈzɔːrp.ʃən/", "pos": "n.", "meaning": "Sự tiêu chân răng", "relatedTerms": [ "Odontoclast", "External resorption", "Internal resorption" ], "example": "Excessive orthodontic forces can cause pathological root resorption.", "exampleVi": "Lực chỉnh nha quá mức có thể gây tiêu chân răng bệnh lý.", "clinicalNote": "Sự phân hủy mô xê-măng và ngà chân răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_11", "unit": "Unit 2", "word": "Physiological root resorption", "ipa": "/ˌfɪz.i.əˈlɒdʒ.ɪ.kəl ruːt rɪˈzɔːrp.ʃən/", "pos": "n.", "meaning": "Sự tiêu chân răng sinh lý", "relatedTerms": [ "Primary shedding", "Osteoclasts" ], "example": "Physiological root resorption of primary teeth allows permanent teeth to erupt.", "exampleVi": "Sự tiêu chân răng sinh lý của răng sữa cho phép các răng vĩnh viễn mọc lên.", "clinicalNote": "Hiện tượng sinh lý bình thường ở răng sữa khi thay răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_12", "unit": "Unit 2", "word": "Exfoliation", "ipa": "/ɛksˌfoʊ.liˈeɪ.ʃən/", "pos": "n.", "meaning": "Sự rụng răng sữa sinh lý", "relatedTerms": [ "Shedding", "Natural loss" ], "example": "Normal exfoliation occurs symmetrically on both sides of the arch.", "exampleVi": "Sự rụng răng sữa bình thường diễn ra đối xứng ở cả hai bên cung hàm.", "clinicalNote": "Quá trình đào thải răng sữa tự nhiên.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_13", "unit": "Unit 2", "word": "Exfoliate", "ipa": "/ɛksˈfoʊ.li.eɪt/", "pos": "v.", "meaning": "Rụng tự nhiên (răng sữa)", "relatedTerms": [ "Shed", "Drop out" ], "example": "Primary incisors exfoliate to make room for larger permanent incisors.", "exampleVi": "Các răng cửa sữa rụng đi để nhường chỗ cho các răng cửa vĩnh viễn lớn hơn.", "clinicalNote": "Động từ chuyên ngành chỉ sự rụng răng sữa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_14", "unit": "Unit 2", "word": "Tooth replacement", "ipa": "/tuːθ rɪˈpleɪs.mənt/", "pos": "n.", "meaning": "Sự thay răng", "relatedTerms": [ "Succedaneous teeth", "Transition" ], "example": "Human tooth replacement follows a strict chronological pattern.", "exampleVi": "Sự thay răng ở người tuân theo một quy luật thời gian nghiêm ngặt.", "clinicalNote": "Thay thế 20 răng sữa bằng 20 răng vĩnh viễn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_15", "unit": "Unit 2", "word": "Permanent successor", "ipa": "/ˈpɜːr.mə.nənt səkˈsɛs.ər/", "pos": "n.", "meaning": "Răng vĩnh viễn kế nhiệm", "relatedTerms": [ "Succedaneous tooth", "Underlying tooth" ], "example": "Damage to a baby tooth can injure the developing permanent successor.", "exampleVi": "Tổn thương răng sữa có thể làm hại đến mầm răng vĩnh viễn kế nhiệm bên dưới.", "clinicalNote": "Mầm răng vĩnh viễn mọc thay vào vị trí răng sữa tương ứng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_16", "unit": "Unit 2", "word": "Premature tooth loss", "ipa": "/ˌpriː.məˈtʃʊər tuːθ lɒs/", "pos": "n.", "meaning": "Mất răng sớm", "relatedTerms": [ "Space loss", "Space maintainer" ], "example": "Premature tooth loss of primary molars often leads to space loss.", "exampleVi": "Mất răng sữa sớm ở nhóm răng cối thường dẫn đến mất khoảng trên cung hàm.", "clinicalNote": "Răng mất trước thời điểm sinh lý bình thường.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_17", "unit": "Unit 2", "word": "Delayed eruption", "ipa": "/dɪˈleɪd ɪˈrʌp.ʃən/", "pos": "n.", "meaning": "Chậm mọc răng", "relatedTerms": [ "Impacted tooth", "Endocrine disorder" ], "example": "Delayed eruption may result from thick gingival fibromatosis or genetic disorders.", "exampleVi": "Chậm mọc răng có thể do u xơ nướu dày hoặc các rối loạn di truyền.", "clinicalNote": "Răng không mọc sau độ tuổi trung bình đáng kể.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_18", "unit": "Unit 2", "word": "Ectopic eruption", "ipa": "/ɛkˈtɒp.ɪk ɪˈrʌp.ʃən/", "pos": "n.", "meaning": "Mọc răng lạc chỗ", "relatedTerms": [ "Transposition", "Malposition" ], "example": "Ectopic eruption of the permanent first molar can cause premature resorption of the adjacent tooth.", "exampleVi": "Mọc răng lạc chỗ của răng cối lớn thứ nhất có thể gây tiêu sớm răng kế cận.", "clinicalNote": "Răng mọc chệch hướng khỏi vị trí giải phẫu chuẩn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_19", "unit": "Unit 2", "word": "Impacted tooth", "ipa": "/ɪmˈpæk.tɪd tuːθ/", "pos": "n.", "meaning": "Răng ngầm", "relatedTerms": [ "Surgical extraction", "Wisdom tooth", "Canine impaction" ], "example": "An impacted tooth fails to erupt fully into normal occlusion.", "exampleVi": "Răng ngầm là chiếc răng không thể mọc lên hoàn toàn vào khớp cắn bình thường.", "clinicalNote": "Thường gặp ở răng khôn và răng nanh hàm trên.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_20", "unit": "Unit 2", "word": "Retained primary tooth", "ipa": "/rɪˈteɪnd ˈpraɪ.mɛr.i tuːθ/", "pos": "n.", "meaning": "Răng sữa lưu tồn", "relatedTerms": [ "Ankylosis", "Missing permanent successor" ], "example": "A retained primary tooth may persist into adulthood if the permanent successor is congenitally absent.", "exampleVi": "Răng sữa lưu tồn có thể tồn tại đến tuổi trưởng thành nếu thiếu bẩm sinh mầm răng vĩnh viễn.", "clinicalNote": "Răng sữa không rụng theo tuổi sinh lý.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_21", "unit": "Unit 2", "word": "Tooth mobility", "ipa": "/tuːθ moʊˈbɪl.ə.ti/", "pos": "n.", "meaning": "Độ lung lay răng", "relatedTerms": [ "Miller classification", "Periodontal bone loss" ], "example": "Increased tooth mobility is a cardinal sign of advanced periodontal destruction.", "exampleVi": "Độ lung lay răng tăng là dấu hiệu điển hình của sự phá hủy nha chu tiến triển.", "clinicalNote": "Được phân độ theo Miller (Độ 1, 2, 3).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_22", "unit": "Unit 2", "word": "Dental arch", "ipa": "/ˈdɛn.təl ɑːrtʃ/", "pos": "n.", "meaning": "Cung răng", "relatedTerms": [ "Maxillary arch", "Mandibular arch" ], "example": "The curve of the dental arch should follow a smooth catenary shape.", "exampleVi": "Đường cong của cung răng nên đi theo hình dây xích trơn tru.", "clinicalNote": "Hình cung parabol hoặc móng ngựa tạo bởi các răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_23", "unit": "Unit 2", "word": "Arch length", "ipa": "/ɑːrtʃ lɛŋkθ/", "pos": "n.", "meaning": "Chiều dài cung răng", "relatedTerms": [ "Arch perimeter", "Crowding" ], "example": "Inadequate arch length relative to tooth size results in severe crowding.", "exampleVi": "Chiều dài cung răng không đủ so với kích thước răng sẽ dẫn đến chen chúc nặng.", "clinicalNote": "Khoảng cách đo dọc chu vi cung hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_24", "unit": "Unit 2", "word": "Crowding", "ipa": "/ˈkraʊ.dɪŋ/", "pos": "n.", "meaning": "Chen chúc răng", "relatedTerms": [ "Malalignment", "Overlap" ], "example": "Dental crowding makes plaque control difficult and raises caries risk.", "exampleVi": "Chen chúc răng làm cho việc kiểm soát mảng bám khó khăn và tăng nguy cơ sâu răng.", "clinicalNote": "Răng mọc đè lên nhau do thiếu chỗ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_25", "unit": "Unit 2", "word": "Spacing", "ipa": "/ˈspeɪ.sɪŋ/", "pos": "n.", "meaning": "Khoảng thưa giữa các răng", "relatedTerms": [ "Diastema", "Excessive arch length" ], "example": "Generalized spacing may indicate small teeth or large jaw bases.", "exampleVi": "Khoảng thưa toàn thể có thể gợi ý kích thước răng nhỏ hoặc nền hàm lớn.", "clinicalNote": "Xuất hiện các khe hở giữa các răng kế cận.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_26", "unit": "Unit 2", "word": "Occlusion", "ipa": "/əˈkluː.ʒən/", "pos": "n.", "meaning": "Khớp cắn", "relatedTerms": [ "Centric relation", "Maximum intercuspation", "Malocclusion" ], "example": "Balanced occlusion distributes chewing forces evenly across both arches.", "exampleVi": "Khớp cắn cân bằng giúp phân bổ lực nhai đồng đều trên cả hai cung hàm.", "clinicalNote": "Sự tiếp xúc giữa răng hàm trên và răng hàm dưới.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_27", "unit": "Unit 2", "word": "Permanent occlusion", "ipa": "/ˈpɜːr.mə.nənt əˈkluː.ʒən/", "pos": "n.", "meaning": "Khớp cắn vĩnh viễn", "relatedTerms": [ "Angle classification", "Adult bite" ], "example": "Permanent occlusion establishes after the eruption of all second molars.", "exampleVi": "Khớp cắn vĩnh viễn được thiết lập sau khi toàn bộ các răng cối lớn thứ hai mọc lên.", "clinicalNote": "Khớp cắn ổn định của bộ răng vĩnh viễn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_28", "unit": "Unit 2", "word": "Eruption pattern", "ipa": "/ɪˈrʌp.ʃən ˈpæt.ərn/", "pos": "n.", "meaning": "Kiểu mọc răng", "relatedTerms": [ "Chronology", "Bilateral symmetry" ], "example": "Deviation from a typical eruption pattern warrants radiographic evaluation.", "exampleVi": "Sự sai lệch khỏi kiểu mọc răng điển hình đòi hỏi phải chụp phim kiểm tra.", "clinicalNote": "Quy luật mọc răng bình thường theo lứa tuổi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u2_29", "unit": "Unit 2", "word": "Developmental abnormality", "ipa": "/dɪˌvɛl.əpˈmɛn.təl ˌæb.nɔːrˈmæl.ə.ti/", "pos": "n.", "meaning": "Bất thường phát triển", "relatedTerms": [ "Amelogenesis imperfecta", "Microdontia", "Supernumerary" ], "example": "A developmental abnormality in tooth size or shape can alter occlusion.", "exampleVi": "Một bất thường phát triển về kích thước hoặc hình thể răng có thể làm biến đổi khớp cắn.", "clinicalNote": "Dị tật bẩm sinh về số lượng, hình dạng hay cấu trúc răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_01", "unit": "Unit 3", "word": "Mouth", "ipa": "/maʊθ/", "pos": "n.", "meaning": "Miệng", "relatedTerms": [ "Oral opening", "Lips" ], "example": "The mouth serves as the primary portal of food intake and verbal expression.", "exampleVi": "Miệng đóng vai trò là cửa ngõ chính để tiếp nhận thức ăn và giao tiếp ngôn ngữ.", "clinicalNote": "Cơ quan giải phẫu bên ngoài và bên trong vùng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_02", "unit": "Unit 3", "word": "Oral cavity", "ipa": "/ˈɔːr.əl ˈkæv.ɪ.ti/", "pos": "n.", "meaning": "Khoang miệng", "relatedTerms": [ "Vestibule", "Oral cavity proper" ], "example": "The oral cavity is lined by specialized and masticatory mucosa.", "exampleVi": "Khoang miệng được lót bởi niêm mạc chuyên biệt và niêm mạc nhai.", "clinicalNote": "Chia thành tiền đình miệng và khoang miệng chính thức.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_03", "unit": "Unit 3", "word": "Oral structures", "ipa": "/ˈɔːr.əl ˈstrʌk.tʃərz/", "pos": "n.", "meaning": "Các cấu trúc miệng", "relatedTerms": [ "Teeth", "Tongue", "Salivary glands" ], "example": "All oral structures work harmoniously to accomplish efficient mastication.", "exampleVi": "Tất cả các cấu trúc miệng hoạt động nhịp nhàng để đạt được sự ăn nhai hiệu quả.", "clinicalNote": "Bao gồm răng, nướu, lưỡi, vòm miệng và tuyến nước bọt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_04", "unit": "Unit 3", "word": "Overall", "ipa": "/ˈoʊ.vər.ɔːl/", "pos": "adj.", "meaning": "Tổng thể", "relatedTerms": [ "Comprehensive", "General" ], "example": "Oral health is closely interconnected with overall systemic wellbeing.", "exampleVi": "Sức khỏe răng miệng có mối liên hệ mật thiết với sức khỏe tổng thể toàn thân.", "clinicalNote": "Góc nhìn toàn diện trong y khoa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_05", "unit": "Unit 3", "word": "Teeth", "ipa": "/tiːθ/", "pos": "n.", "meaning": "Răng (Số nhiều)", "relatedTerms": [ "Incisors", "Canines", "Molars" ], "example": "Healthy teeth allow clear speech articulation and efficient digestion.", "exampleVi": "Răng khỏe mạnh cho phép phát âm ngôn ngữ rõ ràng và tiêu hóa hiệu quả.", "clinicalNote": "Dạng số nhiều của tooth.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_06", "unit": "Unit 3", "word": "Gums", "ipa": "/ɡʌmz/", "pos": "n.", "meaning": "Lợi (Thuật ngữ thông thường)", "relatedTerms": [ "Gingiva", "Gum disease" ], "example": "Bleeding gums while flossing are a classic early indicator of gingivitis.", "exampleVi": "Chảy máu lợi khi dùng chỉ nha khoa là dấu hiệu sớm điển hình của viêm lợi.", "clinicalNote": "Tên thông dụng trong đời sống của Gingiva.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_07", "unit": "Unit 3", "word": "Gingiva", "ipa": "/ˈdʒɪn.dʒɪ.və/", "pos": "n.", "meaning": "Lợi (Thuật ngữ giải phẫu)", "relatedTerms": [ "Marginal gingiva", "Attached gingiva" ], "example": "The gingiva forms a protective seal around the cervical collar of each tooth.", "exampleVi": "Nướu tạo một lớp niêm phong bảo vệ quanh vùng cổ răng của mỗi chiếc răng.", "clinicalNote": "Thuật ngữ y khoa chính thức cho nướu/lợi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_08", "unit": "Unit 3", "word": "Tongue", "ipa": "/tʌŋ/", "pos": "n.", "meaning": "Lưỡi", "relatedTerms": [ "Lingual", "Taste buds", "Papillae" ], "example": "The tongue maneuvers the food bolus between the occlusal surfaces.", "exampleVi": "Lưỡi nhào trộn viên thức ăn vào giữa các bề mặt khớp cắn.", "clinicalNote": "Khối cơ vân di động mạnh, thụ cảm vị giác và hỗ trợ nuốt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_09", "unit": "Unit 3", "word": "Hard palate", "ipa": "/hɑːrd ˈpæl.ət/", "pos": "n.", "meaning": "Khẩu cái cứng / Vòm miệng cứng", "relatedTerms": [ "Palatine rugae", "Maxillary bone" ], "example": "The hard palate separates the oral cavity from the nasal cavity above.", "exampleVi": "Khẩu cái cứng ngăn cách khoang miệng với hốc mũi ở phía trên.", "clinicalNote": "2/3 trước vòm miệng có xương nâng đỡ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_10", "unit": "Unit 3", "word": "Soft palate", "ipa": "/sɒft ˈpæl.ət/", "pos": "n.", "meaning": "Khẩu cái mềm / Vòm miệng mềm", "relatedTerms": [ "Uvula", "Velopharyngeal closure" ], "example": "During deglutition, the soft palate lifts to close off the nasopharynx.", "exampleVi": "Trong khi nuốt, khẩu cái mềm nâng lên để đóng kín vùng tỵ hầu.", "clinicalNote": "1/3 sau vòm miệng di động, không có xương.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_11", "unit": "Unit 3", "word": "Anterior", "ipa": "/ænˈtɪr.i.ər/", "pos": "adj.", "meaning": "Phía trước", "relatedTerms": [ "Frontal", "Ventral" ], "example": "The anterior boundary of the oral cavity is formed by the lips.", "exampleVi": "Giới hạn phía trước của khoang miệng được tạo nên bởi đôi môi.", "clinicalNote": "Chỉ vị trí về phía trước.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_12", "unit": "Unit 3", "word": "Posterior", "ipa": "/pɒsˈtɪr.i.ər/", "pos": "adj.", "meaning": "Phía sau", "relatedTerms": [ "Dorsal", "Back" ], "example": "The soft palate extends posteriorly toward the pharynx.", "exampleVi": "Khẩu cái mềm trải dài về phía sau hướng tới vùng hầu.", "clinicalNote": "Chỉ vị trí về phía sau.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_13", "unit": "Unit 3", "word": "Uvula", "ipa": "/ˈjuː.vjə.lə/", "pos": "n.", "meaning": "Lưỡi gà", "relatedTerms": [ "Bifid uvula", "Soft palate projection" ], "example": "The uvula suspends from the midline of the free posterior border of the soft palate.", "exampleVi": "Lưỡi gà treo rủ từ đường giữa của bờ sau tự do của khẩu cái mềm.", "clinicalNote": "Mẩu mô hình nón treo giữa vòm họng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_14", "unit": "Unit 3", "word": "Palatoglossal arch", "ipa": "/ˌpæl.ə.toʊˈɡlɒs.əl ɑːrtʃ/", "pos": "n.", "meaning": "Cung khẩu cái – lưỡi", "relatedTerms": [ "Anterior pillar of fauces", "Tonsillar fossa" ], "example": "The palatoglossal arch forms the anterior pillar of the palatine tonsil.", "exampleVi": "Cung khẩu cái - lưỡi tạo nên trụ trước của hố amidan khẩu cái.", "clinicalNote": "Nếp niêm mạc chứa cơ khẩu cái - lưỡi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_15", "unit": "Unit 3", "word": "Fold of tissue", "ipa": "/foʊld əv ˈtɪʃ.uː/", "pos": "n.", "meaning": "Nếp mô", "relatedTerms": [ "Plica", "Frenulum" ], "example": "The frenulum is a small fold of tissue that tethers the lip to the gingiva.", "exampleVi": "Phanh môi là một nếp mô nhỏ nối giữ môi vào vùng nướu.", "clinicalNote": "Cấu trúc gấp nếp của niêm mạc.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_16", "unit": "Unit 3", "word": "Tonsils", "ipa": "/ˈtɒn.sɪlz/", "pos": "n.", "meaning": "Amidan", "relatedTerms": [ "Palatine tonsils", "Waldeyer ring", "Tonsillitis" ], "example": "The tonsils are lymphoid tissues that assist in defending the airway against pathogens.", "exampleVi": "Amidan là các mô lympho hỗ trợ bảo vệ đường thở chống lại mầm bệnh.", "clinicalNote": "Tổ chức bạch huyết vùng họng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_17", "unit": "Unit 3", "word": "Upper lip", "ipa": "/ˈʌp.ər lɪp/", "pos": "n.", "meaning": "Môi trên", "relatedTerms": [ "Labium superius", "Philtrum" ], "example": "The upper lip is supported by the labial surfaces of the maxillary incisors.", "exampleVi": "Môi trên được nâng đỡ bởi các mặt môi của các răng cửa hàm trên.", "clinicalNote": "Cấu trúc cơ - da - niêm mạc viền trên của miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_18", "unit": "Unit 3", "word": "Lower lip", "ipa": "/ˈloʊ.ər lɪp/", "pos": "n.", "meaning": "Môi dưới", "relatedTerms": [ "Labium inferius", "Labial groove" ], "example": "Competent closure of the lower lip against the upper lip prevents drooling.", "exampleVi": "Sự khép kín ăn khớp của môi dưới với môi trên giúp ngăn chảy nước miếng.", "clinicalNote": "Viền dưới của miệng, di động nhiều hơn môi trên.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_19", "unit": "Unit 3", "word": "Boundary", "ipa": "/ˈbaʊn.dər.i/", "pos": "n.", "meaning": "Giới hạn", "relatedTerms": [ "Border", "Margin", "Anatomical limit" ], "example": "The lips and cheeks demarcate the external boundaries of the oral cavity.", "exampleVi": "Đôi môi và hai bên má phân định các giới hạn bên ngoài của khoang miệng.", "clinicalNote": "Ranh giới giải phẫu học.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_20", "unit": "Unit 3", "word": "Roof of the mouth", "ipa": "/ruːf əv ðə maʊθ/", "pos": "n.", "meaning": "Vòm miệng", "relatedTerms": [ "Palate", "Hard and soft palate" ], "example": "The roof of the mouth consists of the anterior hard palate and posterior soft palate.", "exampleVi": "Vòm miệng bao gồm khẩu cái cứng phía trước và khẩu cái mềm phía sau.", "clinicalNote": "Thành trên của khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_21", "unit": "Unit 3", "word": "Jaw", "ipa": "/dʒɔː/", "pos": "n.", "meaning": "Hàm", "relatedTerms": [ "Maxilla", "Mandible", "Jawbone" ], "example": "Discrepancy in jaw size produces severe malocclusion.", "exampleVi": "Sự bất cân xứng trong kích thước xương hàm tạo ra sai khớp cắn nặng.", "clinicalNote": "Bộ khung xương nâng đỡ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_22", "unit": "Unit 3", "word": "Jaw bone", "ipa": "/dʒɔː boʊn/", "pos": "n.", "meaning": "Xương hàm", "relatedTerms": [ "Mandible", "Alveolar process" ], "example": "Dental implants are osseointegrated into the jaw bone.", "exampleVi": "Trụ implant nha khoa được tích hợp xương vào trong xương hàm.", "clinicalNote": "Gồm xương hàm trên và xương hàm dưới.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_23", "unit": "Unit 3", "word": "Mastication", "ipa": "/ˌmæs.tɪˈkeɪ.ʃən/", "pos": "n.", "meaning": "Nhai", "relatedTerms": [ "Chewing", "Masseter muscle", "Bolus formation" ], "example": "Mastication crushes and prepares food for safe swallowing.", "exampleVi": "Quá trình nhai nghiền nát và chuẩn bị thức ăn để nuốt an toàn.", "clinicalNote": "Hoạt động cơ học đầu tiên của hệ tiêu hóa.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_24", "unit": "Unit 3", "word": "Anatomical landmark", "ipa": "/ˌæn.əˈtɒm.ɪ.kəl ˈlænd.mɑːrk/", "pos": "n.", "meaning": "Mốc giải phẫu", "relatedTerms": [ "Mental foramen", "Incisive papilla" ], "example": "The incisive papilla is a critical anatomical landmark for local anesthesia.", "exampleVi": "Gai cửa là một mốc giải phẫu quan trọng để gây tê tại chỗ.", "clinicalNote": "Điểm nhận diện trên lâm sàng và X-quang.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_25", "unit": "Unit 3", "word": "Bolus", "ipa": "/ˈboʊ.ləs/", "pos": "n.", "meaning": "Viên thức ăn", "relatedTerms": [ "Food bolus", "Salivary mixing" ], "example": "Saliva aggregates chewed food particles into a cohesive, lubricated bolus.", "exampleVi": "Nước bọt kết tụ các mảnh thức ăn đã nhai thành một viên thức ăn dính kết và trơn láng.", "clinicalNote": "Thức ăn đã được nghiền và làm ẩm sẵn sàng để nuốt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_26", "unit": "Unit 3", "word": "Swallowing", "ipa": "/ˈswɒl.oʊ.ɪŋ/", "pos": "n.", "meaning": "Nuốt", "relatedTerms": [ "Deglutition", "Dysphagia" ], "example": "Mature swallowing involves coordinated movements of the tongue, palate, and pharynx.", "exampleVi": "Kiểu nuốt trưởng thành đòi hỏi các cử động phối hợp nhịp nhàng giữa lưỡi, vòm miệng và hầu.", "clinicalNote": "Thuật ngữ y học chính thức là Deglutition.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_27", "unit": "Unit 3", "word": "Digestion", "ipa": "/daɪˈdʒɛs.tʃən/", "pos": "n.", "meaning": "Tiêu hóa", "relatedTerms": [ "Digestive tract", "Amylase enzyme" ], "example": "Chemical digestion of starches begins in the mouth with salivary amylase.", "exampleVi": "Sự tiêu hóa hóa học tinh bột bắt đầu ngay tại miệng nhờ vào men amylase nước bọt.", "clinicalNote": "Phân giải thức ăn cơ học và hóa học.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_28", "unit": "Unit 3", "word": "Speech", "ipa": "/spiːtʃ/", "pos": "n.", "meaning": "Lời nói", "relatedTerms": [ "Phonation", "Articulation" ], "example": "Teeth, tongue, and lips are active articulators required for clear speech.", "exampleVi": "Răng, lưỡi và môi là các cơ quan phát âm chủ động cần thiết cho lời nói rõ ràng.", "clinicalNote": "Chức năng giao tiếp xã hội của khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_29", "unit": "Unit 3", "word": "Taste", "ipa": "/teɪst/", "pos": "n.", "meaning": "Vị giác", "relatedTerms": [ "Gustation", "Taste buds", "Papillae" ], "example": "Taste perception relies on chemical receptors located inside the lingual taste buds.", "exampleVi": "Sự nhận biết vị giác dựa vào các thụ thể hóa học nằm bên trong nụ vị giác của lưỡi.", "clinicalNote": "5 vị cơ bản: ngọt, chua, mặn, đắng, umami.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_30", "unit": "Unit 3", "word": "Immune system", "ipa": "/ɪˈmjuːn ˈsɪs.təm/", "pos": "n.", "meaning": "Hệ miễn dịch", "relatedTerms": [ "Immunoglobulins", "Secretory IgA", "Tonsils" ], "example": "Salivary secretory IgA forms an essential front line of the oral immune system.", "exampleVi": "Kháng thể IgA tiết trong nước bọt tạo thành tuyến đầu thiết yếu của hệ miễn dịch miệng.", "clinicalNote": "Bảo vệ chống nhiễm trùng vi khuẩn, virus vùng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_31", "unit": "Unit 3", "word": "Soft tissue", "ipa": "/sɒft ˈtɪʃ.uː/", "pos": "n.", "meaning": "Mô mềm", "relatedTerms": [ "Oral mucosa", "Gingiva", "Buccal mucosa" ], "example": "Oral cancer screening entails examining every soft tissue surface in the mouth.", "exampleVi": "Tầm soát ung thư miệng đòi hỏi phải thăm khám kỹ từng bề mặt mô mềm trong miệng.", "clinicalNote": "Niêm mạc, nướu, lưỡi và tuyến nước bọt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_32", "unit": "Unit 3", "word": "Hard structure", "ipa": "/hɑːrd ˈstrʌk.tʃər/", "pos": "n.", "meaning": "Cấu trúc cứng", "relatedTerms": [ "Enamel", "Cortical bone" ], "example": "Teeth and jawbones represent the calcified hard structures of the oral cavity.", "exampleVi": "Răng và xương hàm đại diện cho các cấu trúc cứng vôi hóa của khoang miệng.", "clinicalNote": "Mô chịu lực và nâng đỡ hình thể mặt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_33", "unit": "Unit 3", "word": "Anatomical structure", "ipa": "/ˌæn.əˈtɒm.ɪ.kəl ˈstrʌk.tʃər/", "pos": "n.", "meaning": "Cấu trúc giải phẫu", "relatedTerms": [ "Organ", "Morphology" ], "example": "The temporomandibular joint is a complex anatomical structure linking the jaw to the cranium.", "exampleVi": "Khớp thái dương hàm là một cấu trúc giải phẫu phức tạp nối liền xương hàm với hộp sọ.", "clinicalNote": "Mọi thực thể có hình thái và chức năng trong cơ thể.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u3_34", "unit": "Unit 3", "word": "Oral anatomy", "ipa": "/ˈɔːr.əl əˈnæt.ə.mi/", "pos": "n.", "meaning": "Giải phẫu miệng", "relatedTerms": [ "Dental anatomy", "Oral histology" ], "example": "A solid mastery of oral anatomy is the cornerstone of clinical dental competence.", "exampleVi": "Sự nắm vững vững chắc giải phẫu miệng là nền tảng cốt lõi của năng lực lâm sàng nha khoa.", "clinicalNote": "Môn học cơ sở then chốt trong ngành Răng Hàm Mặt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_01", "unit": "Unit 4", "word": "Dentistry", "ipa": "/ˈden.tɪ.stri/", "pos": "n.", "meaning": "Nha khoa", "relatedTerms": [ "General dentistry", "Restorative dentistry", "Cosmetic dentistry" ], "example": "Modern dentistry focuses on both prevention and treatment of oral diseases.", "exampleVi": "Nha khoa hiện đại tập trung vào cả phòng ngừa và điều trị các bệnh lý răng miệng.", "clinicalNote": "Ngành y tế chuyên về chăm sóc sức khỏe răng miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_02", "unit": "Unit 4", "word": "Dentist", "ipa": "/ˈden.tɪst/", "pos": "n.", "meaning": "Nha sĩ / Bác sĩ nha khoa", "relatedTerms": [ "General dentist", "Dental practitioner", "Chairside manner" ], "example": "The dentist recommended a routine scaling every six months.", "exampleVi": "Bác sĩ nha khoa khuyên nên lấy cao răng định kỳ mỗi sáu tháng.", "clinicalNote": "Người chịu trách nhiệm chẩn đoán và điều trị chính.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_03", "unit": "Unit 4", "word": "Dental specialist", "ipa": "/ˈden.təl ˈspeʃ.əl.ɪst/", "pos": "n.", "meaning": "Bác sĩ chuyên khoa nha khoa", "relatedTerms": [ "Specialty board", "Advanced training", "Clinical expertise" ], "example": "Complex root canal cases are usually referred to a dental specialist.", "exampleVi": "Những ca điều trị tủy phức tạp thường được chuyển đến bác sĩ chuyên khoa nha khoa.", "clinicalNote": "Bác sĩ đã qua đào tạo sau đại học chuyên sâu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_04", "unit": "Unit 4", "word": "Specialization", "ipa": "/ˌspeʃ.əl.aɪˈzeɪ.ʃən/", "pos": "n.", "meaning": "Chuyên khoa / Chuyên môn hóa", "relatedTerms": [ "Residency program", "Subspecialty", "Clinical scope" ], "example": "Specialization allows dentists to focus on complex pathologies.", "exampleVi": "Chuyên môn hóa cho phép các bác sĩ nha khoa tập trung vào các bệnh lý phức tạp.", "clinicalNote": "Xu hướng phân chia chuyên sâu trong nha khoa hiện đại.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_05", "unit": "Unit 4", "word": "Orthodontics", "ipa": "/ˌɔː.θəˈdɒn.tɪks/", "pos": "n.", "meaning": "Chỉnh nha", "relatedTerms": [ "Malocclusion", "Orthodontic appliance", "Cephalometrics" ], "example": "Orthodontics corrects dental irregularities and skeletal discrepancies.", "exampleVi": "Chỉnh nha khắc phục các lệch lạc của răng và bất hài hòa xương hàm.", "clinicalNote": "Chuyên khoa điều chỉnh vị trí răng và xương hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_06", "unit": "Unit 4", "word": "Orthodontist", "ipa": "/ˌɔː.θəˈdɒn.tɪst/", "pos": "n.", "meaning": "Bác sĩ chỉnh nha", "relatedTerms": [ "Bracket placement", "Wire adjustment", "Clear aligner provider" ], "example": "The orthodontist designed a treatment plan using fixed brackets.", "exampleVi": "Bác sĩ chỉnh nha đã thiết kế phác đồ điều trị sử dụng mắc cài cố định.", "clinicalNote": "Bác sĩ chuyên sâu về di chuyển răng và khớp cắn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_07", "unit": "Unit 4", "word": "Braces", "ipa": "/ˈbreɪ.sɪz/", "pos": "n.", "meaning": "Khí cụ chỉnh nha / Niềng răng / Mắc cài", "relatedTerms": [ "Metal brackets", "Archwire", "Ligature" ], "example": "The patient wore braces for two years to resolve severe crowding.", "exampleVi": "Bệnh nhân đã đeo niềng răng trong hai năm để giải quyết tình trạng chen chúc nặng.", "clinicalNote": "Khí cụ cố định tạo lực di chuyển răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_08", "unit": "Unit 4", "word": "Alignment", "ipa": "/əˈlaɪn.mənt/", "pos": "n.", "meaning": "Sự thẳng hàng", "relatedTerms": [ "Arch form", "Leveling and aligning", "Symmetry" ], "example": "Proper alignment facilitates oral hygiene and improves aesthetics.", "exampleVi": "Sự thẳng hàng chuẩn giúp việc vệ sinh răng miệng dễ dàng hơn và tăng tính thẩm mỹ.", "clinicalNote": "Mục tiêu quan trọng trong giai đoạn đầu chỉnh nha.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_09", "unit": "Unit 4", "word": "Endodontics", "ipa": "/ˌen.dəʊˈdɒn.tɪks/", "pos": "n.", "meaning": "Nội nha", "relatedTerms": [ "Pulpectomy", "Periapical lesion", "Dental microscope" ],
