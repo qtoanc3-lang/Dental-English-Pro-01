@@ -428,7 +428,7 @@
           </div>
           <div class="p-3.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800 space-y-1">
             <p class="font-extrabold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5"><i class="fa-solid fa-file-circle-question"></i> 7. Quét PDF Tạo Đề Thi Tự Động</p>
-            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Kéo thả slide bài giảng hoặc sách PDF; Gemini 3.8 Flash tự động trích xuất từ vựng và biên soạn đề trắc nghiệm lâm sàng 10 câu có chấm điểm.</p>
+            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Kéo thả slide bài giảng hoặc sách PDF; Gemini 2.5 Flash tự động trích xuất từ vựng và biên soạn đề trắc nghiệm lâm sàng 10 câu có chấm điểm.</p>
           </div>
         </div>
       </div>
@@ -1003,7 +1003,7 @@
             <span class="text-[10px] text-indigo-600">Nhấn để xem / ẩn</span>
           </summary>
           <p class="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-            Bạn có file PDF slide bài giảng, đề cương hoặc giáo trình tiếng Anh chuyên ngành? Hãy kéo thả file vào khung bên dưới hoặc dán văn bản. <strong>Google Gemini 3.8 Flash</strong> sẽ quét toàn bộ tài liệu để: <strong>(1)</strong> Tự động bóc tách từ vựng y nha khoa cốt lõi để bạn nạp vào app bằng 1 cú click; <strong>(2)</strong> Tự động biên soạn một bộ đề thi trắc nghiệm riêng bám sát bài học để bạn thi thử ngay lập tức!
+            Bạn có file PDF slide bài giảng, đề cương hoặc giáo trình tiếng Anh chuyên ngành? Hãy kéo thả file vào khung bên dưới hoặc dán văn bản. <strong>Google Gemini 2.5 Flash</strong> sẽ quét toàn bộ tài liệu để: <strong>(1)</strong> Tự động bóc tách từ vựng y nha khoa cốt lõi để bạn nạp vào app bằng 1 cú click; <strong>(2)</strong> Tự động biên soạn một bộ đề thi trắc nghiệm riêng bám sát bài học để bạn thi thử ngay lập tức!
           </p>
         </details>
 
@@ -1014,7 +1014,7 @@
           </div>
           <div>
             <h3 class="font-extrabold text-sm sm:text-base">Xưởng Sinh Đề Thi Từ Tài Liệu (AI Document Exam Studio)</h3>
-            <p class="text-xs text-slate-500">Tải Slide, PDF, DOCX để Gemini 3.8 Flash tự tạo đề thi và trích xuất từ vựng</p>
+            <p class="text-xs text-slate-500">Tải Slide, PDF, DOCX để Gemini 2.5 Flash tự tạo đề thi và trích xuất từ vựng</p>
           </div>
         </div>
 
@@ -1051,7 +1051,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button id="btnDocGenerateExam" type="button" class="p-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
               <i class="fa-solid fa-wand-magic-sparkles"></i>
-              <span>Sinh Đề Thi Trắc Nghiệm 10 Câu Bằng Gemini 3.8 Flash</span>
+              <span>Sinh Đề Thi Trắc Nghiệm 10 Câu Bằng Gemini 2.5 Flash</span>
             </button>
             <button id="btnDocExtractVocab" type="button" class="p-3.5 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
               <i class="fa-solid fa-list-check"></i>
@@ -1062,7 +1062,7 @@
           <!-- Loading Overlay Khi Gemini Đang Quét & Sinh Đề -->
           <div id="docLoadingBox" class="hidden p-6 rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-center space-y-2">
             <i class="fa-solid fa-spinner fa-spin text-2xl text-indigo-600"></i>
-            <p id="docLoadingStatusText" class="font-black text-xs sm:text-sm text-indigo-800 dark:text-indigo-300">Đang quét tài liệu và gửi yêu cầu tới Google Gemini 3.8 Flash...</p>
+            <p id="docLoadingStatusText" class="font-black text-xs sm:text-sm text-indigo-800 dark:text-indigo-300">Đang quét tài liệu và gửi yêu cầu tới Google Gemini 2.5 Flash...</p>
             <p class="text-[11px] text-slate-500">Quá trình này mất khoảng 3 - 6 giây tùy vào độ dài của bài học.</p>
           </div>
         </div>
@@ -1144,7 +1144,7 @@
           <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg"><i class="fa-solid fa-book-open-reader"></i></div>
           <div>
             <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Cẩm Nang Hướng Dẫn Sử Dụng</h3>
-            <p class="text-[11px] text-slate-500">Khám phá toàn bộ 6 Chế độ và Tính năng hệ thống</p>
+            <p class="text-[11px] text-slate-500">Khám phá toàn bộ 7 Chế độ và Tính năng hệ thống</p>
           </div>
         </div>
         <button id="btnCloseGuideModal" type="button" class="text-slate-400 hover:text-rose-500 transition p-1.5"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -1188,7 +1188,7 @@
         </section>
         <section class="space-y-2">
           <h4 class="font-extrabold text-indigo-600 dark:text-indigo-400 flex items-center gap-2"><i class="fa-solid fa-file-circle-question"></i> Chế độ 7: Quét Tài Liệu PDF/Slide & Tự Động Tạo Đề Thi</h4>
-          <p class="text-xs leading-relaxed">Kéo thả bất kỳ file Slide bài giảng (.pdf, .docx, .txt) hoặc dán bài học. Gemini 3.8 Flash tự động bóc tách từ vựng y khoa và tạo ngay 1 đề thi trắc nghiệm 10 câu có đồng hồ đếm ngược và giải thích chi tiết, kèm nút 1-click nạp toàn bộ từ mới vào kho từ vựng.</p>
+          <p class="text-xs leading-relaxed">Kéo thả bất kỳ file Slide bài giảng (.pdf, .docx, .txt) hoặc dán bài học. Gemini 2.5 Flash tự động bóc tách từ vựng y khoa và tạo ngay 1 đề thi trắc nghiệm 10 câu có đồng hồ đếm ngược và giải thích chi tiết, kèm nút 1-click nạp toàn bộ từ mới vào kho từ vựng.</p>
         </section>
       </div>
       <div class="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50">
@@ -1293,7 +1293,7 @@
           </summary>
           <div class="mt-3 space-y-2.5">
             <p class="text-[11px] text-slate-500">
-              Nhập API Key để mở khóa mô hình <strong>Gemini 3.8 Flash</strong> (chuẩn mới nhất từ Google AI Studio): Giải thích mọi ca bệnh lâm sàng phức tạp, dịch tự do và tự động phân tích làm giàu từ vựng ở Tab 5.
+              Nhập API Key để mở khóa mô hình <strong>Gemini 2.5 Flash</strong> (chuẩn mới nhất từ Google AI Studio): Giải thích mọi ca bệnh lâm sàng phức tạp, dịch tự do và tự động phân tích làm giàu từ vựng ở Tab 5.
             </p>
             <input id="userGeminiKeyInput" type="password" placeholder="Dán Gemini API Key (AIzaSy...)..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs font-mono" />
             <p id="aiKeyStatusHint" class="text-[11px] font-semibold text-slate-500"></p>
@@ -1398,7 +1398,7 @@
 
       <div class="pt-1 space-y-3">
         <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer select-none">
-          <input type="checkbox" id="chkDontShowWhatsNewAgain" class="w-4 h-4 rounded text-teal-600 focus:ring-teal-500 border-slate-300" />
+          <input type="checkbox" id="chkDontShowWhatsNewAgain" checked class="w-4 h-4 rounded text-teal-600 focus:ring-teal-500 border-slate-300" />
           <span>Không tự động hiện bảng thông báo này ở những lần mở sau</span>
         </label>
         <button id="btnAcknowledgeUpdate" type="button" class="w-full py-3 rounded-2xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:brightness-110 text-white font-extrabold text-xs shadow-lg shadow-teal-500/20 transition">
@@ -1896,7 +1896,6 @@
       }
 
       if (tabName === "dashboard") renderDashboard();
-      if (tabName === "docexam" && typeof initDocExamStudio === "function") initDocExamStudio();
     }
 
     // ================= STREAK & VERSIONING =================
@@ -2045,25 +2044,24 @@
 
       if (isExpanded) {
         expandedUnitDetails.delete(unitName);
-        if (btnElement) {
-          const icon = btnElement.querySelector('i');
-          if (icon) icon.style.transform = "rotate(0deg)";
-        }
-        boxIds.forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.classList.remove('expanded');
-        });
       } else {
         expandedUnitDetails.add(unitName);
-        if (btnElement) {
-          const icon = btnElement.querySelector('i');
-          if (icon) icon.style.transform = "rotate(180deg)";
-        }
-        boxIds.forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.classList.add('expanded');
-        });
       }
+
+      const nextState = expandedUnitDetails.has(unitName);
+      if (btnElement) {
+        const icon = btnElement.querySelector('i');
+        if (icon) icon.style.transform = nextState ? "rotate(180deg)" : "rotate(0deg)";
+      }
+
+      document.querySelectorAll(`[data-dash-toggle-unit="${unitName}"] i, [data-tree-toggle-unit="${unitName}"] i`).forEach(ic => {
+        ic.style.transform = nextState ? "rotate(180deg)" : "rotate(0deg)";
+      });
+
+      boxIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('expanded', nextState);
+      });
     }
 
     function renderUnitAccordion() {
@@ -3801,10 +3799,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       let docExamTimeLeft = 600;
       let docExtractedVocabList = [];
 
-      function initDocExamStudio() {
-        // Khởi tạo các sự kiện drag & drop và file picker
-      }
-
+      const docExamDropZone = document.getElementById("docExamDropZone");
       const docExamFileInput = document.getElementById("docExamFileInput");
       const btnSelectDocFile = document.getElementById("btnSelectDocFile");
       const btnClearDocFile = document.getElementById("btnClearDocFile");
@@ -3818,6 +3813,26 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
         document.getElementById("docExamTextInput").value = "";
         showToast("Đã xóa file tải lên", "info");
       };
+
+      // Bổ sung sự kiện Kéo & Thả (Drag & Drop) cho Tab 7
+      if (docExamDropZone) {
+        docExamDropZone.addEventListener("dragover", e => {
+          e.preventDefault();
+          docExamDropZone.classList.add("border-indigo-500", "bg-indigo-100/70");
+        });
+        docExamDropZone.addEventListener("dragleave", e => {
+          e.preventDefault();
+          docExamDropZone.classList.remove("border-indigo-500", "bg-indigo-100/70");
+        });
+        docExamDropZone.addEventListener("drop", e => {
+          e.preventDefault();
+          docExamDropZone.classList.remove("border-indigo-500", "bg-indigo-100/70");
+          if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            docExamFileInput.files = e.dataTransfer.files;
+            docExamFileInput.dispatchEvent(new Event("change"));
+          }
+        });
+      }
 
       docExamFileInput.onchange = async e => {
         const file = e.target.files[0];
@@ -3837,10 +3852,12 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
           if (['txt', 'csv', 'json', 'md'].includes(ext)) {
             text = await file.text();
           } else if (ext === 'docx') {
+            if (typeof mammoth === "undefined") throw new Error("Thư viện đọc Word chưa sẵn sàng khi Offline.");
             const ab = await file.arrayBuffer();
             const res = await mammoth.extractRawText({ arrayBuffer: ab });
             text = res.value;
           } else if (ext === 'pdf') {
+            if (typeof pdfjsLib === "undefined") throw new Error("Thư viện đọc PDF chưa sẵn sàng khi Offline.");
             const ab = await file.arrayBuffer();
             const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
             for (let i = 1; i <= pdf.numPages; i++) {
@@ -3853,7 +3870,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
           }
 
           document.getElementById("docExamTextInput").value = text.trim();
-          showToast(`Trích xuất thành công ${text.trim().split(/\s+/).length} từ từ file!`, "success");
+          showToast(`Trích xuất thành công ${text.trim().split(/\s+/).filter(Boolean).length} từ từ file!`, "success");
         } catch (err) {
           showToast(`Lỗi đọc file: ${err.message}`, "error");
         } finally {
@@ -3868,7 +3885,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
 
         const loadingBox = document.getElementById("docLoadingBox");
         loadingBox.classList.remove("hidden");
-        document.getElementById("docLoadingStatusText").textContent = "Gemini AI đang phân tích kiến thức và biên soạn đề thi 10 câu...";
+        document.getElementById("docLoadingStatusText").textContent = "Gemini 2.5 Flash đang phân tích kiến thức và biên soạn đề thi 10 câu...";
 
         const apiKey = localStorage.getItem(STORAGE_KEY_AI_KEY);
         let examQuestions = [];
@@ -3902,8 +3919,8 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
                 const clean = raw.replace(/```json/gi, "").replace(/```/g, "").trim();
                 const parsed = JSON.parse(clean);
                 if (Array.isArray(parsed) && parsed.length > 0) {
-                  examQuestions = parsed;
-                  break;
+                  examQuestions = parsed.filter(q => q && q.question && Array.isArray(q.options) && q.options.length >= 2);
+                  if (examQuestions.length > 0) break;
                 }
               }
             } catch (e) {
@@ -3923,7 +3940,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
             return {
               question: `Thuật ngữ chuyên ngành nha khoa "${item.word}" (${item.ipa}) có ý nghĩa lâm sàng là gì?`,
               options: opts,
-              correctIndex: opts.indexOf(item.meaning),
+              correctIndex: Math.max(0, opts.indexOf(item.meaning)),
               rationale: `${item.word} có nghĩa là: ${item.meaning}. Ghi chú: ${item.clinicalNote}`
             };
           });
@@ -3944,6 +3961,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
           updateDocExamTimer();
           clearInterval(docExamTimerInterval);
           docExamTimerInterval = setInterval(() => {
+            if (currentActiveTab !== "docexam") return; // Tạm dừng đếm khi chuyển sang tab khác
             docExamTimeLeft--;
             updateDocExamTimer();
             if (docExamTimeLeft <= 0) {
@@ -3959,8 +3977,8 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
       };
 
       function updateDocExamTimer() {
-        const m = Math.floor(docExamTimeLeft / 60);
-        const s = docExamTimeLeft % 60;
+        const m = Math.max(0, Math.floor(docExamTimeLeft / 60));
+        const s = Math.max(0, docExamTimeLeft % 60);
         document.getElementById("docExamTimerText").textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
       }
 
@@ -4036,12 +4054,18 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
         document.getElementById("docExamPlayView").classList.add("hidden");
         document.getElementById("docExamResultView").classList.remove("hidden");
 
+        // Ẩn nút nạp từ vựng và hiện nút làm lại đề khi ở chế độ Chấm điểm thi
+        document.getElementById("btnDocImportAllExtracted").classList.add("hidden");
+        document.getElementById("btnDocRetryExam").classList.remove("hidden");
+
         let correct = 0;
         docExamPool.forEach((q, idx) => {
           if (docExamAnswers[idx] === q.correctIndex) correct++;
         });
 
-        document.getElementById("docExamFinalScore").textContent = `Điểm số: ${correct} / ${docExamPool.length} câu đúng (${Math.round((correct / docExamPool.length) * 100)}%)`;
+        const totalQ = docExamPool.length || 1;
+        const pct = Math.round((correct / totalQ) * 100);
+        document.getElementById("docExamFinalScore").textContent = `Điểm số: ${correct} / ${docExamPool.length} câu đúng (${pct}%)`;
         const reviewBox = document.getElementById("docExtractedVocabReviewBox");
         reviewBox.innerHTML = "<p class='font-bold text-slate-700 dark:text-slate-200 mb-1'>Bảng đối chiếu câu hỏi & giải thích:</p>";
         docExamPool.forEach((q, idx) => {
@@ -4070,6 +4094,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
       };
 
       document.getElementById("btnDocRetryExam").onclick = () => {
+        if (!docExamPool || docExamPool.length === 0) return;
         docExamCurrentIndex = 0;
         docExamAnswers = {};
         docExamTimeLeft = docExamPool.length * 60;
@@ -4079,6 +4104,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
         updateDocExamTimer();
         clearInterval(docExamTimerInterval);
         docExamTimerInterval = setInterval(() => {
+          if (currentActiveTab !== "docexam") return;
           docExamTimeLeft--;
           updateDocExamTimer();
           if (docExamTimeLeft <= 0) {
@@ -4100,7 +4126,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
 
         const loadingBox = document.getElementById("docLoadingBox");
         loadingBox.classList.remove("hidden");
-        document.getElementById("docLoadingStatusText").textContent = "Gemini AI đang trích xuất thuật ngữ Y Nha khoa từ tài liệu...";
+        document.getElementById("docLoadingStatusText").textContent = "Gemini 2.5 Flash đang trích xuất thuật ngữ Y Nha khoa từ tài liệu...";
 
         const apiKey = localStorage.getItem(STORAGE_KEY_AI_KEY);
         let extractedTerms = [];
@@ -4135,8 +4161,8 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
                 const clean = raw.replace(/```json/gi, "").replace(/```/g, "").trim();
                 const parsed = JSON.parse(clean);
                 if (Array.isArray(parsed) && parsed.length > 0) {
-                  extractedTerms = parsed;
-                  break;
+                  extractedTerms = parsed.filter(item => item && typeof item.word === "string" && item.word.trim());
+                  if (extractedTerms.length > 0) break;
                 }
               }
             } catch (e) {
@@ -4156,23 +4182,30 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
           docExtractedVocabList = extractedTerms;
           document.getElementById("docExamSetupView").classList.add("hidden");
           document.getElementById("docExamResultView").classList.remove("hidden");
+
+          // Hiện nút nạp từ vựng và ẩn nút làm lại đề khi ở chế độ Trích xuất từ vựng
+          document.getElementById("btnDocImportAllExtracted").classList.remove("hidden");
+          document.getElementById("btnDocRetryExam").classList.add("hidden");
+
           document.getElementById("docExamFinalScore").textContent = `🎉 Đã trích xuất thành công ${extractedTerms.length} thuật ngữ!`;
 
           const reviewBox = document.getElementById("docExtractedVocabReviewBox");
           reviewBox.innerHTML = "<p class='font-bold text-slate-700 dark:text-slate-200 mb-2'>Danh sách thuật ngữ nhận diện:</p>";
           extractedTerms.forEach(t => {
-            reviewBox.innerHTML += `
-              <div class="p-2 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between gap-2">
-                <div>
-                  <span class="font-bold text-slate-900 dark:text-white">${t.word}</span>
-                  <span class="text-[11px] font-mono text-teal-600 dark:text-teal-400">${t.ipa || ""}</span>
-                  <p class="text-xs text-slate-600 dark:text-slate-300">${t.meaning || ""}</p>
-                </div>
-                <button type="button" class="text-teal-600 hover:text-teal-700 p-1" onclick="speakText('${t.word}')">
-                  <i class="fa-solid fa-volume-high"></i>
-                </button>
+            const row = document.createElement("div");
+            row.className = "p-2 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between gap-2";
+            row.innerHTML = `
+              <div>
+                <span class="font-bold text-slate-900 dark:text-white">${t.word}</span>
+                <span class="text-[11px] font-mono text-teal-600 dark:text-teal-400">${t.ipa || ""}</span>
+                <p class="text-xs text-slate-600 dark:text-slate-300">${t.meaning || ""}</p>
               </div>
+              <button type="button" class="btn-speak-extracted text-teal-600 hover:text-teal-700 p-1">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
             `;
+            row.querySelector(".btn-speak-extracted").onclick = () => speakText(t.word);
+            reviewBox.appendChild(row);
           });
           showToast(`Đã trích xuất ${extractedTerms.length} từ vựng!`, "success");
         } else {
@@ -4186,20 +4219,23 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
         }
         const unitName = "Tài Liệu Mới";
         let added = 0;
-        const existingWords = new Set(vocabList.map(v => v.word.toLowerCase()));
+        const existingWords = new Set(vocabList.map(v => (v.word || "").toLowerCase().trim()));
 
         docExtractedVocabList.forEach(item => {
-          if (!existingWords.has(item.word.toLowerCase())) {
+          if (!item || typeof item.word !== "string") return;
+          const cleanKey = item.word.toLowerCase().trim();
+          if (cleanKey && !existingWords.has(cleanKey)) {
+            existingWords.add(cleanKey);
             vocabList.push({
               id: "doc_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
               unit: unitName,
-              word: item.word,
-              ipa: item.ipa || `/${item.word.toLowerCase()}/`,
+              word: item.word.trim(),
+              ipa: item.ipa || `/${cleanKey}/`,
               pos: item.pos || "n.",
-              meaning: item.meaning || item.word,
+              meaning: item.meaning || item.word.trim(),
               relatedTerms: ["Document Extraction"],
-              example: item.example || `Clinical study of ${item.word} is highlighted in this dental lecture.`,
-              exampleVi: item.exampleVi || `Nghiên cứu lâm sàng về ${item.meaning || item.word} được nhấn mạnh trong bài học.`,
+              example: item.example || `Clinical study of ${item.word.trim()} is highlighted in this dental lecture.`,
+              exampleVi: item.exampleVi || `Nghiên cứu lâm sàng về ${item.meaning || item.word.trim()} được nhấn mạnh trong bài học.`,
               clinicalNote: item.clinicalNote || "Trích xuất từ tài liệu bài giảng.",
               srsLevel: 0,
               mistakeCount: 0
@@ -4211,7 +4247,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
         selectedUnits.add(unitName);
         saveDatabase();
         syncAllViews();
-        showToast(`Đã thêm thành công ${added} từ vựng vào học phần "${unitName}"!`, "success");
+        showToast(added > 0 ? `Đã thêm thành công ${added} từ mới vào "${unitName}"!` : "Tất cả các từ này đã có sẵn trong kho học tập!", "success");
       };
 
       // Auto-save on page refresh (F5) or window close
