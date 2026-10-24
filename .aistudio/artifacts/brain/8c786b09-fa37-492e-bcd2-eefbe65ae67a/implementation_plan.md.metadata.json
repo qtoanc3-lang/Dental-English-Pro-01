@@ -1,6 +1,6 @@
 {
-  "summary":  "Kế hoạch khắc phục lỗi lọc câu hỏi trắc nghiệm theo Unit, ổn định hóa cơ chế lưu trữ dữ liệu bền vững khi F5 và tự động chuyển đổi dữ liệu khi cập nhật phiên bản mới trên GitHub.",
-  "updatedAt":  "2026-10-23T14:51:32.318652403Z",
+  "summary":  "Kế hoạch triển khai bản vá QA/QC cho Dental English Pro v7.2.1 khắc phục toàn bộ 9 lỗi trong báo cáo kiểm thử (Critical, Medium, Low/Polish) và đồng bộ chuỗi model Gemini trên toàn hệ thống.",
+  "updatedAt":  "2026-10-24T05:13:24.460798173Z",
   "requestFeedback":  true,
   "userFacing":  true
 }

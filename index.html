@@ -152,6 +152,9 @@
         <button class="mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition" data-tab="cbt">
           <i class="fa-solid fa-laptop-medical"></i> 6. Thi Thử CBT
         </button>
+        <button class="mode-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 transition" data-tab="docexam">
+          <i class="fa-solid fa-file-circle-question"></i> 7. Quét PDF Tạo Đề Thi
+        </button>
       </nav>
     </div>
   </header>
@@ -416,6 +419,10 @@
           <div class="p-3.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800 space-y-1">
             <p class="font-extrabold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5"><i class="fa-solid fa-laptop-medical"></i> 6. Phòng Thi CBT & Up File Đề Cương</p>
             <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Tải lên file đề cương (<code>.txt</code>, <code>.docx</code>, <code>.pdf</code>, <code>.csv</code>, <code>.json</code>, <code>.md</code>) để tạo bài thi trắc nghiệm máy tính có đếm ngược, gắn cờ câu hỏi và phân tích lỗ hổng.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800 space-y-1">
+            <p class="font-extrabold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5"><i class="fa-solid fa-file-circle-question"></i> 7. Quét PDF Tạo Đề Thi Tự Động</p>
+            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">Kéo thả slide bài giảng hoặc sách PDF; Gemini 3.8 Flash tự động trích xuất từ vựng và biên soạn đề trắc nghiệm lâm sàng 10 câu có chấm điểm.</p>
           </div>
         </div>
       </div>
@@ -976,6 +983,138 @@
         </div>
       </div>
     </section>
+
+
+    <!-- ==========================================
+         CHẾ ĐỘ 7: QUÉT TÀI LIỆU PDF/SLIDE TẠO ĐỀ THI TỰ ĐỘNG (AI DOCUMENT EXAM STUDIO)
+         ========================================== -->
+    <section id="tab-docexam" class="tab-panel hidden space-y-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+        <!-- Hướng dẫn nhanh Chế độ 7 -->
+        <details class="p-2.5 rounded-xl bg-indigo-50/70 dark:bg-slate-900/60 border border-indigo-200/70 dark:border-slate-700 text-xs">
+          <summary class="cursor-pointer font-bold text-indigo-800 dark:text-indigo-300 flex items-center justify-between">
+            <span><i class="fa-solid fa-circle-info mr-1.5"></i>Hướng dẫn Chế độ 7: Quét Tài Liệu PDF/Slide & Tự Động Sinh Đề Thi Trắc Nghiệm</span>
+            <span class="text-[10px] text-indigo-600">Nhấn để xem / ẩn</span>
+          </summary>
+          <p class="mt-1.5 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+            Bạn có file PDF slide bài giảng, đề cương hoặc giáo trình tiếng Anh chuyên ngành? Hãy kéo thả file vào khung bên dưới hoặc dán văn bản. <strong>Google Gemini 3.8 Flash</strong> sẽ quét toàn bộ tài liệu để: <strong>(1)</strong> Tự động bóc tách từ vựng y nha khoa cốt lõi để bạn nạp vào app bằng 1 cú click; <strong>(2)</strong> Tự động biên soạn một bộ đề thi trắc nghiệm riêng bám sát bài học để bạn thi thử ngay lập tức!
+          </p>
+        </details>
+
+        <!-- Tiêu đề phân hệ -->
+        <div class="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
+          <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-file-circle-question"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-sm sm:text-base">Xưởng Sinh Đề Thi Từ Tài Liệu (AI Document Exam Studio)</h3>
+            <p class="text-xs text-slate-500">Tải Slide, PDF, DOCX để Gemini 3.8 Flash tự tạo đề thi và trích xuất từ vựng</p>
+          </div>
+        </div>
+
+        <!-- MÀN HÌNH 1: KHUNG THIẾT LẬP VÀ TẢI TÀI LIỆU -->
+        <div id="docExamSetupView" class="space-y-4">
+          <!-- Dropzone Upload File -->
+          <div id="docExamDropZone" class="p-5 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-700 bg-indigo-50/40 dark:bg-indigo-950/20 hover:bg-indigo-50/80 transition space-y-3 relative text-center">
+            <input id="docExamFileInput" type="file" accept=".pdf,.docx,.txt,.md,.json,.csv" class="hidden" />
+            <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl mx-auto shadow-md">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-black text-slate-800 dark:text-slate-100">Kéo thả File Slide / PDF / DOCX vào đây</h4>
+              <p class="text-xs text-slate-500 mt-1">Hỗ trợ các file giáo trình, tài liệu lâm sàng .pdf, .docx, .txt, .md</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2">
+              <button id="btnSelectDocFile" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black shadow transition flex items-center gap-1.5">
+                <i class="fa-solid fa-folder-open"></i> Chọn File Từ Máy
+              </button>
+              <button id="btnClearDocFile" type="button" class="hidden px-3 py-2 rounded-xl bg-rose-100 text-rose-600 text-xs font-bold hover:bg-rose-200 transition">
+                <i class="fa-solid fa-trash-can mr-1"></i> Xóa File
+              </button>
+            </div>
+            <p id="docUploadedNameBadge" class="hidden text-xs font-bold text-emerald-600 dark:text-emerald-400"></p>
+          </div>
+
+          <!-- Hoặc Dán Văn Bản Trực Tiếp -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Hoặc dán nội dung bài giảng / ca bệnh vào đây:</label>
+            <textarea id="docExamTextInput" rows="4" placeholder="Dán nội dung slide bài giảng, đoạn văn tiếng Anh nha khoa hoặc ca bệnh lâm sàng vào đây...&#10;Ví dụ: Acute pulpitis is an inflammation of the dental pulp tissue caused by bacterial invasion from dental caries..." class="w-full p-3.5 rounded-2xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs sm:text-sm font-sans focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <!-- Các Tùy Chọn & Nút Thực Thi -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button id="btnDocGenerateExam" type="button" class="p-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Sinh Đề Thi Trắc Nghiệm 10 Câu Bằng Gemini 3.8 Flash</span>
+            </button>
+            <button id="btnDocExtractVocab" type="button" class="p-3.5 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-list-check"></i>
+              <span>Trích Xuất Từ Vựng Cốt Lõi & Lưu Vào App</span>
+            </button>
+          </div>
+
+          <!-- Loading Overlay Khi Gemini Đang Quét & Sinh Đề -->
+          <div id="docLoadingBox" class="hidden p-6 rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-center space-y-2">
+            <i class="fa-solid fa-spinner fa-spin text-2xl text-indigo-600"></i>
+            <p id="docLoadingStatusText" class="font-black text-xs sm:text-sm text-indigo-800 dark:text-indigo-300">Đang quét tài liệu và gửi yêu cầu tới Google Gemini 3.8 Flash...</p>
+            <p class="text-[11px] text-slate-500">Quá trình này mất khoảng 3 - 6 giây tùy vào độ dài của bài học.</p>
+          </div>
+        </div>
+
+        <!-- MÀN HÌNH 2: LÀM BÀI THI TRẮC NGHIỆM ĐƯỢC SINH TỪ TÀI LIỆU -->
+        <div id="docExamPlayView" class="hidden space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-700">
+            <div class="flex items-center gap-2">
+              <span id="docExamCounterText" class="px-2.5 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 font-black text-xs">Câu 1/10</span>
+              <span class="text-xs font-bold text-slate-500">Đề thi biên soạn riêng từ tài liệu</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="docExamTimerText" class="px-3 py-1 rounded-full bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400 font-black text-xs">10:00</span>
+              <button id="btnQuitDocExam" type="button" class="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 text-xs font-bold text-slate-600 transition">Thoát</button>
+            </div>
+          </div>
+
+          <!-- Nội Dung Câu Hỏi -->
+          <div class="p-4 sm:p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+            <h4 id="docExamQuestionText" class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-relaxed">Đang tải câu hỏi...</h4>
+            <div id="docExamOptionsContainer" class="grid grid-cols-1 gap-2 pt-2"></div>
+            <div id="docExamRationaleBox" class="hidden p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 text-xs text-emerald-800 dark:text-emerald-300"></div>
+          </div>
+
+          <!-- Điều Hướng Câu Hỏi -->
+          <div class="flex items-center justify-between gap-2 pt-2">
+            <button id="btnDocExamPrev" type="button" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition">
+              <i class="fa-solid fa-arrow-left mr-1"></i> Câu trước
+            </button>
+            <button id="btnDocExamNext" type="button" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black shadow transition">
+              <span>Câu kế tiếp</span> <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+            <button id="btnDocExamSubmit" type="button" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black shadow transition">
+              <i class="fa-solid fa-check mr-1"></i> Nộp Bài
+            </button>
+          </div>
+        </div>
+
+        <!-- MÀN HÌNH 3: KẾT QUẢ BÀI THI & TRÍCH XUẤT TỪ VỰNG -->
+        <div id="docExamResultView" class="hidden p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 text-center space-y-3">
+          <i class="fa-solid fa-circle-check text-4xl text-emerald-500"></i>
+          <h4 class="text-xl font-black text-slate-900 dark:text-white">Hoàn Thành Bài Thi Tài Liệu</h4>
+          <p id="docExamFinalScore" class="text-base font-black text-indigo-600 dark:text-indigo-400">Điểm số: 9 / 10 câu đúng</p>
+          <div id="docExtractedVocabReviewBox" class="text-left text-xs bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 max-h-56 overflow-y-auto"></div>
+          <div class="flex flex-wrap justify-center gap-2 pt-2">
+            <button id="btnDocImportAllExtracted" type="button" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-black shadow transition">
+              <i class="fa-solid fa-cloud-arrow-down mr-1"></i> Nạp Toàn Bộ Từ Vào Kho Học
+            </button>
+            <button id="btnDocRetryExam" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black shadow transition">
+              <i class="fa-solid fa-rotate-right mr-1"></i> Làm Lại Đề Này
+            </button>
+            <button id="btnDocNewExam" type="button" class="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition">
+              Quét File Mới
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- CHÂN TRANG BẢN QUYỀN CỐ ĐỊNH -->
@@ -1040,6 +1179,10 @@
             <li>Hệ thống sẽ trích xuất văn bản trong File, đối chiếu với cơ sở dữ liệu và đếm số lượng từ vựng xuất hiện.</li>
             <li>Bật <strong>Chế độ riêng đề cương</strong> để App tạo bài thi trắc nghiệm CHỈ TỪ NHỮNG TỪ có trong file bạn vừa tải lên.</li>
           </ul>
+        </section>
+        <section class="space-y-2">
+          <h4 class="font-extrabold text-indigo-600 dark:text-indigo-400 flex items-center gap-2"><i class="fa-solid fa-file-circle-question"></i> Chế độ 7: Quét Tài Liệu PDF/Slide & Tự Động Tạo Đề Thi</h4>
+          <p class="text-xs leading-relaxed">Kéo thả bất kỳ file Slide bài giảng (.pdf, .docx, .txt) hoặc dán bài học. Gemini 3.8 Flash tự động bóc tách từ vựng y khoa và tạo ngay 1 đề thi trắc nghiệm 10 câu có đồng hồ đếm ngược và giải thích chi tiết, kèm nút 1-click nạp toàn bộ từ mới vào kho từ vựng.</p>
         </section>
       </div>
       <div class="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50">
@@ -1698,7 +1841,10 @@
         document.getElementById("chkOnlyMistakes").checked = onlyMistakesFilter;
         document.getElementById("quizScoreText").textContent = `Đúng: ${quizScore}`;
 
-        const tabToOpen = s.activeTab || "dashboard";
+        let tabToOpen = s.activeTab || "dashboard";
+        if (tabToOpen === "dialogue" || tabToOpen === "anatomy") {
+          tabToOpen = "dashboard";
+        }
         switchActiveTab(tabToOpen);
         return true;
       } catch (e) {
@@ -1721,11 +1867,12 @@
 
       const drawer = document.getElementById("unitDrawerSection");
       if (drawer) {
-        if (tabName === "dashboard" || tabName === "cbt") drawer.classList.add("hidden");
+        if (["dashboard", "cbt", "docexam"].includes(tabName)) drawer.classList.add("hidden");
         else drawer.classList.remove("hidden");
       }
 
       if (tabName === "dashboard") renderDashboard();
+      if (tabName === "docexam" && typeof initDocExamStudio === "function") initDocExamStudio();
     }
 
     // ================= STREAK & VERSIONING =================
@@ -3573,6 +3720,415 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
           });
           saveDatabase(); syncAllViews(); document.getElementById("jsonModal").classList.add("hidden"); showToast(`Đã hợp nhất thêm ${added} từ mới!`);
         } catch (e) { showToast("Lỗi định dạng JSON!", "error"); }
+      };
+
+      // ==========================================
+      // CHẾ ĐỘ 7: QUÉT TÀI LIỆU PDF/SLIDE TẠO ĐỀ THI TỰ ĐỘNG (AI DOCUMENT EXAM STUDIO)
+      // ==========================================
+      let docExamPool = [];
+      let docExamCurrentIndex = 0;
+      let docExamAnswers = {};
+      let docExamTimerInterval = null;
+      let docExamTimeLeft = 600;
+      let docExtractedVocabList = [];
+
+      function initDocExamStudio() {
+        // Khởi tạo các sự kiện drag & drop và file picker
+      }
+
+      const docExamFileInput = document.getElementById("docExamFileInput");
+      const btnSelectDocFile = document.getElementById("btnSelectDocFile");
+      const btnClearDocFile = document.getElementById("btnClearDocFile");
+      const docUploadedNameBadge = document.getElementById("docUploadedNameBadge");
+
+      btnSelectDocFile.onclick = () => docExamFileInput.click();
+      btnClearDocFile.onclick = () => {
+        docExamFileInput.value = "";
+        btnClearDocFile.classList.add("hidden");
+        docUploadedNameBadge.classList.add("hidden");
+        document.getElementById("docExamTextInput").value = "";
+        showToast("Đã xóa file tải lên", "info");
+      };
+
+      docExamFileInput.onchange = async e => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        btnClearDocFile.classList.remove("hidden");
+        docUploadedNameBadge.classList.remove("hidden");
+        docUploadedNameBadge.textContent = `📄 Đã nạp file: ${file.name}`;
+
+        const loadingBox = document.getElementById("docLoadingBox");
+        loadingBox.classList.remove("hidden");
+        document.getElementById("docLoadingStatusText").textContent = `Đang trích xuất văn bản từ ${file.name}...`;
+
+        try {
+          let text = "";
+          const ext = file.name.split('.').pop().toLowerCase();
+          if (['txt', 'csv', 'json', 'md'].includes(ext)) {
+            text = await file.text();
+          } else if (ext === 'docx') {
+            const ab = await file.arrayBuffer();
+            const res = await mammoth.extractRawText({ arrayBuffer: ab });
+            text = res.value;
+          } else if (ext === 'pdf') {
+            const ab = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+            for (let i = 1; i <= pdf.numPages; i++) {
+              const page = await pdf.getPage(i);
+              const content = await page.getTextContent();
+              text += content.items.map(it => it.str).join(" ") + " ";
+            }
+          } else {
+            throw new Error("Định dạng file chưa được hỗ trợ.");
+          }
+
+          document.getElementById("docExamTextInput").value = text.trim();
+          showToast(`Trích xuất thành công ${text.trim().split(/\s+/).length} từ từ file!`, "success");
+        } catch (err) {
+          showToast(`Lỗi đọc file: ${err.message}`, "error");
+        } finally {
+          loadingBox.classList.add("hidden");
+        }
+      };
+
+      // Sinh Đề Thi Trắc Nghiệm Bằng Gemini 3.8 Flash
+      document.getElementById("btnDocGenerateExam").onclick = async () => {
+        const rawContent = document.getElementById("docExamTextInput").value.trim();
+        if (!rawContent) return showToast("Vui lòng tải file hoặc dán nội dung bài giảng!", "error");
+
+        const loadingBox = document.getElementById("docLoadingBox");
+        loadingBox.classList.remove("hidden");
+        document.getElementById("docLoadingStatusText").textContent = "Gemini 3.8 Flash đang phân tích kiến thức và biên soạn đề thi 10 câu...";
+
+        const apiKey = localStorage.getItem(STORAGE_KEY_AI_KEY);
+        let examQuestions = [];
+
+        if (apiKey) {
+          try {
+            const prompt = `Bạn là Giảng viên Đại học Y Dược chuyên ngành Răng Hàm Mặt. Dựa trên nội dung tài liệu sau đây:
+"${rawContent.slice(0, 3500)}"
+
+Hãy biên soạn chính xác 10 câu hỏi trắc nghiệm kiểm tra kiến thức lâm sàng và thuật ngữ tiếng Anh trong tài liệu.
+Mỗi câu có 4 đáp án A, B, C, D (1 đáp án đúng và 3 đáp án gây nhiễu y khoa hợp lý), kèm giải thích tại sao đáp án đó đúng.
+Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks:
+[
+  {
+    "question": "Nội dung câu hỏi tiếng Anh hoặc ca bệnh lâm sàng",
+    "options": ["Đáp án A", "Đáp án B", "Đáp án C", "Đáp án D"],
+    "correctIndex": 0,
+    "rationale": "Giải thích ngắn gọn 1-2 câu tiếng Việt chuyên ngành"
+  }
+]`;
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+            const data = await res.json();
+            const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (raw) {
+              const clean = raw.replace(/```json/gi, "").replace(/```/g, "").trim();
+              examQuestions = JSON.parse(clean);
+            }
+          } catch (e) {
+            console.warn("Lỗi gọi Gemini:", e);
+          }
+        }
+
+        // Fallback tạo đề thông minh nếu không có API key
+        if (!examQuestions || examQuestions.length === 0) {
+          const matched = vocabList.filter(v => rawContent.toLowerCase().includes(v.word.toLowerCase().split("/")[0].trim()));
+          const pool = matched.length >= 5 ? matched : vocabList;
+          const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, 10);
+          examQuestions = shuffled.map(item => {
+            const distractors = getDistinctDistractors(item, 3);
+            const opts = [item.meaning, ...distractors.map(d => d.meaning)].sort(() => Math.random() - 0.5);
+            return {
+              question: `Thuật ngữ chuyên ngành nha khoa "${item.word}" (${item.ipa}) có ý nghĩa lâm sàng là gì?`,
+              options: opts,
+              correctIndex: opts.indexOf(item.meaning),
+              rationale: `${item.word} có nghĩa là: ${item.meaning}. Ghi chú: ${item.clinicalNote}`
+            };
+          });
+        }
+
+        loadingBox.classList.add("hidden");
+        if (examQuestions.length > 0) {
+          docExamPool = examQuestions;
+          docExamCurrentIndex = 0;
+          docExamAnswers = {};
+          docExamTimeLeft = docExamPool.length * 60;
+
+          document.getElementById("docExamSetupView").classList.add("hidden");
+          document.getElementById("docExamResultView").classList.add("hidden");
+          document.getElementById("docExamPlayView").classList.remove("hidden");
+
+          renderDocExamQuestion();
+          updateDocExamTimer();
+          clearInterval(docExamTimerInterval);
+          docExamTimerInterval = setInterval(() => {
+            docExamTimeLeft--;
+            updateDocExamTimer();
+            if (docExamTimeLeft <= 0) {
+              clearInterval(docExamTimerInterval);
+              showToast("Hết giờ làm bài!", "error");
+              submitDocExam();
+            }
+          }, 1000);
+          showToast(`Đã tạo thành công đề thi ${docExamPool.length} câu!`, "success");
+        } else {
+          showToast("Không thể tạo đề từ nội dung này. Vui lòng kiểm tra lại tài liệu!", "error");
+        }
+      };
+
+      function updateDocExamTimer() {
+        const m = Math.floor(docExamTimeLeft / 60);
+        const s = docExamTimeLeft % 60;
+        document.getElementById("docExamTimerText").textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      }
+
+      function renderDocExamQuestion() {
+        const q = docExamPool[docExamCurrentIndex];
+        if (!q) return;
+
+        document.getElementById("docExamCounterText").textContent = `Câu ${docExamCurrentIndex + 1}/${docExamPool.length}`;
+        document.getElementById("docExamQuestionText").textContent = q.question;
+
+        const container = document.getElementById("docExamOptionsContainer");
+        container.innerHTML = "";
+        const userChoice = docExamAnswers[docExamCurrentIndex];
+        const rationaleBox = document.getElementById("docExamRationaleBox");
+
+        if (userChoice !== undefined && q.rationale) {
+          rationaleBox.textContent = `💡 Lời giải: ${q.rationale}`;
+          rationaleBox.classList.remove("hidden");
+        } else {
+          rationaleBox.classList.add("hidden");
+        }
+
+        q.options.forEach((opt, optIdx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          const isSelected = userChoice === optIdx;
+          let btnCls = "p-3.5 rounded-xl border text-left text-xs sm:text-sm font-semibold transition flex items-center justify-between ";
+
+          if (userChoice !== undefined) {
+            if (optIdx === q.correctIndex) {
+              btnCls += "bg-emerald-100 dark:bg-emerald-950/80 border-emerald-500 text-emerald-900 dark:text-emerald-200";
+            } else if (isSelected) {
+              btnCls += "bg-rose-100 dark:bg-rose-950/80 border-rose-500 text-rose-900 dark:text-rose-200";
+            } else {
+              btnCls += "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 opacity-60";
+            }
+          } else {
+            btnCls += "bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100";
+          }
+
+          btn.className = btnCls;
+          btn.innerHTML = `<span><strong>${String.fromCharCode(65 + optIdx)}.</strong> ${opt}</span>`;
+
+          btn.onclick = () => {
+            if (docExamAnswers[docExamCurrentIndex] !== undefined) return;
+            docExamAnswers[docExamCurrentIndex] = optIdx;
+            triggerHaptic(optIdx === q.correctIndex ? "success" : "error");
+            renderDocExamQuestion();
+          };
+          container.appendChild(btn);
+        });
+
+        document.getElementById("btnDocExamPrev").disabled = docExamCurrentIndex === 0;
+        document.getElementById("btnDocExamNext").disabled = docExamCurrentIndex === docExamPool.length - 1;
+      }
+
+      document.getElementById("btnDocExamPrev").onclick = () => {
+        if (docExamCurrentIndex > 0) {
+          docExamCurrentIndex--;
+          renderDocExamQuestion();
+        }
+      };
+
+      document.getElementById("btnDocExamNext").onclick = () => {
+        if (docExamCurrentIndex < docExamPool.length - 1) {
+          docExamCurrentIndex++;
+          renderDocExamQuestion();
+        }
+      };
+
+      function submitDocExam() {
+        clearInterval(docExamTimerInterval);
+        document.getElementById("docExamPlayView").classList.add("hidden");
+        document.getElementById("docExamResultView").classList.remove("hidden");
+
+        let correct = 0;
+        docExamPool.forEach((q, idx) => {
+          if (docExamAnswers[idx] === q.correctIndex) correct++;
+        });
+
+        document.getElementById("docExamFinalScore").textContent = `Điểm số: ${correct} / ${docExamPool.length} câu đúng (${Math.round((correct / docExamPool.length) * 100)}%)`;
+        const reviewBox = document.getElementById("docExtractedVocabReviewBox");
+        reviewBox.innerHTML = "<p class='font-bold text-slate-700 dark:text-slate-200 mb-1'>Bảng đối chiếu câu hỏi & giải thích:</p>";
+        docExamPool.forEach((q, idx) => {
+          const isRight = docExamAnswers[idx] === q.correctIndex;
+          reviewBox.innerHTML += `
+            <div class="p-2.5 rounded-lg ${isRight ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300" : "bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300"}">
+              <p><strong>Câu ${idx + 1}:</strong> ${q.question}</p>
+              <p class="text-[11px] mt-0.5">Đáp án đúng: <strong>${q.options[q.correctIndex]}</strong>. ${q.rationale || ""}</p>
+            </div>
+          `;
+        });
+      }
+
+      document.getElementById("btnDocExamSubmit").onclick = () => {
+        const answered = Object.keys(docExamAnswers).length;
+        if (answered < docExamPool.length) {
+          if (!confirm(`Bạn mới trả lời ${answered}/${docExamPool.length} câu. Bạn có chắc muốn nộp bài?`)) return;
+        }
+        submitDocExam();
+      };
+
+      document.getElementById("btnQuitDocExam").onclick = () => {
+        clearInterval(docExamTimerInterval);
+        document.getElementById("docExamPlayView").classList.add("hidden");
+        document.getElementById("docExamSetupView").classList.remove("hidden");
+      };
+
+      document.getElementById("btnDocRetryExam").onclick = () => {
+        docExamCurrentIndex = 0;
+        docExamAnswers = {};
+        docExamTimeLeft = docExamPool.length * 60;
+        document.getElementById("docExamResultView").classList.add("hidden");
+        document.getElementById("docExamPlayView").classList.remove("hidden");
+        renderDocExamQuestion();
+        updateDocExamTimer();
+        clearInterval(docExamTimerInterval);
+        docExamTimerInterval = setInterval(() => {
+          docExamTimeLeft--;
+          updateDocExamTimer();
+          if (docExamTimeLeft <= 0) {
+            clearInterval(docExamTimerInterval);
+            submitDocExam();
+          }
+        }, 1000);
+      };
+
+      document.getElementById("btnDocNewExam").onclick = () => {
+        document.getElementById("docExamResultView").classList.add("hidden");
+        document.getElementById("docExamSetupView").classList.remove("hidden");
+      };
+
+      // Trích xuất từ vựng cốt lõi từ file
+      document.getElementById("btnDocExtractVocab").onclick = async () => {
+        const rawContent = document.getElementById("docExamTextInput").value.trim();
+        if (!rawContent) return showToast("Vui lòng tải file hoặc dán nội dung bài giảng!", "error");
+
+        const loadingBox = document.getElementById("docLoadingBox");
+        loadingBox.classList.remove("hidden");
+        document.getElementById("docLoadingStatusText").textContent = "Gemini 3.8 Flash đang trích xuất thuật ngữ Y Nha khoa từ tài liệu...";
+
+        const apiKey = localStorage.getItem(STORAGE_KEY_AI_KEY);
+        let extractedTerms = [];
+
+        if (apiKey) {
+          try {
+            const prompt = `Bạn là chuyên gia từ điển Y Nha khoa quốc tế. Hãy đọc đoạn tài liệu sau và trích xuất ra 10 đến 15 thuật ngữ tiếng Anh chuyên ngành cốt lõi:
+"${rawContent.slice(0, 3500)}"
+
+Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải thích nào:
+[
+  {
+    "word": "Thuật ngữ tiếng Anh",
+    "ipa": "/phiên âm IPA/",
+    "pos": "từ loại (n., v., adj.)",
+    "meaning": "nghĩa tiếng Việt chính xác",
+    "clinicalNote": "ghi chú lâm sàng ngắn gọn",
+    "example": "1 câu ví dụ tiếng Anh",
+    "exampleVi": "dịch câu ví dụ sang tiếng Việt"
+  }
+]`;
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+            const data = await res.json();
+            const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (raw) {
+              const clean = raw.replace(/```json/gi, "").replace(/```/g, "").trim();
+              extractedTerms = JSON.parse(clean);
+            }
+          } catch (e) {
+            console.warn("Lỗi trích xuất Gemini:", e);
+          }
+        }
+
+        // Fallback trích xuất nếu không có API key
+        if (!extractedTerms || extractedTerms.length === 0) {
+          const matched = vocabList.filter(v => rawContent.toLowerCase().includes(v.word.toLowerCase().split("/")[0].trim()));
+          extractedTerms = matched.slice(0, 10);
+        }
+
+        loadingBox.classList.add("hidden");
+        if (extractedTerms.length > 0) {
+          docExtractedVocabList = extractedTerms;
+          document.getElementById("docExamSetupView").classList.add("hidden");
+          document.getElementById("docExamResultView").classList.remove("hidden");
+          document.getElementById("docExamFinalScore").textContent = `🎉 Đã trích xuất thành công ${extractedTerms.length} thuật ngữ!`;
+
+          const reviewBox = document.getElementById("docExtractedVocabReviewBox");
+          reviewBox.innerHTML = "<p class='font-bold text-slate-700 dark:text-slate-200 mb-2'>Danh sách thuật ngữ nhận diện:</p>";
+          extractedTerms.forEach(t => {
+            reviewBox.innerHTML += `
+              <div class="p-2 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between gap-2">
+                <div>
+                  <span class="font-bold text-slate-900 dark:text-white">${t.word}</span>
+                  <span class="text-[11px] font-mono text-teal-600 dark:text-teal-400">${t.ipa || ""}</span>
+                  <p class="text-xs text-slate-600 dark:text-slate-300">${t.meaning || ""}</p>
+                </div>
+                <button type="button" class="text-teal-600 hover:text-teal-700 p-1" onclick="speakText('${t.word}')">
+                  <i class="fa-solid fa-volume-high"></i>
+                </button>
+              </div>
+            `;
+          });
+          showToast(`Đã trích xuất ${extractedTerms.length} từ vựng!`, "success");
+        } else {
+          showToast("Không tìm thấy thuật ngữ nào phù hợp.", "error");
+        }
+      };
+
+      document.getElementById("btnDocImportAllExtracted").onclick = () => {
+        if (!docExtractedVocabList || docExtractedVocabList.length === 0) {
+          return showToast("Chưa có danh sách từ vựng để nạp!", "info");
+        }
+        const unitName = "Tài Liệu Mới";
+        let added = 0;
+        const existingWords = new Set(vocabList.map(v => v.word.toLowerCase()));
+
+        docExtractedVocabList.forEach(item => {
+          if (!existingWords.has(item.word.toLowerCase())) {
+            vocabList.push({
+              id: "doc_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+              unit: unitName,
+              word: item.word,
+              ipa: item.ipa || `/${item.word.toLowerCase()}/`,
+              pos: item.pos || "n.",
+              meaning: item.meaning || item.word,
+              relatedTerms: ["Document Extraction"],
+              example: item.example || `Clinical study of ${item.word} is highlighted in this dental lecture.`,
+              exampleVi: item.exampleVi || `Nghiên cứu lâm sàng về ${item.meaning || item.word} được nhấn mạnh trong bài học.`,
+              clinicalNote: item.clinicalNote || "Trích xuất từ tài liệu bài giảng.",
+              srsLevel: 0,
+              mistakeCount: 0
+            });
+            added++;
+          }
+        });
+
+        selectedUnits.add(unitName);
+        saveDatabase();
+        syncAllViews();
+        showToast(`Đã thêm thành công ${added} từ vựng vào học phần "${unitName}"!`, "success");
       };
 
       // Auto-save on page refresh (F5) or window close
