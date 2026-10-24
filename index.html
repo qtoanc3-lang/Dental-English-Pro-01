@@ -1137,14 +1137,23 @@
           <button id="btnSendCustomAi" type="submit" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold shrink-0 transition">Hỏi AI</button>
         </form>
         <div id="aiResponseBox" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap min-h-[140px]">👋 Xin chào! Tôi là Trợ lý AI Chuyên ngành (Tác giả: Quốc Toản). Bạn có thể bấm vào các gợi ý phía trên hoặc nhập bất kỳ thuật ngữ nào để phân tích lâm sàng.</div>
-        <details class="p-3.5 rounded-2xl bg-teal-50/50 dark:bg-slate-900/50 border border-teal-200/60 dark:border-slate-700 text-xs">
-          <summary class="cursor-pointer font-extrabold text-teal-800 dark:text-teal-300">⚙️ Cài đặt Gemini API Key cá nhân (Tùy chọn nâng cao)</summary>
+        <details id="aiKeyDetailsBox" class="p-3.5 rounded-2xl bg-teal-50/50 dark:bg-slate-900/50 border border-teal-200/60 dark:border-slate-700 text-xs">
+          <summary class="cursor-pointer font-extrabold text-teal-800 dark:text-teal-300 flex items-center justify-between">
+            <span>⚙️ Cài đặt Gemini API Key cá nhân (Mở khóa toàn năng)</span>
+            <span id="aiKeyBadgeHeader" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold">Chưa kết nối</span>
+          </summary>
           <div class="mt-3 space-y-2.5">
-            <p class="text-[11px] text-slate-500">Ngay cả khi không nhập Key, ứng dụng vẫn luôn hoạt động 100% nhờ Bộ phân tích Gốc từ & Lâm sàng Nội tuyến.</p>
-            <input id="userGeminiKeyInput" type="password" placeholder="Dán Gemini API Key từ Google AI Studio..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs" />
-            <div class="flex gap-2">
-              <button id="btnSaveAiKey" type="button" class="flex-1 py-2 rounded-xl bg-teal-600 text-white font-bold text-xs">Lưu Key</button>
-              <button id="btnClearAiKey" type="button" class="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-xs font-semibold">Xóa Key</button>
+            <p class="text-[11px] text-slate-500">
+              Nhập API Key để mở khóa mô hình <strong>Gemini 3.8 Flash</strong> (chuẩn mới nhất từ Google AI Studio): Giải thích mọi ca bệnh lâm sàng phức tạp, dịch tự do và tự động phân tích làm giàu từ vựng ở Tab 5.
+            </p>
+            <input id="userGeminiKeyInput" type="password" placeholder="Dán Gemini API Key (AIzaSy...)..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-xs font-mono" />
+            <p id="aiKeyStatusHint" class="text-[11px] font-semibold text-slate-500"></p>
+            <div class="flex flex-wrap gap-2">
+              <button id="btnSaveAiKey" type="button" class="flex-1 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs transition">Lưu Key</button>
+              <button id="btnTestAiKey" type="button" class="px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs transition flex items-center gap-1">
+                <i class="fa-solid fa-bolt"></i> Thử kết nối
+              </button>
+              <button id="btnClearAiKey" type="button" class="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-rose-100 dark:hover:bg-rose-950/60 hover:text-rose-600 text-xs font-semibold transition">Xóa Key</button>
             </div>
           </div>
         </details>
@@ -2755,32 +2764,57 @@
 
     // ================= TRỢ LÝ AI & LÀM GIÀU TỪ VỰNG =================
     async function queryThreeTierAi(promptText) {
-      const sysPrompt = "Bạn là Trợ lý Nha khoa & Y khoa. Hãy giải thích ngắn gọn, chuẩn xác thuật ngữ lâm sàng, dễ nhớ cho sinh viên.";
+      const sysPrompt = "Bạn là Trợ lý Nha khoa & Y khoa chuyên nghiệp (Dental English Pro — Tác giả: Quốc Toản). Hãy giải thích chuẩn xác, chuyên sâu theo kiến thức giải phẫu và lâm sàng, súc tích và dễ nhớ cho sinh viên và bác sĩ nha khoa.";
+      
+      // TẦNG 1: Chrome On-Device AI (nếu trình duyệt có hỗ trợ)
       if (window.ai && window.ai.languageModel) {
         try {
           const cap = await window.ai.languageModel.capabilities();
           if (cap.available === "readily") {
             const session = await window.ai.languageModel.create({ systemPrompt: sysPrompt });
-            return await session.prompt(promptText);
+            const reply = await session.prompt(promptText);
+            if (reply) {
+              return `📱 [Chrome On-Device AI — Trực tiếp trên thiết bị]\n\n${reply}`;
+            }
           }
         } catch (e) {}
       }
+
+      // TẦNG 2: Google Gemini Cloud AI (khi người dùng lưu API Key)
       const apiKey = localStorage.getItem(STORAGE_KEY_AI_KEY);
+      let apiErrorMessage = "";
       if (apiKey) {
-        const models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-latest"];
+        const models = ["gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
         for (const m of models) {
           try {
             const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
-              method: "POST", headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ contents: [{ parts: [{ text: `${sysPrompt}\n\n${promptText}` }] }] })
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: `${sysPrompt}\n\n${promptText}` }] }]
+              })
             });
             const data = await res.json();
-            const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (reply) return reply;
-          } catch (e) {}
+            if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+              const reply = data.candidates[0].content.parts[0].text;
+              return `✨ [Google Gemini Cloud AI — Model: ${m}]\n\n${reply}`;
+            } else if (data?.error?.message) {
+              apiErrorMessage = data.error.message;
+            }
+          } catch (e) {
+            apiErrorMessage = e.message || "Lỗi kết nối mạng";
+          }
         }
       }
-      return buildOfflineMedicalAnalysis(promptText);
+
+      // TẦNG 3: Phân tích Gốc từ & Hồ sơ lâm sàng Nội tuyến (Chế độ Offline)
+      const offlineResult = buildOfflineMedicalAnalysis(promptText);
+      if (apiKey && apiErrorMessage) {
+        return `⚠️ [CẢNH BÁO GEMINI API KEY]: Không thể kết nối Gemini (${apiErrorMessage}).\n\n👉 Hệ thống tự động chuyển sang Từ điển Y - Nha khoa Nội tuyến (Chế độ Offline):\n\n${offlineResult}`;
+      } else if (!apiKey) {
+        return `📚 [Từ Điển Y Nha Khoa Nội Tuyến — Chế Độ Offline]\n\n${offlineResult}\n\n💡 Mẹo: Nhấn vào "⚙️ Cài đặt Gemini API Key cá nhân" bên dưới để kết nối trực tiếp với Google Gemini 3.8 Flash — mở khóa giải thích mọi ca bệnh lâm sàng, dịch tự do và tự động làm giàu từ vựng thông minh!`;
+      }
+      return offlineResult;
     }
 
     function buildOfflineMedicalAnalysis(q) {
@@ -2799,44 +2833,99 @@
         return `🧬 GIẢI MÃ GỐC TỪ & HẬU TỐ:\n\n` + matchedRoots.map(r => `• ${r.type}: ${r.mean}\n  ➔ Ứng dụng: ${r.note}`).join("\n\n");
       }
       if (lower.includes("hội thoại") || lower.includes("khám")) {
-        return `💬 MẪU HỘI THOẠI LÂM SÀNG:\n\n👨‍⚕️ Dentist: "What brings you to the clinic?" (Hôm nay bạn đến phòng khám vì vấn đề gì?)\n🧑 Patient: "I have severe throbbing pain." (Tôi bị đau nhức dữ dội.)`;
+        return `💬 MẪU HỘI THOẠI LÂM SÀNG:\n\n👨‍⚕️ Dentist: "What brings you to the clinic?" (Hôm nay bạn đến phòng khám vì vấn đề gì?)\n🧑 Patient: "I have severe throbbing pain in my molar." (Tôi bị đau buốt nhức dữ dội ở răng hàm.)`;
       }
-      return `📚 TRỢ LÝ Y KHOA NỘI TUYẾN:\nChưa tìm thấy dữ liệu sâu cho: "${q}". Hãy dán Gemini API Key ở mục Cài đặt để mở rộng trí tuệ nhân tạo.`;
+      return `📚 DỮ LIỆU NỘI TUYẾN:\nChưa tìm thấy từ khóa "${q}" trong kho 247 từ có sẵn. Bạn hãy lưu Gemini API Key bên dưới để Gemini trực tiếp phân tích chi tiết bất kỳ thuật ngữ hay câu hỏi nào.`;
     }
 
     async function enrichWordWithAiFallback(word, meaning, unit) {
-        const cleanW = word.trim();
-        const lowerW = cleanW.toLowerCase();
-        let detectedMeaning = meaning ? meaning.trim() : "";
-        let detectedPos = "n.";
-        let detectedNote = "Thuật ngữ chuyên ngành Y - Nha khoa.";
-        const related = ["Clinical practice"];
+      const cleanW = word.trim();
+      const lowerW = cleanW.toLowerCase();
+      const apiKey = localStorage.getItem(STORAGE_KEY_AI_KEY);
 
-        for (const entry of MEDICAL_ROOT_LEXICON) {
-            if (lowerW.includes(entry.aff)) {
-            if (!detectedMeaning) detectedMeaning = `${entry.mean} (${cleanW})`;
-            detectedPos = entry.pos;
-            detectedNote = `${entry.type}: ${entry.mean}. ${entry.note}`;
-            related.push(entry.type);
-            break;
+      // Nếu có Gemini API Key, gọi trực tiếp Gemini để tự động phân tích và tạo dữ liệu thật 100%
+      if (apiKey) {
+        const models = ["gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
+        for (const m of models) {
+          try {
+            const aiPrompt = `Bạn là chuyên gia từ điển Y Nha khoa quốc tế. Hãy phân tích thuật ngữ tiếng Anh: "${cleanW}" (nghĩa gợi ý tiếng Việt nếu có: "${meaning || ''}").
+Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giải thích hay dấu markdown backticks nào, theo cấu trúc:
+{
+  "ipa": "phiên âm quốc tế IPA chuẩn ví dụ: /ˈdɛn.təl/",
+  "pos": "từ loại ví dụ: n. hoặc v. hoặc adj.",
+  "meaning": "nghĩa tiếng Việt chuyên ngành nha khoa chính xác",
+  "clinicalNote": "ghi chú hoặc giải thích lâm sàng ngắn gọn 1-2 câu",
+  "example": "1 câu ví dụ giao tiếp hoặc bệnh án lâm sàng bằng tiếng Anh",
+  "exampleVi": "dịch câu ví dụ trên sang tiếng Việt",
+  "relatedTerms": ["2-3 thuật ngữ liên quan"]
+}`;
+
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: aiPrompt }] }]
+              })
+            });
+            const data = await res.json();
+            let rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+            rawText = rawText.replace(/```json/gi, "").replace(/```/g, "").trim();
+            if (rawText) {
+              const parsed = JSON.parse(rawText);
+              if (parsed.meaning && parsed.ipa) {
+                return {
+                  id: "custom_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+                  unit: unit || "Unit 5",
+                  word: cleanW,
+                  ipa: parsed.ipa || `/${lowerW}/`,
+                  pos: parsed.pos || "n.",
+                  meaning: parsed.meaning,
+                  relatedTerms: Array.isArray(parsed.relatedTerms) ? parsed.relatedTerms : ["Clinical practice"],
+                  example: parsed.example || `Clinical evaluation of ${lowerW} is essential for accurate dental diagnosis.`,
+                  exampleVi: parsed.exampleVi || `Đánh giá lâm sàng về ${parsed.meaning.toLowerCase()} rất cần thiết để chẩn đoán chính xác.`,
+                  clinicalNote: parsed.clinicalNote || `Thuật ngữ lâm sàng chuyên sâu (Được làm giàu bởi Gemini AI — Model: ${m}).`,
+                  srsLevel: 0,
+                  mistakeCount: 0
+                };
+              }
             }
+          } catch (e) {
+            console.warn(`Gemini enrichment with ${m} failed:`, e);
+          }
         }
-        if (!detectedMeaning) detectedMeaning = `Thuật ngữ: ${cleanW}`;
+      }
 
-        return {
-            id: "custom_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
-            unit: unit || "Unit 5",
-            word: cleanW,
-            ipa: `/${lowerW}/`,
-            pos: detectedPos,
-            meaning: detectedMeaning,
-            relatedTerms: related,
-            example: `Clinical evaluation of ${lowerW} is essential for accurate dental diagnosis.`,
-            exampleVi: `Đánh giá lâm sàng về ${detectedMeaning.toLowerCase()} rất cần thiết để chẩn đoán chính xác.`,
-            clinicalNote: detectedNote,
-            srsLevel: 0,
-            mistakeCount: 0
-        };
+      // Fallback theo quy tắc gốc từ nội tuyến nếu chưa có Key hoặc offline
+      let detectedMeaning = meaning ? meaning.trim() : "";
+      let detectedPos = "n.";
+      let detectedNote = "Thuật ngữ chuyên ngành Y - Nha khoa.";
+      const related = ["Clinical practice"];
+
+      for (const entry of MEDICAL_ROOT_LEXICON) {
+        if (lowerW.includes(entry.aff)) {
+          if (!detectedMeaning) detectedMeaning = `${entry.mean} (${cleanW})`;
+          detectedPos = entry.pos;
+          detectedNote = `${entry.type}: ${entry.mean}. ${entry.note}`;
+          related.push(entry.type);
+          break;
+        }
+      }
+      if (!detectedMeaning) detectedMeaning = `Thuật ngữ: ${cleanW}`;
+
+      return {
+        id: "custom_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+        unit: unit || "Unit 5",
+        word: cleanW,
+        ipa: `/${lowerW}/`,
+        pos: detectedPos,
+        meaning: detectedMeaning,
+        relatedTerms: related,
+        example: `Clinical evaluation of ${lowerW} is essential for accurate dental diagnosis.`,
+        exampleVi: `Đánh giá lâm sàng về ${detectedMeaning.toLowerCase()} rất cần thiết để chẩn đoán chính xác.`,
+        clinicalNote: detectedNote,
+        srsLevel: 0,
+        mistakeCount: 0
+      };
     }
 
     function renderVocabTree(filterQuery = "") {
@@ -2985,6 +3074,7 @@
     window.addEventListener("DOMContentLoaded", () => {
       initDatabase();
       checkNewVersionNotice();
+      updateAiStatusUI();
 
       // UI Events
       const btnAck = document.getElementById("btnAcknowledgeUpdate");
@@ -3347,14 +3437,115 @@
         document.getElementById("aiResponseBox").textContent = await queryThreeTierAi(q);
       };
 
+      function updateAiStatusUI() {
+        const k = localStorage.getItem(STORAGE_KEY_AI_KEY);
+        const dot = document.getElementById("aiStatusDot");
+        const badge = document.getElementById("aiKeyBadgeHeader");
+        const hint = document.getElementById("aiKeyStatusHint");
+        const input = document.getElementById("userGeminiKeyInput");
+
+        if (input && k && !input.value) input.value = k;
+
+        if (k) {
+          if (dot) {
+            dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400";
+            dot.title = "Gemini Cloud AI: Đã kết nối Key (Gemini 3.8 Flash)";
+          }
+          if (badge) {
+            badge.textContent = "Đã kết nối Gemini AI";
+            badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold";
+          }
+          if (hint) {
+            hint.textContent = "✅ Đã lưu API Key. Mô hình Gemini 3.8 Flash đang sẵn sàng phục vụ!";
+            hint.className = "text-[11px] font-bold text-emerald-600 dark:text-emerald-400";
+          }
+        } else {
+          if (dot) {
+            dot.className = "w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400";
+            dot.title = "Chế độ Từ điển Nội tuyến Offline (Chưa có Key)";
+          }
+          if (badge) {
+            badge.textContent = "Chế độ Offline";
+            badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold";
+          }
+          if (hint) {
+            hint.textContent = "ℹ️ Đang chạy Chế độ Từ điển Nội tuyến Offline. Nhập API Key để mở khóa Gemini Cloud AI.";
+            hint.className = "text-[11px] font-semibold text-slate-500";
+          }
+        }
+      }
+
       document.getElementById("btnSaveAiKey").onclick = () => {
         const k = document.getElementById("userGeminiKeyInput").value.trim();
         if (!k) return showToast("Vui lòng dán API Key!", "error");
-        localStorage.setItem(STORAGE_KEY_AI_KEY, k); showToast("Đã lưu Gemini API Key!");
+        localStorage.setItem(STORAGE_KEY_AI_KEY, k);
+        updateAiStatusUI();
+        showToast("Đã lưu Gemini API Key! Bấm 'Thử kết nối' để test.");
       };
+
       document.getElementById("btnClearAiKey").onclick = () => {
-        localStorage.removeItem(STORAGE_KEY_AI_KEY); document.getElementById("userGeminiKeyInput").value = ""; showToast("Đã xóa API Key.", "info");
+        localStorage.removeItem(STORAGE_KEY_AI_KEY);
+        document.getElementById("userGeminiKeyInput").value = "";
+        updateAiStatusUI();
+        showToast("Đã xóa API Key.", "info");
       };
+
+      const btnTestAiKey = document.getElementById("btnTestAiKey");
+      if (btnTestAiKey) {
+        btnTestAiKey.onclick = async () => {
+          const k = document.getElementById("userGeminiKeyInput").value.trim() || localStorage.getItem(STORAGE_KEY_AI_KEY);
+          if (!k) return showToast("Vui lòng nhập hoặc lưu API Key trước khi thử kết nối!", "error");
+          
+          btnTestAiKey.disabled = true;
+          btnTestAiKey.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang test...';
+          const respBox = document.getElementById("aiResponseBox");
+          respBox.textContent = "⏳ Đang gửi yêu cầu kiểm tra kết nối đến Google Gemini Cloud (gemini-3.8-flash)...";
+
+          const testModels = ["gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
+          let lastErrMsg = "";
+          let success = false;
+
+          for (const model of testModels) {
+            try {
+              const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${k}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  contents: [{ parts: [{ text: "Trả lời ngắn gọn đúng 1 câu tiếng Việt xác nhận bạn là Gemini AI sẵn sàng hỗ trợ ứng dụng Dental English Pro của tác giả Quốc Toản." }] }]
+                })
+              });
+              const data = await res.json();
+              if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+                localStorage.setItem(STORAGE_KEY_AI_KEY, k);
+                updateAiStatusUI();
+                const text = data.candidates[0].content.parts[0].text;
+                respBox.textContent = `🎉 KẾT NỐI GEMINI API THÀNH CÔNG!\n\n✨ [Phản hồi trực tiếp từ Google ${model}]:\n"${text.trim()}"\n\n✅ Key của bạn hoạt động hoàn hảo! Giờ đây bạn có thể hỏi bất kỳ ca bệnh lâm sàng nào hoặc tự động làm giàu từ vựng ở Tab 5.`;
+                showToast(`Kết nối thành công với ${model}!`, "success");
+                success = true;
+                break;
+              } else if (data?.error?.message) {
+                lastErrMsg = data.error.message;
+              }
+            } catch (err) {
+              lastErrMsg = err.message || "Lỗi mạng hoặc CORS";
+            }
+          }
+
+          if (!success) {
+            respBox.textContent = `❌ LỖI KẾT NỐI GEMINI API:\n${lastErrMsg}\n\n💡 Gợi ý kiểm tra:\n1. Đảm bảo mã API Key được copy đầy đủ từ Google AI Studio (bắt đầu bằng AIzaSy...)\n2. Kiểm tra xem tài khoản Google Cloud/AI Studio có hạn chế IP hay Referrer không\n3. Trình duyệt hoặc mạng chặn kết nối tới generativelanguage.googleapis.com`;
+            showToast("API Key không hợp lệ hoặc lỗi kết nối!", "error");
+          }
+
+          btnTestAiKey.disabled = false;
+          btnTestAiKey.innerHTML = '<i class="fa-solid fa-bolt mr-1"></i> Thử kết nối';
+        };
+      }
+
+      // Khi mở modal AI Hub thì cập nhật UI status
+      const btnOpenAiHubElem = document.getElementById("btnOpenAiHub");
+      if (btnOpenAiHubElem) {
+        btnOpenAiHubElem.addEventListener("click", () => updateAiStatusUI());
+      }
 
       // JSON Export/Import
       document.getElementById("btnExportJsonText").onclick = () => { document.getElementById("jsonTextBox").value = JSON.stringify(vocabList, null, 2); showToast("Đã xuất JSON!"); };
