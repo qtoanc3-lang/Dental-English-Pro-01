@@ -1104,7 +1104,7 @@
         <!-- MÀN HÌNH 3: KẾT QUẢ BÀI THI & TRÍCH XUẤT TỪ VỰNG -->
         <div id="docExamResultView" class="hidden p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 text-center space-y-3">
           <i class="fa-solid fa-circle-check text-4xl text-emerald-500"></i>
-          <h4 class="text-xl font-black text-slate-900 dark:text-white">Hoàn Thành Bài Thi Tài Liệu</h4>
+          <h4 id="docExamResultTitle" class="text-xl font-black text-slate-900 dark:text-white">Hoàn Thành Bài Thi Tài Liệu</h4>
           <p id="docExamFinalScore" class="text-base font-black text-indigo-600 dark:text-indigo-400">Điểm số: 9 / 10 câu đúng</p>
           <div id="docExtractedVocabReviewBox" class="text-left text-xs bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 max-h-56 overflow-y-auto"></div>
           <div class="flex flex-wrap justify-center gap-2 pt-2">
@@ -3016,7 +3016,10 @@
 
     function buildOfflineMedicalAnalysis(q) {
       const lower = q.toLowerCase();
-      const matchedWords = vocabList.filter(v => lower.includes(v.word.toLowerCase().split("/")[0].trim()) || v.meaning.toLowerCase().includes(lower));
+      const matchedWords = vocabList.filter(v => {
+        const cleanW = v.word.toLowerCase().split("/")[0].replace(/\([^)]*\)/g, "").trim();
+        return (cleanW.length >= 3 && lower.includes(cleanW)) || v.meaning.toLowerCase().includes(lower);
+      });
       if (matchedWords.length >= 2) {
         const w1 = matchedWords[0], w2 = matchedWords[1];
         return `🩺 PHÂN TÍCH SO SÁNH LÂM SÀNG:\n\n1️⃣ ${w1.word} (${w1.ipa}): ${w1.meaning}\n   • Lâm sàng: ${w1.clinicalNote}\n\n2️⃣ ${w2.word} (${w2.ipa}): ${w2.meaning}\n   • Lâm sàng: ${w2.clinicalNote}`;
@@ -3164,7 +3167,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
         words.forEach(w => {
           const itemRow = document.createElement("div");
           itemRow.className = "p-3 flex items-center justify-between gap-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition";
-          const isCustom = String(w.id).startsWith("custom_") || String(w.id).startsWith("auto_");
+          const isCustom = String(w.id).startsWith("custom_") || String(w.id).startsWith("auto_") || String(w.id).startsWith("doc_");
           itemRow.innerHTML = `
             <div class="min-w-0 flex-1">
               <div class="flex flex-wrap items-center gap-1.5">
@@ -3798,6 +3801,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       let docExamTimerInterval = null;
       let docExamTimeLeft = 600;
       let docExtractedVocabList = [];
+      const escapeHtml = str => String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
       const docExamDropZone = document.getElementById("docExamDropZone");
       const docExamFileInput = document.getElementById("docExamFileInput");
@@ -3931,7 +3935,10 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
 
         // Fallback tạo đề thông minh nếu không có API key
         if (!examQuestions || examQuestions.length === 0) {
-          const matched = vocabList.filter(v => rawContent.toLowerCase().includes(v.word.toLowerCase().split("/")[0].trim()));
+          const matched = vocabList.filter(v => {
+            const cleanW = v.word.toLowerCase().split("/")[0].replace(/\([^)]*\)/g, "").trim();
+            return cleanW.length >= 3 && rawContent.toLowerCase().includes(cleanW);
+          });
           const pool = matched.length >= 5 ? matched : vocabList;
           const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, 10);
           examQuestions = shuffled.map(item => {
@@ -4020,7 +4027,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
           }
 
           btn.className = btnCls;
-          btn.innerHTML = `<span><strong>${String.fromCharCode(65 + optIdx)}.</strong> ${opt}</span>`;
+          btn.innerHTML = `<span><strong>${String.fromCharCode(65 + optIdx)}.</strong> ${escapeHtml(opt)}</span>`;
 
           btn.onclick = () => {
             if (docExamAnswers[docExamCurrentIndex] !== undefined) return;
@@ -4054,7 +4061,8 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
         document.getElementById("docExamPlayView").classList.add("hidden");
         document.getElementById("docExamResultView").classList.remove("hidden");
 
-        // Ẩn nút nạp từ vựng và hiện nút làm lại đề khi ở chế độ Chấm điểm thi
+        // Cập nhật tiêu đề, ẩn nút nạp từ vựng và hiện nút làm lại đề khi ở chế độ Chấm điểm thi
+        document.getElementById("docExamResultTitle").textContent = "Hoàn Thành Bài Thi Tài Liệu";
         document.getElementById("btnDocImportAllExtracted").classList.add("hidden");
         document.getElementById("btnDocRetryExam").classList.remove("hidden");
 
@@ -4072,8 +4080,8 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
           const isRight = docExamAnswers[idx] === q.correctIndex;
           reviewBox.innerHTML += `
             <div class="p-2.5 rounded-lg ${isRight ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300" : "bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300"}">
-              <p><strong>Câu ${idx + 1}:</strong> ${q.question}</p>
-              <p class="text-[11px] mt-0.5">Đáp án đúng: <strong>${q.options[q.correctIndex]}</strong>. ${q.rationale || ""}</p>
+              <p><strong>Câu ${idx + 1}:</strong> ${escapeHtml(q.question)}</p>
+              <p class="text-[11px] mt-0.5">Đáp án đúng: <strong>${escapeHtml(q.options[q.correctIndex])}</strong>. ${escapeHtml(q.rationale || "")}</p>
             </div>
           `;
         });
@@ -4173,7 +4181,10 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
 
         // Fallback trích xuất nếu không có API key
         if (!extractedTerms || extractedTerms.length === 0) {
-          const matched = vocabList.filter(v => rawContent.toLowerCase().includes(v.word.toLowerCase().split("/")[0].trim()));
+          const matched = vocabList.filter(v => {
+            const cleanW = v.word.toLowerCase().split("/")[0].replace(/\([^)]*\)/g, "").trim();
+            return cleanW.length >= 3 && rawContent.toLowerCase().includes(cleanW);
+          });
           extractedTerms = matched.slice(0, 10);
         }
 
@@ -4183,7 +4194,8 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
           document.getElementById("docExamSetupView").classList.add("hidden");
           document.getElementById("docExamResultView").classList.remove("hidden");
 
-          // Hiện nút nạp từ vựng và ẩn nút làm lại đề khi ở chế độ Trích xuất từ vựng
+          // Cập nhật tiêu đề, hiện nút nạp từ vựng và ẩn nút làm lại đề khi ở chế độ Trích xuất từ vựng
+          document.getElementById("docExamResultTitle").textContent = "Kết Quả Trích Xuất Thuật Ngữ";
           document.getElementById("btnDocImportAllExtracted").classList.remove("hidden");
           document.getElementById("btnDocRetryExam").classList.add("hidden");
 
@@ -4196,9 +4208,9 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
             row.className = "p-2 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between gap-2";
             row.innerHTML = `
               <div>
-                <span class="font-bold text-slate-900 dark:text-white">${t.word}</span>
-                <span class="text-[11px] font-mono text-teal-600 dark:text-teal-400">${t.ipa || ""}</span>
-                <p class="text-xs text-slate-600 dark:text-slate-300">${t.meaning || ""}</p>
+                <span class="font-bold text-slate-900 dark:text-white">${escapeHtml(t.word)}</span>
+                <span class="text-[11px] font-mono text-teal-600 dark:text-teal-400">${escapeHtml(t.ipa || "")}</span>
+                <p class="text-xs text-slate-600 dark:text-slate-300">${escapeHtml(t.meaning || "")}</p>
               </div>
               <button type="button" class="btn-speak-extracted text-teal-600 hover:text-teal-700 p-1">
                 <i class="fa-solid fa-volume-high"></i>
