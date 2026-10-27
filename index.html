@@ -102,9 +102,9 @@
         </div>
 
         <div class="flex items-center gap-1.5 ml-auto">
-          <button id="btnOpenWhatsNewModal" type="button" title="Xem thông báo bản cập nhật mới v7.2" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/80 dark:hover:bg-teal-900/70 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-bell text-amber-500 animate-bounce"></i>
-            <span class="hidden sm:inline">Bản mới v7.2</span>
+          <button id="btnOpenWhatsNewModal" type="button" title="Xem thông báo bản cập nhật mới" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/80 dark:hover:bg-teal-900/70 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 flex items-center gap-1.5 transition">
+            <i id="whatsNewBellIcon" class="fa-solid fa-bell text-amber-500 animate-bounce"></i>
+            <span id="headerVersionBadgeText" class="hidden sm:inline">Bản mới v7.2</span>
           </button>
           <button id="btnOpenGuideModal" type="button" title="Cẩm nang hướng dẫn sử dụng toàn bộ chế độ & tính năng" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/80 dark:hover:bg-indigo-900/70 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 flex items-center gap-1.5 transition">
             <i class="fa-solid fa-book-open-reader"></i>
@@ -497,6 +497,17 @@
               <option value="vi-en">Chiều: Việt ➔ Anh</option>
               <option value="context">Chiều: Điền khuyết câu lâm sàng</option>
               <option value="mix">Chiều: Hỗn hợp ngẫu nhiên</option>
+            </select>
+            <select id="quizOptionCountSelect" title="Số lượng phương án trả lời" class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-teal-700 dark:text-teal-300 focus:outline-none">
+              <option value="4" selected>4 Đáp án (Chuẩn)</option>
+              <option value="6">6 Đáp án (Khó)</option>
+              <option value="8">8 Đáp án (Thử thách)</option>
+            </select>
+            <select id="quizDistractorModeSelect" title="Chiến thuật tạo đáp án nhiễu" class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-indigo-700 dark:text-indigo-300 focus:outline-none">
+              <option value="smart" selected>Nhiễu: Tổng hợp (Tối ưu)</option>
+              <option value="meaning">Nhiễu: Giống nghĩa & Gốc từ</option>
+              <option value="unit">Nhiễu: Cùng Unit học phần</option>
+              <option value="length">Nhiễu: Cùng độ dài & Cấu trúc</option>
             </select>
             <button id="btnShuffleQuiz" type="button" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 hover:bg-teal-50 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition flex items-center gap-1">
               <i class="fa-solid fa-shuffle text-teal-600"></i> Đảo câu
@@ -1367,34 +1378,7 @@
         </div>
       </div>
 
-      <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-        <div class="p-3.5 rounded-2xl bg-teal-50/70 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/80 space-y-1">
-          <p class="font-extrabold text-teal-900 dark:text-teal-200 flex items-center gap-2">
-            <i class="fa-solid fa-file-circle-question text-teal-600 dark:text-teal-400"></i> 1. Phân Tích Đề Cương CBT & Xưởng Quét PDF Tạo Đề Thi (Tab 6 & Tab 7)
-          </p>
-          <p class="text-[11px] text-teal-800 dark:text-teal-300">
-            Hỗ trợ kéo thả/đọc trực tiếp các file <code>.txt</code>, <code>.docx</code>, <code>.pdf</code>, <code>.csv</code> để đối chiếu thuật ngữ chính xác và tự động biên soạn bài kiểm tra trắc nghiệm bám sát 100% tài liệu của bạn.
-          </p>
-        </div>
-
-        <div class="p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/80 space-y-1">
-          <p class="font-extrabold text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
-            <i class="fa-solid fa-book-open text-indigo-600 dark:text-indigo-400"></i> 2. Đồng Bộ Chi Tiết Học Phần (Unit 1 ➔ Unit 5) & Cẩm Nang
-          </p>
-          <p class="text-[11px] text-indigo-800 dark:text-indigo-300">
-            Cập nhật kho <strong>247 thuật ngữ chuẩn Y Nha khoa</strong> (tự động kích hoạt Unit 5) cùng tính năng bung rộng xem tóm tắt trọng tâm từng Unit ngay trên Dashboard, Drawer và Cây thư mục.
-          </p>
-        </div>
-        
-        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 space-y-1">
-          <p class="font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-            <i class="fa-solid fa-robot text-amber-500"></i> 3. Nâng Cấp Chuỗi Model Gemini 2.5 Flash & Tối Ưu Hóa QA/QC
-          </p>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400">
-            Tăng tốc phản hồi API với chuỗi model chuẩn <code>gemini-2.5-flash</code>, bảo toàn trọn vẹn dữ liệu tiến trình học từ các bản cũ và khử trùng lặp đáp án đồng nghĩa.
-          </p>
-        </div>
-      </div>
+      <div id="whatsNewDynamicList" class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300"></div>
 
       <div class="pt-1 space-y-3">
         <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer select-none">
@@ -1414,8 +1398,103 @@
      * Tác giả & Bản quyền: Quốc Toản (© 2026)
      * ========================================================================= */
     const APP_AUTHOR = "Quốc Toản";
-    const APP_BUILD_VERSION = "v7.2.2_RELEASE_NOTICE";
-    const STORAGE_KEY_SEEN_VERSION = "dental_pro_seen_version_v7_2_2";
+    const STORAGE_KEY_SEEN_VERSION = "dental_pro_seen_important_version";
+
+    /**
+     * DANH SÁCH LỊCH SỬ CẬP NHẬT (Viết theo thứ tự thời gian từ CŨ -> MỚI ở cuối mảng,
+     * hoặc dùng hàm registerAppUpdate ở dưới).
+     * - type: "important" (+0.1 cấp giữa, hiện lên bảng thông báo tối đa 4 thanh)
+     * - type: "minor" (+1 cấp cuối .x, đủ 10 lần tự tăng 0.1, KHÔNG hiện lên bảng thông báo)
+     */
+    const BASE_VERSION = { major: 7, minor: 0, patch: 0 };
+
+    const RELEASE_CHANGELOG = [
+      {
+        type: "important",
+        date: "15/10/2026 • 09:30",
+        icon: "fa-robot",
+        title: "Nâng Cấp Chuỗi Model Gemini 2.5 Flash & Tối Ưu Hóa QA/QC",
+        desc: "Tăng tốc phản hồi API với chuỗi model chuẩn gemini-2.5-flash, bảo toàn trọn vẹn dữ liệu tiến trình học từ các bản cũ và khử trùng lặp đáp án đồng nghĩa."
+      },
+      {
+        type: "important",
+        date: "21/10/2026 • 14:15",
+        icon: "fa-book-open",
+        title: "Đồng Bộ Chi Tiết Học Phần (Unit 1 ➔ Unit 5) & Cẩm Nang",
+        desc: "Cập nhật kho 247 thuật ngữ chuẩn Y Nha khoa (tự động kích hoạt Unit 5) cùng tính năng bung rộng xem tóm tắt trọng tâm từng Unit ngay trên Dashboard, Drawer và Cây thư mục."
+      },
+      {
+        type: "important",
+        date: "25/10/2026 • 20:00",
+        icon: "fa-file-circle-question",
+        title: "Phân Tích Đề Cương CBT & Xưởng Quét PDF Tạo Đề Thi (Tab 6 & Tab 7)",
+        desc: "Hỗ trợ kéo thả/đọc trực tiếp các file .txt, .docx, .pdf, .csv để đối chiếu thuật ngữ chính xác và tự động biên soạn bài kiểm tra trắc nghiệm bám sát 100% tài liệu của bạn."
+      },
+      {
+        type: "minor",
+        date: "26/10/2026 • 10:00",
+        title: "Vá lỗi nút xóa từ vựng Tab 5 & thoát ký tự toán học lâm sàng Tab 7"
+      },
+      {
+        type: "important",
+        date: "27/10/2026 • 17:05",
+        icon: "fa-filter-circle-xmark",
+        title: "Thuật Toán Tạo Đáp Án Nhiễu 3 Tầng Chống Đoán Mò",
+        desc: "Tự động chọn phương án gây nhiễu có nghĩa tương đồng, cùng gốc từ y khoa (-itis, -odontics), cùng Unit học phần và tương đương độ dài từ giúp sinh viên nhớ sâu kiến thức."
+      }
+    ];
+
+    // Hàm tính toán phiên bản tự động theo quy tắc cơ số 10 và gắn số phiên bản cho từng bản ghi
+    function computeVersionState() {
+      let maj = BASE_VERSION.major;
+      let min = BASE_VERSION.minor;
+      let pat = BASE_VERSION.patch;
+      let lastImportantVersion = `v${maj}.${min}`;
+
+      const processedLogs = RELEASE_CHANGELOG.map(entry => {
+        if (entry.type === "important") {
+          pat = 0; // Reset cấp nhỏ khi lên bản quan trọng
+          min += 1;
+          if (min >= 10) {
+            maj += Math.floor(min / 10);
+            min = min % 10;
+          }
+          const verStr = `v${maj}.${min}`;
+          lastImportantVersion = verStr;
+          return { ...entry, version: verStr };
+        } else {
+          // Bản update nhỏ (minor/patch)
+          pat += 1;
+          if (pat >= 10) {
+            pat = 0;
+            min += 1;
+            if (min >= 10) {
+              maj += Math.floor(min / 10);
+              min = min % 10;
+            }
+          }
+          const verStr = pat === 0 ? `v${maj}.${min}` : `v${maj}.${min}.${pat}`;
+          return { ...entry, version: verStr };
+        }
+      });
+
+      const currentFullVersion = pat === 0 ? `v${maj}.${min}` : `v${maj}.${min}.${pat}`;
+
+      // Lọc CHỈ lấy các bản update quan trọng, đảo ngược (mới nhất lên đầu) và cắt tối đa 4 thanh
+      const top4ImportantUpdates = processedLogs
+        .filter(item => item.type === "important")
+        .reverse()
+        .slice(0, 4);
+
+      return {
+        currentFullVersion,       // Hiển thị trên thanh Header (VD: v7.4 hoặc v7.3.1)
+        lastImportantVersion,     // Dùng để kiểm tra bật Popup khi có tính năng lớn mới
+        top4ImportantUpdates      // Mảng tối đa 4 phần tử mới nhất giữ chỗ từ trên xuống
+      };
+    }
+
+    const VERSION_STATE = computeVersionState();
+    const APP_BUILD_VERSION = VERSION_STATE.lastImportantVersion;
     const STORAGE_KEY_SPECIALTIES = "dental_pro_specialties";
     const STORAGE_KEY_CURRENT_SPEC = "dental_pro_current_specialty";
     const STORAGE_KEY_THEME = "dental_pro_theme";
@@ -1748,6 +1827,8 @@
 
     let quizPool = [], quizIndex = 0, quizScore = 0, quizDirection = "en-vi";
     let currentQuizItem = null, currentQuizAnswered = false, currentQuizModeType = "en-vi";
+    let quizOptionCount = 4; // Hỗ trợ 4, 6, hoặc 8 đáp án
+    let distractorStrategy = "smart"; // 'smart' (tổng hợp), 'meaning' (gần nghĩa), 'unit' (cùng unit), 'length' (cùng độ dài)
     let fcPool = [], fcIndex = 0;
     let dictIndex = 0, isDictTransitioning = false;
 
@@ -1758,6 +1839,12 @@
     let parsedSyllabusWords = [];
 
     // ================= TIỆN ÍCH HỆ THỐNG =================
+    const escapeHtml = str => String(str || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
     function showToast(msg, type = "success") {
       const container = document.getElementById("toastContainer");
       if (!container) return;
@@ -1810,6 +1897,8 @@
         autoAudio,
         quizAutoNext,
         quizDirection,
+        quizOptionCount,
+        distractorStrategy,
         quizIndex,
         quizScore,
         quizPoolIds: quizPool.map(i => i.id),
@@ -1828,6 +1917,8 @@
         if (s.autoAudio !== undefined) autoAudio = s.autoAudio;
         if (s.quizAutoNext !== undefined) quizAutoNext = s.quizAutoNext;
         if (s.quizDirection) quizDirection = s.quizDirection;
+        if (s.quizOptionCount !== undefined) quizOptionCount = s.quizOptionCount;
+        if (s.distractorStrategy) distractorStrategy = s.distractorStrategy;
         if (s.fcIndex !== undefined) fcIndex = s.fcIndex;
         if (s.dictIndex !== undefined) dictIndex = s.dictIndex;
         if (s.onlyMistakes !== undefined) onlyMistakesFilter = s.onlyMistakes;
@@ -1862,6 +1953,10 @@
         document.getElementById("autoAudioIcon").className = autoAudio ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark";
         document.getElementById("chkQuizAutoNext").checked = quizAutoNext;
         document.getElementById("quizDirectionSelect").value = quizDirection;
+        const optCountEl = document.getElementById("quizOptionCountSelect");
+        if (optCountEl) optCountEl.value = String(quizOptionCount);
+        const distModeEl = document.getElementById("quizDistractorModeSelect");
+        if (distModeEl) distModeEl.value = distractorStrategy;
         document.getElementById("chkOnlyMistakes").checked = onlyMistakesFilter;
         document.getElementById("quizScoreText").textContent = `Đúng: ${quizScore}`;
 
@@ -1924,11 +2019,97 @@
       return streakData.count;
     }
 
+    function renderWhatsNewModal() {
+      const { currentFullVersion, top4ImportantUpdates } = VERSION_STATE;
+
+      // 1. Cập nhật số phiên bản trên nút Header và tiêu đề Modal
+      const headerBadge = document.getElementById("headerVersionBadgeText");
+      const headerBtn = document.getElementById("btnOpenWhatsNewModal");
+      const modalTitle = document.getElementById("whatsNewTitle");
+
+      if (headerBadge) headerBadge.textContent = `Bản mới ${currentFullVersion}`;
+      if (headerBtn) headerBtn.title = `Xem thông báo bản cập nhật ${currentFullVersion}`;
+      if (modalTitle) modalTitle.textContent = `Dental English Pro — ${currentFullVersion}`;
+
+      // 2. Đổ tối đa 4 bản cập nhật quan trọng vào danh sách (Mới nhất ở vị trí số 1)
+      const listContainer = document.getElementById("whatsNewDynamicList");
+      if (!listContainer) return;
+      listContainer.innerHTML = "";
+
+      // Bảng màu phân biệt vị trí số 1 (Mới nhất) và các vị trí cũ hơn bên dưới
+      const themes = [
+        {
+          box: "bg-teal-50/90 dark:bg-teal-950/50 border-2 border-teal-400 dark:border-teal-600 shadow-sm",
+          title: "text-teal-950 dark:text-teal-100",
+          icon: "text-teal-600 dark:text-teal-400",
+          desc: "text-teal-900 dark:text-teal-200",
+          badge: "bg-amber-400 text-slate-950 font-black",
+          badgeText: "MỚI NHẤT"
+        },
+        {
+          box: "bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/80",
+          title: "text-indigo-900 dark:text-indigo-200",
+          icon: "text-indigo-600 dark:text-indigo-400",
+          desc: "text-indigo-800 dark:text-indigo-300",
+          badge: "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 font-bold",
+          badgeText: ""
+        },
+        {
+          box: "bg-cyan-50/60 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/70",
+          title: "text-cyan-900 dark:text-cyan-200",
+          icon: "text-cyan-600 dark:text-cyan-400",
+          desc: "text-cyan-800 dark:text-cyan-300",
+          badge: "bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-300 font-bold",
+          badgeText: ""
+        },
+        {
+          box: "bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 opacity-90",
+          title: "text-slate-800 dark:text-slate-200",
+          icon: "text-slate-500 dark:text-slate-400",
+          desc: "text-slate-600 dark:text-slate-400",
+          badge: "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold",
+          badgeText: ""
+        }
+      ];
+
+      top4ImportantUpdates.forEach((item, idx) => {
+        const t = themes[idx] || themes[3];
+        const card = document.createElement("div");
+        card.className = `p-3.5 rounded-2xl ${t.box} space-y-1.5 transition-all`;
+
+        card.innerHTML = `
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <p class="font-extrabold ${t.title} flex items-center gap-2 flex-1 min-w-[200px]">
+              <i class="fa-solid ${item.icon || "fa-star"} ${t.icon}"></i>
+              <span>${idx + 1}. ${item.title}</span>
+            </p>
+            <div class="flex items-center gap-1.5 shrink-0">
+              ${t.badgeText ? `<span class="text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider ${t.badge}">${t.badgeText}</span>` : ""}
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-md ${t.badge}">${item.version}</span>
+            </div>
+          </div>
+          <p class="text-[11px] ${t.desc} leading-relaxed">${item.desc || ""}</p>
+          <div class="pt-1 flex items-center justify-end">
+            <span class="text-[10px] italic text-slate-400 dark:text-slate-500 flex items-center gap-1">
+              <i class="fa-regular fa-clock text-[9px]"></i> Cập nhật lúc: ${item.date}
+            </span>
+          </div>
+        `;
+        listContainer.appendChild(card);
+      });
+    }
+
     function checkNewVersionNotice() {
+      renderWhatsNewModal();
       const lastSeen = localStorage.getItem(STORAGE_KEY_SEEN_VERSION);
+      // Chỉ tự động bật bảng thông báo khi có bản cập nhật QUAN TRỌNG mới
       if (lastSeen !== APP_BUILD_VERSION) {
         const modal = document.getElementById("whatsNewModal");
         if (modal) modal.classList.remove("hidden");
+      } else {
+        // Tắt hiệu ứng rung chuông nếu người dùng đã đọc bản mới nhất
+        const bell = document.getElementById("whatsNewBellIcon");
+        if (bell) bell.classList.remove("animate-bounce");
       }
     }
 
@@ -2278,33 +2459,128 @@
       }
     }
 
-    function getDistinctDistractors(targetItem, count = 3) {
+    // Tách toàn bộ các biến thể đồng nghĩa ngăn cách bởi dấu / hoặc trong ngoặc ()
+    function extractAllVariants(rawStr) {
+      if (!rawStr) return [];
+      const results = new Set();
+      rawStr.toLowerCase().split("/").forEach(part => {
+        const clean = part.replace(/\([^)]*\)/g, "").trim();
+        if (clean) results.add(clean);
+        const match = part.match(/\(([^)]+)\)/);
+        if (match && match[1]) results.add(match[1].trim());
+      });
+      return Array.from(results);
+    }
+
+    // Tách từ khóa có nghĩa để đo độ tương đồng ngữ nghĩa tiếng Việt & tiếng Anh
+    function tokenizeSemanticWords(str) {
+      const stopWords = new Set(["của", "và", "hoặc", "các", "những", "một", "trong", "trên", "dưới", "cho", "với", "sự", "quá", "trình", "thuật", "ngữ", "phổ", "thông", "giải", "phẫu", "the", "of", "and", "in", "to", "a", "an"]);
+      return (str || "")
+        .toLowerCase()
+        .replace(/[(),/.-]/g, " ")
+        .split(/\s+/)
+        .filter(w => w.length >= 2 && !stopWords.has(w));
+    }
+
+    // Kiểm tra chung hậu tố / tiền tố y khoa gây nhầm lẫn cao
+    function shareMedicalAffix(wordA, wordB) {
+      const w1 = (wordA || "").toLowerCase().trim();
+      const w2 = (wordB || "").toLowerCase().trim();
+      const suffixes = ["itis", "odontics", "odontist", "ectomy", "otomy", "pathy", "tion", "sion", "ment", "al", "ic", "ous"];
+      const prefixes = ["peri", "endo", "ortho", "prostho", "pre", "post", "hyper", "hypo", "gingiv", "odont", "dent", "maxill"];
+      const sameSuffix = suffixes.some(s => w1.length > s.length + 2 && w2.length > s.length + 2 && w1.endsWith(s) && w2.endsWith(s));
+      const samePrefix = prefixes.some(p => w1.startsWith(p) && w2.startsWith(p));
+      return sameSuffix || samePrefix;
+    }
+
+    function getDistinctDistractors(targetItem, count = 3, modeType = "en-vi", strategy = distractorStrategy) {
       const dist = [];
-      const normalizeText = str => (str || "").toLowerCase().replace(/\([^)]*\)/g, "").split("/")[0].trim();
-      const usedWords = new Set([normalizeText(targetItem.word)]);
-      const usedMeanings = new Set([normalizeText(targetItem.meaning)]);
+      const usedWords = new Set(extractAllVariants(targetItem.word));
+      const usedMeanings = new Set(extractAllVariants(targetItem.meaning));
 
-      const candidates = [...vocabList]
+      // Xác định chuỗi hiển thị thực tế trên nút bấm dựa theo chiều hỏi
+      const isViDisplay = (modeType === "en-vi");
+      const targetDisplayStr = isViDisplay ? targetItem.meaning : targetItem.word;
+      const targetCharLen = targetDisplayStr.length;
+      const targetWordCount = targetDisplayStr.trim().split(/\s+/).length;
+
+      const targetMeaningTokens = new Set(tokenizeSemanticWords(targetItem.meaning));
+      const targetRelatedSet = new Set((targetItem.relatedTerms || []).map(r => r.toLowerCase().trim()));
+      const targetWordClean = extractAllVariants(targetItem.word)[0] || "";
+
+      // Chấm điểm từng ứng viên trước khi sắp xếp (tránh lỗi TimSort)
+      const scoredCandidates = vocabList
         .filter(c => c.id !== targetItem.id)
-        .sort((a, b) => {
-          const aPosMatch = (a.pos === targetItem.pos) ? 2 : 0;
-          const bPosMatch = (b.pos === targetItem.pos) ? 2 : 0;
-          const aLenDiff = Math.abs(a.word.length - targetItem.word.length);
-          const bLenDiff = Math.abs(b.word.length - targetItem.word.length);
-          const lenScore = (aLenDiff < 5 ? 1 : 0) - (bLenDiff < 5 ? 1 : 0);
-          return (bPosMatch - aPosMatch) + lenScore || (Math.random() - 0.5);
-        });
+        .map(c => {
+          let score = 0;
 
-      for (const c of candidates) {
+          // 1. ĐIỂM GIỐNG NGHĨA & LIÊN QUAN LÂM SÀNG (Meaning & Semantic Similarity)
+          let meaningScore = 0;
+          const candMeaningTokens = tokenizeSemanticWords(c.meaning);
+          const sharedViTokens = candMeaningTokens.filter(t => targetMeaningTokens.has(t)).length;
+          meaningScore += sharedViTokens * 18; // Chung từ khóa tiếng Việt (VD: cùng có chữ "viêm", "xương", "răng cửa"...)
+
+          // Kiểm tra liên kết trực tiếp trong relatedTerms
+          const candWords = extractAllVariants(c.word);
+          const isDirectlyRelated = candWords.some(cw => targetRelatedSet.has(cw)) ||
+            (c.relatedTerms || []).some(r => usedWords.has(r.toLowerCase().trim()));
+          if (isDirectlyRelated) meaningScore += 35;
+
+          // Cùng tiền tố / hậu tố y khoa (VD: Gingivitis vs Periodontitis, Orthodontics vs Endodontics)
+          if (shareMedicalAffix(targetWordClean, candWords[0] || "")) meaningScore += 20;
+
+          // 2. ĐIỂM CÙNG UNIT HỌC PHẦN (Same Unit)
+          const unitScore = (c.unit === targetItem.unit) ? 25 : 0;
+
+          // 3. ĐIỂM CÙNG ĐỘ DÀI & CẤU TRÚC TỪ (Length & Word Count Similarity)
+          const candDisplayStr = isViDisplay ? c.meaning : c.word;
+          const charDiff = Math.abs(candDisplayStr.length - targetCharLen);
+          const wordCountDiff = Math.abs(candDisplayStr.trim().split(/\s+/).length - targetWordCount);
+          let lengthScore = 0;
+          if (wordCountDiff === 0) lengthScore += 15; // Cùng số lượng từ (VD: cùng là cụm 2 từ)
+          else if (wordCountDiff === 1) lengthScore += 6;
+          if (charDiff <= 3) lengthScore += 15;       // Chênh lệch không quá 3 ký tự
+          else if (charDiff <= 6) lengthScore += 8;
+
+          // 4. ĐIỂM CÙNG TỪ LOẠI (Part of Speech: n., v., adj., adv.)
+          const posScore = (c.pos === targetItem.pos) ? 15 : 0;
+
+          // Tổng hợp điểm theo chiến thuật người dùng chọn
+          if (strategy === "meaning") {
+            score = meaningScore * 2.5 + posScore + unitScore * 0.5;
+          } else if (strategy === "unit") {
+            score = unitScore * 3 + meaningScore + lengthScore + posScore;
+          } else if (strategy === "length") {
+            score = lengthScore * 2.5 + posScore * 1.5 + unitScore * 0.5;
+          } else {
+            // 'smart': Kết hợp cân bằng cả 3 yếu tố
+            score = meaningScore + unitScore + lengthScore + posScore;
+          }
+
+          // Cộng nhiễu ngẫu nhiên nhỏ (0 -> 12 điểm) để đề thi luôn tươi mới qua mỗi lượt đảo câu
+          score += Math.random() * 12;
+
+          return { item: c, score };
+        })
+        .sort((a, b) => b.score - a.score);
+
+      // Lọc lấy đủ số lượng đáp án nhiễu và khử trùng lặp biến thể đồng nghĩa
+      for (const entry of scoredCandidates) {
         if (dist.length >= count) break;
-        const w = normalizeText(c.word);
-        const m = normalizeText(c.meaning);
-        if (!usedWords.has(w) && !usedMeanings.has(m)) {
+        const c = entry.item;
+        const wVariants = extractAllVariants(c.word);
+        const mVariants = extractAllVariants(c.meaning);
+
+        const hasWordCollision = wVariants.some(w => usedWords.has(w));
+        const hasMeaningCollision = mVariants.some(m => usedMeanings.has(m));
+
+        if (!hasWordCollision && !hasMeaningCollision) {
           dist.push(c);
-          usedWords.add(w);
-          usedMeanings.add(m);
+          wVariants.forEach(w => usedWords.add(w));
+          mVariants.forEach(m => usedMeanings.add(m));
         }
       }
+
       return dist;
     }
 
@@ -2386,7 +2662,8 @@
         spkBtn.classList.add("opacity-40");
       }
 
-      const dist = getDistinctDistractors(currentQuizItem, 3);
+      const neededDistractors = Math.max(1, (quizOptionCount || 4) - 1);
+      const dist = getDistinctDistractors(currentQuizItem, neededDistractors, currentQuizModeType, distractorStrategy);
       const opts = [currentQuizItem, ...dist].sort(() => Math.random() - 0.5);
       const box = document.getElementById("quizOptionsContainer");
       box.innerHTML = "";
@@ -2396,7 +2673,7 @@
         btn.type = "button";
         btn.className = "quiz-opt-btn p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/50 hover:border-teal-500 text-left text-xs sm:text-sm font-semibold transition flex items-center gap-2.5";
         const optionText = currentQuizModeType === "en-vi" ? o.meaning : o.word;
-        btn.innerHTML = `<span class="w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-teal-600 font-extrabold flex items-center justify-center shrink-0">${i + 1}</span><span>${optionText}</span>`;
+        btn.innerHTML = `<span class="w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-teal-600 font-extrabold flex items-center justify-center shrink-0">${i + 1}</span><span>${escapeHtml(optionText)}</span>`;
         btn.onclick = () => selectQuizAnswer(o, btn, opts);
         box.appendChild(btn);
       });
@@ -2781,6 +3058,7 @@
           updateCBTTimerDisplay();
           clearInterval(cbtTimerInterval);
           cbtTimerInterval = setInterval(() => {
+            if (currentActiveTab !== "cbt") return; // Tạm dừng đếm ngược nếu người dùng chuyển sang Tab khác
             cbtTimeLeft--; updateCBTTimerDisplay(); saveCBTState();
             if (cbtTimeLeft <= 0) {
               clearInterval(cbtTimerInterval);
@@ -2864,7 +3142,7 @@
         }`;
         btn.innerHTML = `<span class="w-7 h-7 rounded-full border font-extrabold flex items-center justify-center shrink-0 ${
           isSelected ? "border-indigo-600 bg-indigo-600 text-white" : "border-slate-300 dark:border-slate-600"
-        }">${String.fromCharCode(65 + i)}</span><span>${label}</span>`;
+        }">${String.fromCharCode(65 + i)}</span><span>${escapeHtml(label)}</span>`;
         btn.onclick = () => {
           cbtAnswers[cbtCurrentIndex] = o.id;
           triggerHaptic("light");
@@ -3171,12 +3449,12 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
           itemRow.innerHTML = `
             <div class="min-w-0 flex-1">
               <div class="flex flex-wrap items-center gap-1.5">
-                <span class="font-bold text-xs text-slate-900 dark:text-white">${w.word}</span>
-                <span class="text-[11px] font-mono text-teal-600 dark:text-teal-400">${w.ipa}</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${w.pos}</span>
+                <span class="font-bold text-xs text-slate-900 dark:text-white">${escapeHtml(w.word)}</span>
+                <span class="text-[11px] font-mono text-teal-600 dark:text-teal-400">${escapeHtml(w.ipa)}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${escapeHtml(w.pos)}</span>
               </div>
-              <p class="text-xs font-semibold text-slate-700 dark:text-slate-200 mt-0.5">${w.meaning}</p>
-              <p class="text-[11px] text-slate-400 truncate">${w.clinicalNote || ""}</p>
+              <p class="text-xs font-semibold text-slate-700 dark:text-slate-200 mt-0.5">${escapeHtml(w.meaning)}</p>
+              <p class="text-[11px] text-slate-400 truncate">${escapeHtml(w.clinicalNote || "")}</p>
             </div>
             <div class="flex items-center gap-1.5 shrink-0">
               <button type="button" data-tree-ai="${w.id}" class="w-8 h-8 rounded-full bg-teal-50 hover:bg-teal-100 dark:bg-slate-700 text-teal-600 dark:text-teal-300 flex items-center justify-center" title="Phân tích AI"><i class="fa-solid fa-wand-magic-sparkles text-xs"></i></button>
@@ -3286,7 +3564,11 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
           localStorage.removeItem(STORAGE_KEY_SEEN_VERSION);
         }
         if (whatsNewModal) whatsNewModal.classList.add("hidden");
-        if (showWelcomeToast) showToast("Chào mừng bạn đến với Dental English Pro v7.2!");
+        if (showWelcomeToast) {
+          showToast(`Chào mừng bạn đến với Dental English Pro ${VERSION_STATE.currentFullVersion}!`);
+        }
+        const bell = document.getElementById("whatsNewBellIcon");
+        if (bell) bell.classList.remove("animate-bounce");
       };
 
       const btnAck = document.getElementById("btnAcknowledgeUpdate");
@@ -3408,6 +3690,24 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
 
       // Quiz
       document.getElementById("quizDirectionSelect").onchange = e => { quizDirection = e.target.value; saveStudyProgress(); resetQuizPool(); };
+      const optCountSel = document.getElementById("quizOptionCountSelect");
+      if (optCountSel) {
+        optCountSel.onchange = e => {
+          quizOptionCount = parseInt(e.target.value, 10) || 4;
+          saveStudyProgress();
+          loadQuizQuestion();
+          showToast(`Đã chuyển sang chế độ ${quizOptionCount} đáp án!`, "info");
+        };
+      }
+      const distModeSel = document.getElementById("quizDistractorModeSelect");
+      if (distModeSel) {
+        distModeSel.onchange = e => {
+          distractorStrategy = e.target.value;
+          saveStudyProgress();
+          loadQuizQuestion();
+          showToast("Đã cập nhật thuật toán tạo đáp án nhiễu!", "info");
+        };
+      }
       document.getElementById("btnShuffleQuiz").onclick = () => { resetQuizPool(); showToast("Đã đảo câu hỏi!"); };
       document.getElementById("chkQuizAutoNext").onchange = e => { quizAutoNext = e.target.checked; saveStudyProgress(); };
       document.getElementById("btnNextQuizQuestion").onclick = () => { quizIndex++; saveStudyProgress(); loadQuizQuestion(); };
@@ -3588,10 +3888,10 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
         cbtTotalQuestions = shuffled.length; cbtTimeLeft = cbtTotalQuestions * 45;
 
         cbtPool = shuffled.map(q => {
-          const dist = getDistinctDistractors(q, 3);
-          const lockedOptions = [q, ...dist].sort(() => Math.random() - 0.5);
           let qType = examDir;
           if (examDir === "mix") qType = ["en-vi", "vi-en", "context"][Math.floor(Math.random() * 3)];
+          const dist = getDistinctDistractors(q, (quizOptionCount || 4) - 1, qType, distractorStrategy);
+          const lockedOptions = [q, ...dist].sort(() => Math.random() - 0.5);
           return { ...q, qType, lockedOptions };
         });
 
@@ -3601,6 +3901,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
 
         updateCBTTimerDisplay(); clearInterval(cbtTimerInterval);
         cbtTimerInterval = setInterval(() => {
+          if (currentActiveTab !== "cbt") return; // Tạm dừng đếm ngược nếu người dùng chuyển sang Tab khác
           cbtTimeLeft--; updateCBTTimerDisplay(); saveCBTState();
           if (cbtTimeLeft <= 0) { clearInterval(cbtTimerInterval); showToast("Hết giờ! Tự động thu bài.", "error"); submitCBTExam(); }
         }, 1000);
@@ -3801,7 +4102,6 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       let docExamTimerInterval = null;
       let docExamTimeLeft = 600;
       let docExtractedVocabList = [];
-      const escapeHtml = str => String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
       const docExamDropZone = document.getElementById("docExamDropZone");
       const docExamFileInput = document.getElementById("docExamFileInput");
@@ -4273,7 +4573,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
       window.addEventListener("keydown", e => {
         if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
         if (currentActiveTab === "quiz") {
-          if (["1", "2", "3", "4"].includes(e.key) && !currentQuizAnswered) {
+          if (["1", "2", "3", "4", "5", "6", "7", "8"].includes(e.key) && !currentQuizAnswered) {
             const btns = document.querySelectorAll(".quiz-opt-btn");
             if (btns[parseInt(e.key, 10) - 1]) btns[parseInt(e.key, 10) - 1].click();
           } else if ((e.key === "Enter" || e.key === "ArrowRight") && currentQuizAnswered) {
