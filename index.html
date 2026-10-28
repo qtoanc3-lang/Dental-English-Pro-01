@@ -734,10 +734,33 @@
           <p id="sprintLastResultBanner" class="hidden text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 py-2.5 px-4 rounded-xl max-w-sm mx-auto border border-emerald-200 dark:border-emerald-800"></p>
           <button id="btnStartSprintGame" type="button" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-extrabold text-xs shadow-lg hover:brightness-110 transition">BẮT ĐẦU ĐUA NGAY</button>
         </div>
-        <div id="sprintPlayView" class="hidden space-y-4 py-2">
+        <div id="sprintPlayView" class="hidden relative space-y-4 py-2">
           <span id="sprintUnitTag" class="inline-block text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300">Unit ...</span>
           <h3 id="sprintQuestionWord" class="text-2xl font-black text-slate-900 dark:text-white">...</h3>
           <div id="sprintOptionsBox" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+
+          <!-- LỚP PHỦ TẠM DỪNG CHE ĐỀ THI KHI CHUYỂN TAB -->
+          <div id="sprintPauseOverlay" class="hidden absolute inset-0 z-20 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md rounded-2xl border-2 border-amber-400/60 flex flex-col items-center justify-center p-5 text-center space-y-3 shadow-lg">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shadow-sm">
+              <i class="fa-solid fa-pause"></i>
+            </div>
+            <div class="space-y-1">
+              <h4 class="text-sm sm:text-base font-black text-slate-900 dark:text-white">Lượt Đua Đang Tạm Dừng</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-300">
+                Thời gian còn lại: <strong id="sprintPauseRemainingText" class="text-amber-600 dark:text-amber-400 font-mono text-sm">00s</strong>
+                • Điểm hiện tại: <strong id="sprintPauseScoreText" class="text-teal-600 dark:text-teal-400">0</strong>
+              </p>
+              <p class="text-[11px] text-slate-400 italic">(Nội dung câu hỏi đã được ẩn để đảm bảo tính công bằng)</p>
+            </div>
+            <div class="flex items-center justify-center gap-2.5 pt-1">
+              <button id="btnResumeSprintGame" type="button" class="px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold shadow-md transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play"></i> Tiếp tục thi
+              </button>
+              <button id="btnAbortSprintGame" type="button" class="px-4 py-2.5 rounded-xl bg-rose-100 hover:bg-rose-200 dark:bg-rose-950/80 text-rose-600 dark:text-rose-300 text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-stop"></i> Dừng lại
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1441,6 +1464,11 @@
         icon: "fa-filter-circle-xmark",
         title: "Thuật Toán Tạo Đáp Án Nhiễu 3 Tầng Chống Đoán Mò",
         desc: "Tự động chọn phương án gây nhiễu có nghĩa tương đồng, cùng gốc từ y khoa (-itis, -odontics), cùng Unit học phần và tương đương độ dài từ giúp sinh viên nhớ sâu kiến thức."
+      },
+      {
+        type: "minor",
+        date: "27/10/2026 • 17:55",
+        title: "Sửa lỗi dừng đồng hồ Đua tốc độ 60s khi chuyển Tab & bổ sung màn chắn tạm dừng chống lộ từ"
       }
     ];
 
@@ -1450,47 +1478,56 @@
       let min = BASE_VERSION.minor;
       let pat = BASE_VERSION.patch;
       let lastImportantVersion = `v${maj}.${min}`;
+      const importantGroups = [];
 
-      const processedLogs = RELEASE_CHANGELOG.map(entry => {
+      RELEASE_CHANGELOG.forEach(entry => {
         if (entry.type === "important") {
-          pat = 0; // Reset cấp nhỏ khi lên bản quan trọng
+          pat = 0;
           min += 1;
-          if (min >= 10) {
-            maj += Math.floor(min / 10);
-            min = min % 10;
-          }
+          if (min >= 10) { maj += Math.floor(min / 10); min = min % 10; }
           const verStr = `v${maj}.${min}`;
           lastImportantVersion = verStr;
-          return { ...entry, version: verStr };
+          importantGroups.push({
+            ...entry,
+            version: verStr,
+            subUpdates: [] // Chứa các bản update nhỏ (x.y.1 -> x.y.9) của phiên bản lớn này
+          });
         } else {
-          // Bản update nhỏ (minor/patch)
           pat += 1;
           if (pat >= 10) {
+            // Đủ 10 lần update nhỏ -> tự động nâng 1 cấp phiên bản lớn (+0.1)
             pat = 0;
             min += 1;
-            if (min >= 10) {
-              maj += Math.floor(min / 10);
-              min = min % 10;
+            if (min >= 10) { maj += Math.floor(min / 10); min = min % 10; }
+            const promotedVer = `v${maj}.${min}`;
+            lastImportantVersion = promotedVer;
+            importantGroups.push({
+              type: "important",
+              date: entry.date,
+              icon: "fa-layer-group",
+              title: entry.title,
+              desc: entry.desc || "Bản nâng cấp tích lũy từ chuỗi 10 bản tối ưu hóa hệ thống.",
+              version: promotedVer,
+              subUpdates: []
+            });
+          } else {
+            const patchVer = `v${maj}.${min}.${pat}`;
+            const currentMajorGroup = importantGroups[importantGroups.length - 1];
+            if (currentMajorGroup) {
+              // Đẩy bản nhỏ mới nhất lên đầu danh sách con của bản lớn hiện tại
+              currentMajorGroup.subUpdates.unshift({
+                ...entry,
+                version: patchVer
+              });
             }
           }
-          const verStr = pat === 0 ? `v${maj}.${min}` : `v${maj}.${min}.${pat}`;
-          return { ...entry, version: verStr };
         }
       });
 
       const currentFullVersion = pat === 0 ? `v${maj}.${min}` : `v${maj}.${min}.${pat}`;
+      const top4ImportantUpdates = importantGroups.reverse().slice(0, 4);
 
-      // Lọc CHỈ lấy các bản update quan trọng, đảo ngược (mới nhất lên đầu) và cắt tối đa 4 thanh
-      const top4ImportantUpdates = processedLogs
-        .filter(item => item.type === "important")
-        .reverse()
-        .slice(0, 4);
-
-      return {
-        currentFullVersion,       // Hiển thị trên thanh Header (VD: v7.4 hoặc v7.3.1)
-        lastImportantVersion,     // Dùng để kiểm tra bật Popup khi có tính năng lớn mới
-        top4ImportantUpdates      // Mảng tối đa 4 phần tử mới nhất giữ chỗ từ trên xuống
-      };
+      return { currentFullVersion, lastImportantVersion, top4ImportantUpdates };
     }
 
     const VERSION_STATE = computeVersionState();
@@ -1833,7 +1870,7 @@
     let dictIndex = 0, isDictTransitioning = false;
 
     let sprintTimer = null, sprintSeconds = 60, sprintScore = 0, sprintCombo = 1, currentSprintItem = null;
-    let sprintBestScore = 0;
+    let sprintBestScore = 0, isSprintActive = false, isSprintPaused = false;
 
     let cbtPool = [], cbtAnswers = {}, cbtFlags = {}, cbtCurrentIndex = 0, cbtTimerInterval = null, cbtTimeLeft = 0, cbtTotalQuestions = 40;
     let parsedSyllabusWords = [];
@@ -2077,6 +2114,35 @@
         const card = document.createElement("div");
         card.className = `p-3.5 rounded-2xl ${t.box} space-y-1.5 transition-all`;
 
+        const hasSub = Array.isArray(item.subUpdates) && item.subUpdates.length > 0;
+        const subBoxId = `whatsNewSub_${idx}`;
+
+        // Tạo HTML cho danh sách các bản cập nhật nhỏ bên trong
+        const subItemsHtml = hasSub
+          ? `<div id="${subBoxId}" class="collapse-content pt-2 mt-2 border-t border-slate-200/70 dark:border-slate-700/70 space-y-1.5">
+               <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                 Các bản vá & tinh chỉnh nhỏ thuộc ${item.version}:
+               </p>
+               ${item.subUpdates.map(sub => `
+                 <div class="p-2 rounded-xl bg-white/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-700/60 flex items-start justify-between gap-2 text-[11px]">
+                   <div class="flex items-start gap-1.5">
+                     <span class="font-mono font-extrabold text-teal-600 dark:text-teal-400 shrink-0">[${sub.version}]</span>
+                     <span class="text-slate-700 dark:text-slate-300">${sub.title}</span>
+                   </div>
+                   <span class="text-[9px] italic text-slate-400 shrink-0">${sub.date}</span>
+                 </div>
+               `).join("")}
+             </div>`
+          : "";
+
+        // Ở chân thanh thông báo chính (cạnh thời gian cập nhật), thêm nút mũi tên xổ xuống nếu có bản nhỏ:
+        const toggleSubBtnHtml = hasSub
+          ? `<button type="button" data-toggle-sub="${subBoxId}" class="inline-flex items-center gap-1 text-[10px] font-extrabold text-teal-700 dark:text-teal-300 hover:underline">
+               <span>Chi tiết ${item.subUpdates.length} bản cập nhật nhỏ (mới nhất: ${item.subUpdates[0].version})</span>
+               <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300"></i>
+             </button>`
+          : `<span></span>`;
+
         card.innerHTML = `
           <div class="flex flex-wrap items-start justify-between gap-2">
             <p class="font-extrabold ${t.title} flex items-center gap-2 flex-1 min-w-[200px]">
@@ -2089,13 +2155,25 @@
             </div>
           </div>
           <p class="text-[11px] ${t.desc} leading-relaxed">${item.desc || ""}</p>
-          <div class="pt-1 flex items-center justify-end">
+          <div class="pt-1 flex flex-wrap items-center justify-between gap-2">
+            ${toggleSubBtnHtml}
             <span class="text-[10px] italic text-slate-400 dark:text-slate-500 flex items-center gap-1">
               <i class="fa-regular fa-clock text-[9px]"></i> Cập nhật lúc: ${item.date}
             </span>
           </div>
+          ${subItemsHtml}
         `;
         listContainer.appendChild(card);
+
+        const toggleBtn = card.querySelector(`[data-toggle-sub="${subBoxId}"]`);
+        if (toggleBtn) {
+          toggleBtn.onclick = () => {
+            const subEl = document.getElementById(subBoxId);
+            const icon = toggleBtn.querySelector("i");
+            const isExp = subEl.classList.toggle("expanded");
+            if (icon) icon.style.transform = isExp ? "rotate(180deg)" : "rotate(0deg)";
+          };
+        }
       });
     }
 
@@ -2848,6 +2926,7 @@
         btn.className = "p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 hover:border-teal-500 text-xs font-bold transition";
         btn.textContent = o.meaning;
         btn.onclick = () => {
+          if (isSprintPaused || !isSprintActive) return;
           if (o.id === currentSprintItem.id) {
             sprintScore += 10 * sprintCombo;
             sprintCombo = Math.min(5, sprintCombo + 1);
@@ -2872,9 +2951,42 @@
       });
     }
 
+    function startSprintTicker() {
+      clearInterval(sprintTimer);
+      sprintTimer = setInterval(() => {
+        if (isSprintPaused || !isSprintActive) return;
+        sprintSeconds--;
+        document.getElementById("sprintTimeText").textContent = `${sprintSeconds}s`;
+        if (sprintSeconds <= 0) finishSprintGame();
+      }, 1000);
+    }
+
+    function pauseSprintGame() {
+      if (!isSprintActive || isSprintPaused || sprintSeconds <= 0) return;
+      isSprintPaused = true;
+      clearInterval(sprintTimer);
+      sprintTimer = null;
+
+      // Cập nhật số giây còn lại và hiện màn chắn che câu hỏi
+      document.getElementById("sprintPauseRemainingText").textContent = `${sprintSeconds} giây`;
+      document.getElementById("sprintPauseScoreText").textContent = `${sprintScore} điểm`;
+      document.getElementById("sprintPauseOverlay").classList.remove("hidden");
+    }
+
+    function resumeSprintGame() {
+      if (!isSprintActive || sprintSeconds <= 0) return;
+      isSprintPaused = false;
+      document.getElementById("sprintPauseOverlay").classList.add("hidden");
+      if (autoAudio && currentSprintItem) speakText(currentSprintItem.word);
+      startSprintTicker();
+    }
+
     function finishSprintGame() {
       clearInterval(sprintTimer);
       sprintTimer = null;
+      isSprintActive = false;
+      isSprintPaused = false;
+      document.getElementById("sprintPauseOverlay")?.classList.add("hidden");
       document.getElementById("sprintPlayView").classList.add("hidden");
       document.getElementById("btnStopSprintGame").classList.add("hidden");
       document.getElementById("sprintIntroView").classList.remove("hidden");
@@ -3596,13 +3708,19 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       document.querySelectorAll(".mode-tab").forEach(btn => {
         btn.onclick = () => {
           const tab = btn.getAttribute("data-tab");
-          if (currentActiveTab === "sprint" && tab !== "sprint" && sprintTimer) {
-            clearInterval(sprintTimer); sprintTimer = null;
+          if (currentActiveTab === "sprint" && tab !== "sprint" && isSprintActive) {
+            pauseSprintGame();
           }
           triggerHaptic("light");
           switchActiveTab(tab);
           saveStudyProgress();
         };
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && isSprintActive) {
+          pauseSprintGame();
+        }
       });
 
       const bindModal = (o, m, c) => {
@@ -3791,18 +3909,20 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       // Sprint
       document.getElementById("btnStartSprintGame").onclick = () => {
         sprintSeconds = 60; sprintScore = 0; sprintCombo = 1;
-        document.getElementById("sprintTimeText").textContent = "60s"; document.getElementById("sprintScoreText").textContent = "0 điểm";
+        isSprintActive = true; isSprintPaused = false;
+        document.getElementById("sprintPauseOverlay").classList.add("hidden");
+        document.getElementById("sprintTimeText").textContent = "60s";
+        document.getElementById("sprintScoreText").textContent = "0 điểm";
         document.getElementById("sprintComboBadge").textContent = "Combo x1";
-        document.getElementById("sprintIntroView").classList.add("hidden"); document.getElementById("sprintPlayView").classList.remove("hidden");
+        document.getElementById("sprintIntroView").classList.add("hidden");
+        document.getElementById("sprintPlayView").classList.remove("hidden");
         document.getElementById("btnStopSprintGame").classList.remove("hidden");
         nextSprintQuestion();
-        clearInterval(sprintTimer);
-        sprintTimer = setInterval(() => {
-          sprintSeconds--; document.getElementById("sprintTimeText").textContent = `${sprintSeconds}s`;
-          if (sprintSeconds <= 0) finishSprintGame();
-        }, 1000);
+        startSprintTicker();
       };
       document.getElementById("btnStopSprintGame").onclick = finishSprintGame;
+      document.getElementById("btnResumeSprintGame").onclick = resumeSprintGame;
+      document.getElementById("btnAbortSprintGame").onclick = finishSprintGame;
 
       // Tab 5: Manage & AI
       document.getElementById("btnToggleSingleAdd").onclick = () => {
