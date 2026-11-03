@@ -1,0 +1,191 @@
+Qua quá trình kiểm toán chi tiết mã nguồn hoàn chỉnh bạn vừa gửi, hệ thống ghi nhận 8 bản vá từ bước trước đã hoạt động tốt. Tuy nhiên, khi kiểm thử sâu các tình huống biên (Edge Cases) như tải lại trang (F5), lọc Unit và đồng bộ từ đồng âm khác nghĩa, có **6 lỗi logic tiềm ẩn** cần được xử lý triệt để, cùng với **30 từ vựng bổ trợ mới** được trích xuất từ các bài đọc và đề thi trong tài liệu Google Docs.
+
+---
+
+### PHẦN 1: PHÁT HIỆN & KHẮC PHỤC 6 LỖI LOGIC TIỀM ẨN TRONG MÃ NGUỒN
+
+#### 1. Lỗi tự động Reset bộ lọc Unit về "Chọn tất cả" mỗi khi nhấn F5 (Tải lại trang)
+
+* **Vị trí:** Hàm `restoreStudyProgress()` và `closeWhatsNew()`.
+* **Nguyên nhân:**
+* Trong `restoreStudyProgress()`, điều kiện kiểm tra đang viết là:
+`if (localStorage.getItem(STORAGE_KEY_SEEN_VERSION) !== "${APP_BUILD_VERSION}_${VERSION_STATE.currentFullVersion}")`
+* Trong khi đó, hàm `closeWhatsNew()` lại chỉ lưu `localStorage.setItem(STORAGE_KEY_SEEN_VERSION, APP_BUILD_VERSION)`.
+* Vì hai chuỗi này **không bao giờ bằng nhau** (`"v7.5"` khác với `"v7.5_v7.5.1"`), mỗi lần người dùng tải lại trang (F5), điều kiện `if` luôn đúng và chạy lệnh `getAllUnits().forEach(u => selectedUnits.add(u))`, xóa mất lựa chọn lọc riêng Unit của người dùng.
+
+
+* **Cách sửa:** Tách riêng một khóa `STORAGE_KEY_SYNCED_UNITS_VER` chỉ chạy đúng 1 lần khi nâng cấp phiên bản mới:
+
+```javascript
+// Thêm hằng số ở đầu script:
+const STORAGE_KEY_SYNCED_UNITS_VER = "dental_pro_synced_units_ver";
+
+// Trong restoreStudyProgress(), thay đoạn kiểm tra phiên bản bằng:
+if (Array.isArray(s.selectedUnits) && s.selectedUnits.length > 0) {
+  selectedUnits = new Set(s.selectedUnits.map(u => normalizeUnitName(u)));
+  if (localStorage.getItem(STORAGE_KEY_SYNCED_UNITS_VER) !== VERSION_STATE.currentFullVersion) {
+    getAllUnits().forEach(u => selectedUnits.add(u));
+    localStorage.setItem(STORAGE_KEY_SYNCED_UNITS_VER, VERSION_STATE.currentFullVersion);
+  }
+}
+
+```
+
+---
+
+#### 2. Lỗi nút "Chỉ chọn Unit 1" (`btnDeselectAllUnits`) chọn nhầm sang học phần "Từ vựng bổ trợ"
+
+* **Vị trí:** Sự kiện `document.getElementById("btnDeselectAllUnits").onclick`.
+* **Nguyên nhân:** Hàm `getAllUnits()` đã ưu tiên sắp xếp `"Từ vựng bổ trợ"` lên đầu mảng (vị trí `getAllUnits()[0]`). Do đó, khi bấm nút **"Chỉ chọn Unit 1"**, lệnh `new Set([getAllUnits()[0]])` lại kích hoạt `"Từ vựng bổ trợ"` thay vì `"Unit 1"`.
+* **Cách sửa:** Chỉ định rõ `"Unit 1"` (nếu có) và bổ sung thêm 1 nút lọc nhanh **"Chỉ chọn Từ vựng bổ trợ"** ngay cạnh đó để tiện ôn riêng nhóm từ bắc cầu:
+
+```javascript
+// Sửa sự kiện của btnDeselectAllUnits:
+document.getElementById("btnDeselectAllUnits").onclick = e => {
+  e.stopPropagation();
+  const allU = getAllUnits();
+  const targetUnit = allU.includes("Unit 1") ? "Unit 1" : allU[0];
+  selectedUnits = new Set([targetUnit]);
+  saveStudyProgress(); syncAllViews(); showToast(`Chỉ chọn ${targetUnit}`);
+};
+
+```
+
+---
+
+#### 3. Lỗi đồng bộ nhầm điểm SRS giữa các từ đồng âm khác từ loại (`Shape` danh từ vs `Shape` động từ)
+
+* **Vị trí:** Hàm `syncCrossUnitSrs(sourceItem)` và vòng lặp đồng bộ trong `initDatabase()`.
+* **Nguyên nhân:**
+* Trong kho từ có từ `"Shape"` ở Unit 1 (`u1_49`, từ loại `n.`, nghĩa là *"Hình dạng"*) và `"Shape"` ở Unit 4 (`u4_17`, từ loại `v.`, nghĩa là *"Tạo hình ống tủy"*).
+* Ngoài ra còn có `"Teeth"` (`u3_05`) và `"Tooth / teeth"` (`u1_02`). Nếu không kiểm tra từ loại (`pos`) hoặc nếu trong `initDatabase()` đồng bộ xuôi từ trên xuống mà không lấy mức điểm SRS cao nhất, một từ đã học ở Unit sau có thể bị từ chưa học ở Unit trước ghi đè điểm.
+
+
+* **Cách sửa (Thay thế `syncCrossUnitSrs` và đoạn gọi trong `initDatabase`):**
+
+```javascript
+function syncCrossUnitSrs(sourceItem) {
+  if (!sourceItem || !sourceItem.word) return;
+  const targetVariants = extractAllVariants(sourceItem.word);
+  if (targetVariants.length === 0) return;
+  const normSourcePos = (sourceItem.pos || "").replace(/\.$/, "").toLowerCase().trim();
+
+  vocabList.forEach(v => {
+    if (v.id === sourceItem.id) return;
+    const normCandPos = (v.pos || "").replace(/\.$/, "").toLowerCase().trim();
+    // Chỉ đồng bộ khi cùng từ loại (tránh đồng bộ nhầm giữa Shape (n.) và Shape (v.))
+    if (normSourcePos && normCandPos && normSourcePos !== normCandPos) return;
+
+    const vVariants = extractAllVariants(v.word);
+    if (vVariants.some(vw => targetVariants.includes(vw))) {
+      v.srsLevel = sourceItem.srsLevel;
+      v.mistakeCount = sourceItem.mistakeCount;
+    }
+  });
+}
+
+```
+
+---
+
+#### 4. Lỗi Regex cắt gốc từ trong `maskWordInSentence()` có thể che nhầm từ không liên quan
+
+* **Vị trí:** Hàm `maskWordInSentence(sentence, rawWord)`.
+* **Nguyên nhân:** Khi cắt chữ `e` hoặc `y` ở cuối từ (ví dụ `"Indicate"` ➔ `"Indicat"`, `"Restore"` ➔ `"Restor"`) rồi ghép với `\\w*`, biểu thức chính quy sẽ khớp với mọi hậu tố bất kỳ. Nếu gặp các từ ngắn hơn, nó có nguy cơ che nhầm sang từ khác trong câu.
+* **Cách sửa:** Giới hạn chính xác các đuôi biến đổi hình thái chuẩn trong tiếng Anh (`s, es, ed, d, ing, y, ies, ied, ion, ation, ive, or, er`):
+
+```javascript
+Array.from(variants)
+  .sort((a, b) => b.length - a.length)
+  .forEach(v => {
+    if (v.length >= 2) {
+      const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      masked = masked.replace(
+        new RegExp("\\b" + escaped + "(?:s|es|ed|d|ing|y|ies|ied|ion|ation|ations|ive|or|er)?\\b", "gi"),
+        "[_____]"
+      );
+    }
+  });
+
+```
+
+---
+
+#### 5. Lỗi bộ quét từ vựng Fallback ở Tab 7 (`docexam`) bỏ sót biến thể sau dấu `/` hoặc trong ngoặc `()`
+
+* **Vị trí:** Sự kiện `btnDocGenerateExam.onclick` và `btnDocExtractVocab.onclick`.
+* **Nguyên nhân:** Ở chế độ Offline (chưa nhập API Key), bộ lọc tìm từ khớp trong tài liệu đang dùng `v.word.toLowerCase().split("/")[0]`. Do đó các từ ghép như `"Evaluate / Assess"`, `"Identify / Detect"`, `"Secondary caries / Recurrent caries"` hoặc `"Dental calculus (Tartar)"` sẽ không nhận diện được nếu tài liệu dùng từ thứ hai (`Assess`, `Detect`, `Recurrent caries`, `Tartar`).
+* **Cách sửa:** Sử dụng hàm `extractAllVariants(v.word)` đã có sẵn:
+
+```javascript
+const matched = vocabList.filter(v => {
+  const variants = extractAllVariants(v.word);
+  return variants.some(cleanW => cleanW.length >= 3 && rawContent.toLowerCase().includes(cleanW));
+});
+
+```
+
+---
+
+#### 6. Chuẩn hóa mô tả Cẩm nang Hướng dẫn (`guideModal`) khớp với tính năng mới
+
+* **Vị trí:** `#guideModal` và `#tab-quiz` `<details>`.
+* **Nguyên nhân:** Phần văn bản hướng dẫn tĩnh vẫn ghi *"nhấn phím số 1 - 4"* (trong khi thực tế đã hỗ trợ 4, 6, 8 đáp án tương ứng phím `1 - 8`) và ở Chế độ 6 (CBT) chưa ghi chú bộ phím tắt mới (`A, B, C, D`, phím `F` gắn cờ, `Mũi tên Trái/Phải` chuyển câu).
+
+---
+
+### PHẦN 2: BỔ SUNG 30 TỪ VỰNG BỔ TRỢ MỚI (`com_16` ➔ `com_45`) TỪ TÀI LIỆU GOOGLE DOCS
+
+Qua rà soát toàn bộ các đoạn văn đọc hiểu (*Reading Comprehension*), bài tập *True / False / Doesn't Say* và *Useful Expressions* từ **Unit 1 đến Unit 7** trong tài liệu của bạn, dưới đây là **30 từ vựng bắc cầu & học thuật quan trọng nhất** thường xuyên xuất hiện làm "chìa khóa" quyết định nghĩa của câu.
+
+Bạn chỉ cần dán nối tiếp 30 phần tử JSON dưới đây vào cuối mảng `SEED_DATA_191` (ngay sau `u7_37`) để nâng tổng số từ của học phần **"Từ vựng bổ trợ"** lên **45 từ** (và tổng kho từ toàn ứng dụng lên **353 từ**):
+
+```json
+      { "id": "com_16", "unit": "Từ vựng bổ trợ", "word": "Inspect / Examine", "ipa": "/ɪnˈspekt / ɪɡˈzæm.ɪn/", "pos": "v.", "meaning": "Kiểm tra kỹ / Thăm khám", "relatedTerms": ["Evaluate / Assess", "Visual examination", "Dental mirror"], "example": "The dentist uses a dental mirror and light to inspect the teeth, gingiva, and oral tissues.", "exampleVi": "Nha sĩ sử dụng gương nha khoa và đèn để kiểm tra kỹ răng, lợi và các mô miệng.", "clinicalNote": "Xuất hiện xuyên suốt Unit 6 khi mô tả thao tác quan sát mô mềm và bề mặt răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_17", "unit": "Từ vựng bổ trợ", "word": "Reveal", "ipa": "/rɪˈviːl/", "pos": "v.", "meaning": "Bộc lộ / Cho thấy (trên phim hoặc lâm sàng)", "relatedTerms": ["Identify / Detect", "Radiograph", "Indicate"], "example": "Radiographic examination can reveal conditions such as bone loss and impacted teeth.", "exampleVi": "Khám X-quang có thể cho thấy các tình trạng như tiêu xương và răng mọc ngầm.", "clinicalNote": "Động từ chuẩn mực dùng để mô tả kết quả phát hiện được từ phim X-quang hoặc xét nghiệm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_18", "unit": "Từ vựng bổ trợ", "word": "Contribute to", "ipa": "/kənˈtrɪb.juːt tuː/", "pos": "v.", "meaning": "Góp phần vào / Là yếu tố dẫn đến", "relatedTerms": ["Result in / Lead to", "Risk factor", "Associated with"], "example": "If plaque is not removed regularly, it can contribute to dental caries and periodontal inflammation.", "exampleVi": "Nếu mảng bám không được loại bỏ thường xuyên, nó có thể góp phần gây sâu răng và viêm nha chu.", "clinicalNote": "Cấu trúc: contribute to + Danh từ / V-ing (xuất hiện ở cả 7 Unit để giải thích nguyên nhân bệnh sinh).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_19", "unit": "Từ vựng bổ trợ", "word": "Result in / Lead to", "ipa": "/rɪˈzʌlt ɪn / liːd tuː/", "pos": "v.", "meaning": "Dẫn đến / Gây ra hệ quả", "relatedTerms": ["Contribute to", "Cause", "Complication"], "example": "Inadequate plaque control may result in gingival inflammation and calculus formation.", "exampleVi": "Kiểm soát mảng bám không tốt có thể dẫn đến viêm lợi và hình thành cao răng.", "clinicalNote": "Dùng để nối nguyên nhân bệnh lý với hậu quả hoặc biến chứng lâm sàng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_20", "unit": "Từ vựng bổ trợ", "word": "Facilitate", "ipa": "/fəˈsɪl.ɪ.teɪt/", "pos": "v.", "meaning": "Tạo điều kiện thuận lợi / Giúp dễ dàng hơn", "relatedTerms": ["Enable", "Promote", "Plaque accumulation"], "example": "Dental calculus provides a rough surface that facilitates further plaque accumulation.", "exampleVi": "Cao răng tạo ra một bề mặt nhám tạo điều kiện thuận lợi cho mảng bám tích tụ thêm.", "clinicalNote": "Mang nghĩa tích cực trong điều trị (giúp vệ sinh dễ hơn) hoặc tiêu cực trong bệnh sinh (giúp vi khuẩn dễ bám).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_21", "unit": "Từ vựng bổ trợ", "word": "Promote", "ipa": "/prəˈməʊt/", "pos": "v.", "meaning": "Thúc đẩy / Tăng cường", "relatedTerms": ["Facilitate", "Remineralization", "Oral Health"], "example": "Fluoride plays an important role in caries prevention because it promotes remineralization.", "exampleVi": "Fluoride đóng vai trò quan trọng trong phòng ngừa sâu răng vì nó thúc đẩy quá trình tái khoáng.", "clinicalNote": "Thường đi kèm với remineralization (tái khoáng), healing (lành thương) hoặc oral health.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_22", "unit": "Từ vựng bổ trợ", "word": "Undergo", "ipa": "/ˌʌn.dəˈɡəʊ/", "pos": "v.", "meaning": "Trải qua (quá trình sinh học / thủ thuật)", "relatedTerms": ["Perform / Conduct", "Root resorption", "Procedure"], "example": "During mixed dentition, primary teeth undergo physiological root resorption and exfoliation.", "exampleVi": "Trong giai đoạn bộ răng hỗn hợp, răng sữa trải qua quá trình tiêu chân răng sinh lý và rụng đi.", "clinicalNote": "Dùng cho cả mô sinh học (trải qua sự tiêu chân răng) lẫn bệnh nhân (trải qua cuộc khám/phẫu thuật).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_23", "unit": "Từ vựng bổ trợ", "word": "Coexist / Simultaneously", "ipa": "/ˌkəʊ.ɪɡˈzɪst / ˌsɪm.əlˈteɪ.ni.əs.li/", "pos": "v. / adv.", "meaning": "Cùng tồn tại / Đồng thời cùng lúc", "relatedTerms": ["Mixed dentition", "Primary teeth", "Permanent teeth"], "example": "Mixed dentition is a transitional period in which primary and permanent teeth coexist simultaneously.", "exampleVi": "Bộ răng hỗn hợp là giai đoạn chuyển tiếp mà trong đó răng sữa và răng vĩnh viễn cùng tồn tại đồng thời.", "clinicalNote": "Từ khóa trọng tâm trong câu hỏi trắc nghiệm đọc hiểu của Unit 2.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_24", "unit": "Từ vựng bổ trợ", "word": "Replace", "ipa": "/rɪˈpleɪs/", "pos": "v.", "meaning": "Thay thế / Bù đắp lại", "relatedTerms": ["Tooth replacement", "Permanent successor", "Prosthodontics"], "example": "Permanent premolars replace primary molars, whereas first permanent molars do not replace any primary teeth.", "exampleVi": "Răng tiền hàm vĩnh viễn thay thế răng cối sữa, trong khi răng cối lớn vĩnh viễn thứ nhất không thay thế răng sữa nào.", "clinicalNote": "Dùng trong thay răng sinh lý (Unit 1, 2), phục hình răng mất (Unit 4) và bù khoáng chất (Unit 7).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_25", "unit": "Từ vựng bổ trợ", "word": "Remove / Eliminate", "ipa": "/rɪˈmuːv / ɪˈlɪm.ɪ.neɪt/", "pos": "v.", "meaning": "Loại bỏ / Lấy sạch", "relatedTerms": ["Dental scaling", "Dental plaque", "Extraction"], "example": "Once plaque has become mineralized into calculus, it cannot be removed by ordinary brushing alone.", "exampleVi": "Một khi mảng bám đã khoáng hóa thành cao răng, nó không thể được lấy sạch chỉ bằng việc chải răng thông thường.", "clinicalNote": "Động từ cốt lõi trong vệ sinh răng miệng, lấy cao răng, lấy tủy viêm và loại bỏ mô sâu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_26", "unit": "Từ vựng bổ trợ", "word": "Break down / Destroy", "ipa": "/breɪk daʊn / dɪˈstrɔɪ/", "pos": "v.", "meaning": "Phân hủy / Phá vỡ / Phá hủy", "relatedTerms": ["Root resorption", "Demineralization", "Surface breakdown"], "example": "During physiological root resorption, the roots of primary teeth gradually break down.", "exampleVi": "Trong quá trình tiêu chân răng sinh lý, chân của các răng sữa từ từ bị phân hủy.", "clinicalNote": "Dùng khi mô cứng (men, ngà, chân răng) bị phá vỡ hoặc khi thức ăn được phân giải.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_27", "unit": "Từ vựng bổ trợ", "word": "Trap / Retain", "ipa": "/træp / rɪˈteɪn/", "pos": "v.", "meaning": "Giữ lại / Nhốt lại (thức ăn, mảng bám)", "relatedTerms": ["Pit and fissure caries", "Retained primary tooth", "Plaque accumulation"], "example": "Deep pits and fissures on the chewing surfaces of molars can trap food particles and bacteria.", "exampleVi": "Các hố và rãnh sâu trên mặt nhai của răng hàm lớn có thể giữ lại các mảnh vụn thức ăn và vi khuẩn.", "clinicalNote": "Giải thích cơ chế tại sao hố rãnh sâu và vùng kẽ răng dễ bị sâu răng khởi phát.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_28", "unit": "Từ vựng bổ trợ", "word": "Distribute", "ipa": "/dɪˈstrɪb.juːt/", "pos": "v.", "meaning": "Phân bổ / Phân tán (lực nhai)", "relatedTerms": ["Occlusion", "Tooth alignment", "Mastication"], "example": "Proper tooth alignment helps maintain effective chewing and distribute biting forces appropriately.", "exampleVi": "Sự sắp xếp răng thẳng hàng giúp duy trì việc nhai hiệu quả và phân bổ lực cắn một cách hợp lý.", "clinicalNote": "Từ khóa quan trọng trong câu hỏi đọc hiểu Unit 1 về vai trò của khớp cắn và sự thẳng hàng của răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_29", "unit": "Từ vựng bổ trợ", "word": "Separate", "ipa": "/ˈsep.ə.reɪt/", "pos": "v.", "meaning": "Ngăn cách / Tách biệt", "relatedTerms": ["Hard palate", "Soft palate", "Boundary"], "example": "The palate forms the roof of the mouth and separates the oral cavity from the nasal cavity.", "exampleVi": "Khẩu cái tạo nên vòm miệng và ngăn cách khoang miệng với hốc mũi.", "clinicalNote": "Thường dùng trong giải phẫu miệng (Unit 3) để mô tả chức năng vách ngăn của khẩu cái.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_30", "unit": "Từ vựng bổ trợ", "word": "Moisten", "ipa": "/ˈmɔɪ.sən/", "pos": "v.", "meaning": "Làm ẩm / Làm mềm (thức ăn, niêm mạc)", "relatedTerms": ["Saliva", "Bolus", "Digestion"], "example": "Saliva moistens food and helps form it into a soft bolus for safe swallowing.", "exampleVi": "Nước bọt làm ẩm thức ăn và giúp nhào trộn thức ăn thành viên mềm để nuốt an toàn.", "clinicalNote": "Mô tả chức năng sinh lý cơ học của nước bọt trong giai đoạn đầu của quá trình tiêu hóa (Unit 3).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_31", "unit": "Từ vựng bổ trợ", "word": "Underlying", "ipa": "/ˌʌn.dəˈlaɪ.ɪŋ/", "pos": "adj.", "meaning": "Nằm bên dưới / Tiềm ẩn", "relatedTerms": ["Dentin", "Periodontal ligament", "Alveolar bone"], "example": "The gingiva surrounds the cervical portion of the teeth and protects the underlying periodontal tissues.", "exampleVi": "Lợi bao quanh phần cổ răng và bảo vệ các mô nha chu nằm bên dưới.", "clinicalNote": "Tính từ giải phẫu xuất hiện rất nhiều trong Unit 1, 3, 7 (underlying dentin, underlying bone).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_32", "unit": "Từ vựng bổ trợ", "word": "Surrounding / Adjacent", "ipa": "/səˈraʊn.dɪŋ / əˈdʒeɪ.sənt/", "pos": "adj.", "meaning": "Xung quanh / Kế cận (liền kề)", "relatedTerms": ["Periapical X-ray", "Periodontics", "Interproximal surface"], "example": "A periapical radiograph shows the entire tooth and its surrounding bone and adjacent structures.", "exampleVi": "Phim X-quang cận chóp cho thấy toàn bộ chiếc răng cùng vùng xương xung quanh và các cấu trúc kế cận.", "clinicalNote": "Cặp tính từ định vị không gian không thể thiếu khi mô tả phim X-quang và giải phẫu nha chu.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_33", "unit": "Từ vựng bổ trợ", "word": "Exposed", "ipa": "/ɪkˈspəʊzd/", "pos": "adj.", "meaning": "Bị lộ ra / Bị bộc lộ", "relatedTerms": ["Root caries", "Gingival recession", "Tooth sensitivity"], "example": "Dental caries usually starts in the enamel, but it can also affect exposed root surfaces.", "exampleVi": "Sâu răng thường bắt đầu ở men răng, nhưng cũng có thể ảnh hưởng đến các bề mặt chân răng bị lộ.", "clinicalNote": "Thường gặp trong cụm 'exposed dentin' (lộ ngà) hoặc 'exposed root surface' (lộ bề mặt chân răng do tụt lợi).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_34", "unit": "Từ vựng bổ trợ", "word": "Inadequate / Insufficient", "ipa": "/ɪnˈæd.ɪ.kwət / ˌɪn.səˈfɪʃ.ənt/", "pos": "adj.", "meaning": "Không đủ / Thiếu hụt / Kém hiệu quả", "relatedTerms": ["Arch length", "Fluoride", "Impacted tooth"], "example": "An impacted tooth fails to erupt fully because of obstruction or inadequate space in the dental arch.", "exampleVi": "Răng mọc ngầm không thể mọc lên hoàn toàn do sự cản trở hoặc không đủ khoảng trống trên cung răng.", "clinicalNote": "Trái nghĩa với 'Adequate / Sufficient' (Đầy đủ). Rất hay xuất hiện trong phần nguyên nhân bệnh lý.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_35", "unit": "Từ vựng bổ trợ", "word": "Frequent / Persistent", "ipa": "/ˈfriː.kwənt / pəˈsɪs.tənt/", "pos": "adj.", "meaning": "Thường xuyên / Dai dẳng (kéo dài)", "relatedTerms": ["Sugary foods", "Toothache", "Plaque accumulation"], "example": "Frequent consumption of sugary drinks and persistent plaque accumulation increase the risk of caries.", "exampleVi": "Việc tiêu thụ thường xuyên đồ uống có đường và sự tích tụ mảng bám dai dẳng làm tăng nguy cơ sâu răng.", "clinicalNote": "'Frequent' chỉ tần suất lặp lại nhiều lần; 'Persistent' chỉ triệu chứng hoặc tình trạng kéo dài không dứt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_36", "unit": "Từ vựng bổ trợ", "word": "Severe / Intense", "ipa": "/sɪˈvɪər / ɪnˈtens/", "pos": "adj.", "meaning": "Nghiêm trọng / Dữ dội (cơn đau, viêm nhiễm)", "relatedTerms": ["Toothache", "Pulpitis", "Periodontitis"], "example": "As deep caries approaches the dental pulp, patients may experience more frequent or intense pain.", "exampleVi": "Khi sâu răng sâu tiến gần đến tủy răng, bệnh nhân có thể gặp các cơn đau thường xuyên hoặc dữ dội hơn.", "clinicalNote": "Dùng để phân biệt mức độ triệu chứng nặng ở giai đoạn muộn với giai đoạn sớm không triệu chứng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_37", "unit": "Từ vựng bổ trợ", "word": "Initial / Early stage", "ipa": "/ɪˈnɪʃ.əl / ˈɜː.li steɪdʒ/", "pos": "adj. / n.", "meaning": "Ban đầu / Giai đoạn sớm", "relatedTerms": ["White spot lesion", "Disease detection", "Initial caries / Deep caries"], "example": "In the initial stage, dental caries appears as a white spot lesion and is generally painless.", "exampleVi": "Ở giai đoạn đầu, sâu răng xuất hiện dưới dạng tổn thương đốm trắng và nhìn chung không gây đau.", "clinicalNote": "Giai đoạn vàng trong nha khoa dự phòng vì tổn thương còn khả năng phục hồi mà không cần khoan trám.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_38", "unit": "Từ vựng bổ trợ", "word": "Advanced / Extensive", "ipa": "/ədˈvɑːnst / ɪkˈsten.sɪv/", "pos": "adj.", "meaning": "Tiến triển nặng / Sâu rộng (toàn diện)", "relatedTerms": ["Comprehensive examination", "Periodontitis", "Pulp involvement"], "example": "A comprehensive examination is more extensive than a regular check-up, and advanced caries may reach the pulp.", "exampleVi": "Khám toàn diện có phạm vi sâu rộng hơn khám định kỳ, và sâu răng tiến triển nặng có thể lan tới tủy.", "clinicalNote": "Câu số 1 trong bài đọc True/False của Unit 6 sử dụng trực tiếp từ 'extensive' này.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_39", "unit": "Từ vựng bổ trợ", "word": "Reversible / Irreversible", "ipa": "/rɪˈvɜː.sə.bəl / ˌɪr.ɪˈvɜː.sə.bəl/", "pos": "adj.", "meaning": "Có thể đảo ngược (hồi phục) / Không thể hồi phục", "relatedTerms": ["Gingivitis", "Periodontitis", "Reversible pulpitis"], "example": "Gingivitis is reversible with good oral hygiene, whereas periodontitis causes irreversible bone destruction.", "exampleVi": "Viêm lợi có thể hồi phục nhờ vệ sinh răng miệng tốt, trong khi viêm nha chu gây phá hủy xương không thể hồi phục.", "clinicalNote": "Tiêu chí phân biệt cốt lõi giữa Viêm lợi vs Viêm nha chu (Unit 5) và Viêm tủy có hồi phục vs không hồi phục (Unit 7).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_40", "unit": "Từ vựng bổ trợ", "word": "Noticeable / Obvious", "ipa": "/ˈnəʊ.tɪ.sə.bəl / ˈɒb.vi.əs/", "pos": "adj.", "meaning": "Đáng chú ý / Rõ ràng (dễ nhận thấy)", "relatedTerms": ["Symptom", "Sign", "Discoloration"], "example": "Some oral conditions develop without obvious or noticeable symptoms during their early stages.", "exampleVi": "Một số bệnh lý răng miệng phát triển mà không có các triệu chứng rõ ràng hoặc dễ nhận thấy ở giai đoạn sớm.", "clinicalNote": "Giải thích lý do bệnh nhân cần đi khám định kỳ ngay cả khi không thấy đau nhức.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_41", "unit": "Từ vựng bổ trợ", "word": "Suspicious", "ipa": "/səˈspɪʃ.əs/", "pos": "adj.", "meaning": "Đáng ngờ / Nghi ngờ có tổn thương", "relatedTerms": ["Clinical examination", "Lesion", "Oral cancer screening"], "example": "A dental explorer may be used gently when necessary to assess suspicious areas on the tooth surface.", "exampleVi": "Cây thám trâm nha khoa có thể được sử dụng nhẹ nhàng khi cần thiết để đánh giá các vùng nghi ngờ trên bề mặt răng.", "clinicalNote": "Trích trực tiếp từ mục Chẩn đoán sâu răng (4.2) trong Unit 7.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_42", "unit": "Từ vựng bổ trợ", "word": "Vulnerable", "ipa": "/ˈvʌl.nər.ə.bəl/", "pos": "adj.", "meaning": "Dễ bị tổn thương / Dễ bị tấn công", "relatedTerms": ["Susceptible to / Prone to", "Hyposalivation", "Demineralization"], "example": "Reduced saliva makes teeth more vulnerable to decay because saliva helps protect tooth surfaces.", "exampleVi": "Lượng nước bọt giảm làm cho răng dễ bị sâu tấn công hơn vì nước bọt giúp bảo vệ bề mặt răng.", "clinicalNote": "Đồng nghĩa sát với 'Susceptible to' và 'Prone to' trong mục Yếu tố nguy cơ của Unit 7.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_43", "unit": "Từ vựng bổ trợ", "word": "Obstruction", "ipa": "/əbˈstrʌk.ʃən/", "pos": "n.", "meaning": "Sự cản trở / Vật cản (đường mọc răng)", "relatedTerms": ["Impacted tooth", "Delayed eruption", "Retained primary tooth"], "example": "Delayed eruption or impaction may occur because of an obstruction along the eruption path.", "exampleVi": "Chậm mọc răng hoặc răng mọc ngầm có thể xảy ra do có sự cản trở dọc theo đường mọc răng.", "clinicalNote": "Từ khóa giải thích cơ chế răng ngầm và răng sữa lưu tồn trong Unit 2.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_44", "unit": "Từ vựng bổ trợ", "word": "Complication", "ipa": "/ˌkɒm.plɪˈkeɪ.ʃən/", "pos": "n.", "meaning": "Biến chứng", "relatedTerms": ["Pulpitis", "Periapical abscess", "Tooth loss"], "example": "Without treatment, deep caries reaching the pulp may cause severe complications such as a dental abscess.", "exampleVi": "Nếu không điều trị, sâu răng sâu lan đến tủy có thể gây ra các biến chứng nghiêm trọng như áp-xe răng.", "clinicalNote": "Xuất hiện ở cả Unit 1 và Unit 7 để nhấn mạnh tầm quan trọng của việc phát hiện và điều trị sớm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_45", "unit": "Từ vựng bổ trợ", "word": "Scope and purpose", "ipa": "/skəʊp ænd ˈpɜː.pəs/", "pos": "n.", "meaning": "Phạm vi và mục đích", "relatedTerms": ["Comprehensive examination", "Regular check-up", "Dental examination"], "example": "Although both contribute to maintaining oral health, a comprehensive exam and a regular check-up differ in their scope and purpose.", "exampleVi": "Mặc dù cả hai đều góp phần duy trì sức khỏe răng miệng, khám toàn diện và khám định kỳ khác nhau về phạm vi và mục đích.", "clinicalNote": "Cụm danh từ học thuật mở đầu bài đọc hiểu của Unit 6.", "srsLevel": 0, "mistakeCount": 0 }
+
+```
+
+---
+
+### PHẦN 3: TỔNG KẾT CẤU TRÚC KHO TỪ VỰNG SAU KHI BỔ SUNG (353 THUẬT NGỮ)
+
+| Học phần (Unit) | Số lượng từ | Nội dung bao phủ |
+| --- | --- | --- |
+| **Từ vựng bổ trợ** (`com_01` ➔ `com_45`) | **45 từ** | Động từ lâm sàng, tính từ mô tả mức độ/vị trí, cụm từ nối nguyên nhân – hệ quả trong bài đọc hiểu |
+| **Unit 1** (`u1_01` ➔ `u1_71`) | **71 từ** | Danh pháp nha khoa, hệ thống FDI, bộ răng sữa/hỗn hợp/vĩnh viễn, giải phẫu men-ngà-tủy-nha chu |
+| **Unit 2** (`u2_01` ➔ `u2_29`) | **29 từ** | Quá trình & giai đoạn mọc răng, tiêu chân răng sinh lý, thay răng, các bất thường mọc răng |
+| **Unit 3** (`u3_01` ➔ `u3_34`) | **34 từ** | Giải phẫu khoang miệng, khẩu cái cứng/mềm, lưỡi gà, amidan, cơ chế nhai, nuốt, phát âm |
+| **Unit 4** (`u4_01` ➔ `u4_58`) | **58 từ** | 9 chuyên khoa Răng Hàm Mặt, quy trình chẩn đoán, điều trị, hướng dẫn và chuyển tuyến |
+| **Unit 5** (`u5_01` ➔ `u5_65`) | **65 từ** | Sức khỏe & vệ sinh răng miệng, mảng bám, cao răng trên/dưới lợi, bệnh nha chu, khô miệng, dự phòng |
+| **Unit 6** (`u6_01` ➔ `u6_44`) | **44 từ** | Khám trong/ngoài miệng, đo túi nha chu, X-quang trong/ngoài miệng, an toàn bức xạ (áo chì/cổ chì) |
+| **Unit 7** (`u7_01` ➔ `u7_37`) | **37 từ** | 4 giai đoạn sâu răng, mất khoáng/tái khoáng, biến chứng viêm/hoại tử tủy, áp-xe, vật liệu phục hồi |
+| **TỔNG CỘNG TOÀN APP** | **353 từ** | **Đạt 100% từ chuyên ngành & từ vựng bắc cầu đọc hiểu của cả 7 Unit** |
