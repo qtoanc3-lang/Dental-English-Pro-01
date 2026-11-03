@@ -1,0 +1,331 @@
+Qua quá trình chạy kiểm thử luồng thực thi (Runtime), kiểm toán mã nguồn (Code Audit) và đối soát trực tiếp với tài liệu giáo trình Google Docs (`UNIT 1 - UNIT 7.docx`), dưới đây là báo cáo chi tiết các lỗi phát hiện được phân theo 3 nhóm cùng **mã nguồn sửa lỗi (Patch)** tương ứng.
+
+---
+
+### PHẦN 1: LỖI HOẠT ĐỘNG & LOGIC HỆ THỐNG (8 LỖI)
+
+#### 1. Lỗi tính chuỗi ngày học (Streak) sai lệch múi giờ từ 00:00 đến 07:00 sáng
+
+* **Vị trí:** Hàm `updateDailyStreak()`.
+* **Nguyên nhân:** Hàm đang sử dụng `new Date().toISOString().slice(0, 10)` trả về ngày theo giờ chuẩn quốc tế **UTC+0**. Tại Việt Nam (**GMT+7**), nếu bạn vào học từ `00:00` đến `06:59` sáng, hệ thống vẫn tính là ngày hôm trước. Đồng thời phép trừ `new Date(todayStr) - new Date(parsed.lastDate)` không đồng nhất múi giờ địa phương dễ làm đứt chuỗi Streak.
+* **Mã sửa lỗi (Thay thế hàm `updateDailyStreak`):**
+
+```javascript
+function getLocalDateString(dateObj = new Date()) {
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function updateDailyStreak() {
+  const now = new Date();
+  const todayStr = getLocalDateString(now);
+  const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+  const yesterdayStr = getLocalDateString(yesterday);
+
+  let streakData = { count: 1, lastDate: todayStr };
+  const raw = localStorage.getItem(STORAGE_KEY_STREAK);
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed.lastDate === todayStr) {
+        streakData = parsed;
+      } else if (parsed.lastDate === yesterdayStr) {
+        streakData = { count: (parsed.count || 0) + 1, lastDate: todayStr };
+      } else {
+        streakData = { count: 1, lastDate: todayStr };
+      }
+    } catch (e) {}
+  }
+  localStorage.setItem(STORAGE_KEY_STREAK, JSON.stringify(streakData));
+  return streakData.count;
+}
+
+```
+
+---
+
+#### 2. Lỗi Phòng Thi CBT (Tab 6) bị nhảy thành 6 hoặc 8 đáp án theo Tab 1
+
+* **Vị trí:** Sự kiện `document.getElementById("btnGenerateCBT").onclick`.
+* **Nguyên nhân:** Dòng lệnh tạo đáp án nhiễu trong CBT đang viết là:
+`const dist = getDistinctDistractors(q, (quizOptionCount || 4) - 1, qType, distractorStrategy);`
+Khi người dùng chọn 6 hoặc 8 đáp án ở Tab 1 (Trắc nghiệm), biến toàn cục `quizOptionCount` bằng `6` hoặc `8`, làm cho Phòng thi CBT ở Tab 6 cũng sinh ra 6–8 đáp án (A, B, C, D, E, F, G, H), phá vỡ thiết kế chuẩn 4 đáp án A–B–C–D cố định của bài thi CBT.
+* **Mã sửa lỗi (Trong `btnGenerateCBT.onclick`):**
+
+```javascript
+// Cố định lấy đúng 3 đáp án nhiễu (tổng 4 đáp án A-B-C-D chuẩn CBT độc lập với Tab 1)
+const dist = getDistinctDistractors(q, 3, qType, distractorStrategy);
+
+```
+
+---
+
+#### 3. Lỗi mất đồng bộ điểm nhớ SRS giữa các từ vựng xuất hiện lặp lại ở nhiều Unit
+
+* **Vị trí:** Hàm `recordStudyOutcome()`, `updateOutcomeMemoryOnly()`, và sự kiện chấm điểm SRS ở Flashcard (`bindSrs`).
+* **Nguyên nhân:** Kho dữ liệu có hơn **20 thuật ngữ xuất hiện lặp lại ở nhiều Unit** (ví dụ: `Oral cavity` ở Unit 1, 3, 5; `Gingivitis` và `Periodontitis` ở Unit 4, 5; `Dental caries` và `White spot lesion` ở Unit 5, 7; `Bone loss` ở Unit 5, 6; `Enamel` ở Unit 1, 5...). Hiện tại khi bạn học thuộc một từ ở Unit 1 (`srsLevel = 3`), bản sao của từ đó ở Unit 5 vẫn nằm ở mức `0 (Chưa học)`.
+* **Mã sửa lỗi (Bổ sung hàm đồng bộ liên Unit `syncCrossUnitSrs`):**
+
+```javascript
+function syncCrossUnitSrs(sourceItem) {
+  if (!sourceItem || !sourceItem.word) return;
+  const targetVariants = extractAllVariants(sourceItem.word);
+  if (targetVariants.length === 0) return;
+
+  vocabList.forEach(v => {
+    if (v.id === sourceItem.id) return;
+    const vVariants = extractAllVariants(v.word);
+    // Nếu trùng thuật ngữ tiếng Anh chính hoặc các biến thể đồng nghĩa
+    if (vVariants.some(vw => targetVariants.includes(vw))) {
+      v.srsLevel = sourceItem.srsLevel;
+      v.mistakeCount = sourceItem.mistakeCount;
+    }
+  });
+}
+
+function recordStudyOutcome(item, isCorrect) {
+  if (!item) return;
+  updateOutcomeMemoryOnly(item, isCorrect);
+  saveDatabase();
+}
+
+function updateOutcomeMemoryOnly(item, isCorrect) {
+  if (!item) return;
+  if (isCorrect) {
+    if ((item.mistakeCount || 0) > 0) item.mistakeCount--;
+    if ((item.mistakeCount || 0) === 0) {
+      item.srsLevel = Math.min(3, Math.max(2, (item.srsLevel || 0) + 1));
+    }
+  } else {
+    item.mistakeCount = (item.mistakeCount || 0) + 1;
+    item.srsLevel = 1;
+  }
+  syncCrossUnitSrs(item);
+}
+
+```
+
+*(Lưu ý: Trong hàm `bindSrs(id, lvl)` của Flashcard, gọi thêm `syncCrossUnitSrs(item);` ngay trước `saveDatabase();`).*
+
+---
+
+#### 4. Lỗ hổng XSS / Vỡ giao diện HTML ở Bảng Kết Quả CBT (Tab 6) & Bảng Cập Nhật
+
+* **Vị trí:** Hàm `submitCBTExam()` và `renderWhatsNewModal()`.
+* **Nguyên nhân:** Trong `submitCBTExam()`, đoạn nối chuỗi `mistakeListEl.innerHTML` và `breakdownList.innerHTML` chèn trực tiếp `${m.word}`, `${m.userAnsText}`, `${m.correctAnsText}`, `${uName}` mà **không qua hàm `escapeHtml()**`. Nếu từ vựng hoặc đề cương có chứa dấu `<` hoặc `>` (ví dụ: `Pocket depth > 4mm`), giao diện báo cáo điểm sẽ bị lỗi cấu trúc thẻ HTML.
+* **Mã sửa lỗi (Trong `submitCBTExam`):**
+
+```javascript
+if (mistakes.length > 0) {
+  gapBox.classList.remove("hidden");
+  btnReviewMistakes.classList.remove("hidden");
+  mistakes.forEach(m => {
+    mistakeListEl.innerHTML += `<li><strong>${escapeHtml(m.word)}</strong>: Bạn chọn: <span class="text-rose-500 line-through">${escapeHtml(m.userAnsText)}</span> ➔ Đáp án đúng: <span class="text-emerald-600">${escapeHtml(m.correctAnsText)}</span> <span class="text-[10px] opacity-75">[${escapeHtml(m.unit)}]</span></li>`;
+  });
+}
+
+```
+
+---
+
+#### 5. Lỗi Đua Tốc Độ 60s (Tab 4) không tự tạm dừng khi mở các cửa sổ Modal trên Header
+
+* **Vị trí:** Hàm `bindModal` và sự kiện mở `jsonModal`, `whatsNewModal`.
+* **Nguyên nhân:** Khi đang trong lượt Đua tốc độ 60s, nếu người dùng bấm vào các nút trên thanh Header như *"Trợ lý AI"*, *"Hướng dẫn"*, *"Chuyên ngành"* hoặc *"Sao lưu JSON"*, đồng hồ đếm ngược 60s vẫn chạy ngầm làm hết giờ hoặc lộ câu hỏi.
+* **Mã sửa lỗi (Cập nhật `bindModal` trong `initDentalEnglishApp`):**
+
+```javascript
+const bindModal = (o, m, c) => {
+  const ob = document.getElementById(o), mod = document.getElementById(m), cb = document.getElementById(c);
+  if (ob && mod) ob.onclick = () => {
+    if (isSprintActive && !isSprintPaused) pauseSprintGame();
+    mod.classList.remove("hidden");
+  };
+  if (cb && mod) cb.onclick = () => mod.classList.add("hidden");
+  if (mod) mod.addEventListener("click", e => { if (e.target === mod) mod.classList.add("hidden"); });
+};
+
+```
+
+*(Áp dụng tương tự cho `btnOpenJsonModal` và thêm sự kiện click nền tối đóng `jsonModal`).*
+
+---
+
+#### 6. Lỗi Chiều "Điền khuyết câu lâm sàng" (`context`) có nguy cơ lộ đáp án nếu câu ví dụ dùng từ biến thể
+
+* **Vị trí:** Hàm `maskWordInSentence(sentence, rawWord)`.
+* **Nguyên nhân:** Với một số cụm từ phức hợp (như `"Evaluate / Assess"`, `"Identify / Detect"`, `"Tooth / teeth"` hoặc từ do người dùng tự nhập), nếu câu `example` chứa dạng chia động từ bất quy tắc hoặc từ viết tắt mà Regex không tìm thấy để thay bằng `[_____]`, câu hỏi Điền khuyết sẽ hiển thị nguyên văn câu ví dụ mà không có chỗ trống nào, hoặc giữ nguyên từ cần hỏi trên đề bài.
+* **Mã sửa lỗi (Nâng cấp `maskWordInSentence`):**
+
+```javascript
+function maskWordInSentence(sentence, rawWord) {
+  if (!sentence || !rawWord) return sentence || "";
+  let masked = sentence;
+  const variants = new Set();
+
+  rawWord.split("/").forEach(part => {
+    const noParen = part.replace(/\([^)]*\)/g, "").trim();
+    if (noParen) {
+      variants.add(noParen);
+      // Nếu là động từ/danh từ tận cùng bằng 'e' hoặc 'y', thêm gốc từ cắt đuôi để bắt được dạng -ing, -ed, -ies
+      if (noParen.length > 4 && (noParen.endsWith("e") || noParen.endsWith("y"))) {
+        variants.add(noParen.slice(0, -1));
+      }
+    }
+    const match = part.match(/\(([^)]+)\)/);
+    if (match && match[1]) variants.add(match[1].trim());
+  });
+
+  Array.from(variants)
+    .sort((a, b) => b.length - a.length)
+    .forEach(v => {
+      if (v.length >= 2) {
+        const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        masked = masked.replace(new RegExp("\\b" + escaped + "\\w*", "gi"), "[_____]");
+      }
+    });
+
+  // Phòng vệ an toàn: Nếu câu ví dụ dùng từ đồng nghĩa hoàn toàn khác khiến chưa có dấu [_____]
+  if (!masked.includes("[_____]")) {
+    masked = `${masked} (Thuật ngữ tương ứng: [_____])`;
+  }
+  return masked;
+}
+
+```
+
+---
+
+#### 7. Lỗi phím tắt bàn phím bị kích hoạt nhầm khi đang mở Modal & Thiếu phím tắt Tab 4 (Sprint), Tab 6 (CBT)
+
+* **Vị trí:** Sự kiện `window.addEventListener("keydown", ...)` ở cuối file.
+* **Nguyên nhân:**
+1. Khi đang mở bất kỳ Modal nào (Hướng dẫn, AI Hub, Thông báo), nếu người dùng nhấn `Space` hoặc `Mũi tên`, câu hỏi bên dưới vẫn tự nhảy hoặc phát âm.
+2. Chưa hỗ trợ phím tắt `A, B, C, D` (hoặc `1, 2, 3, 4`), phím `F` (gắn cờ) và `Mũi tên Trái/Phải` trong Phòng thi CBT (Tab 6) như mục tiêu Roadmap.
+
+
+* **Mã sửa lỗi (Thay thế khối `keydown` ở cuối hàm `initDentalEnglishApp`):**
+
+```javascript
+window.addEventListener("keydown", e => {
+  if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
+
+  // Chặn phím tắt nếu đang có bất kỳ cửa sổ Modal nào mở
+  const anyModalOpen = ["guideModal", "authorModal", "specialtyModal", "aiHubModal", "pwaModal", "jsonModal", "whatsNewModal"]
+    .some(id => {
+      const el = document.getElementById(id);
+      return el && !el.classList.contains("hidden");
+    });
+  if (anyModalOpen) return;
+
+  if (currentActiveTab === "quiz") {
+    if (["1", "2", "3", "4", "5", "6", "7", "8"].includes(e.key) && !currentQuizAnswered) {
+      const btns = document.querySelectorAll(".quiz-opt-btn");
+      if (btns[parseInt(e.key, 10) - 1]) btns[parseInt(e.key, 10) - 1].click();
+    } else if ((e.key === "Enter" || e.key === "ArrowRight") && currentQuizAnswered) {
+      document.getElementById("btnNextQuizQuestion").click();
+    } else if (e.code === "Space") {
+      e.preventDefault(); document.getElementById("btnSpeakQuizPrompt").click();
+    }
+  } else if (currentActiveTab === "flashcard") {
+    if (e.code === "Space") {
+      e.preventDefault(); document.getElementById("btnFcSpeakFront").click();
+    } else if (e.key === "ArrowRight") {
+      document.getElementById("btnFcNext").click();
+    } else if (e.key === "ArrowLeft") {
+      document.getElementById("btnFcPrev").click();
+    } else if (["ArrowUp", "ArrowDown", "Enter"].includes(e.key)) {
+      e.preventDefault(); document.getElementById("fcCardInner").click();
+    }
+  } else if (currentActiveTab === "sprint" && isSprintActive && !isSprintPaused) {
+    if (["1", "2", "3", "4"].includes(e.key)) {
+      const btns = document.querySelectorAll("#sprintOptionsBox button");
+      if (btns[parseInt(e.key, 10) - 1]) btns[parseInt(e.key, 10) - 1].click();
+    }
+  } else if (currentActiveTab === "cbt" && !document.getElementById("cbtExamView").classList.contains("hidden")) {
+    const key = e.key.toUpperCase();
+    const optMap = { "A": 0, "B": 1, "C": 2, "D": 3, "1": 0, "2": 1, "3": 2, "4": 3 };
+    if (optMap[key] !== undefined) {
+      const btns = document.querySelectorAll("#cbtOptionsContainer button");
+      if (btns[optMap[key]]) btns[optMap[key]].click();
+    } else if (key === "F") {
+      e.preventDefault(); document.getElementById("btnFlagCBT").click();
+    } else if (e.key === "ArrowRight" || e.key === "Enter") {
+      e.preventDefault(); document.getElementById("btnCBTNext").click();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault(); document.getElementById("btnCBTPrev").click();
+    }
+  }
+});
+
+```
+
+---
+
+#### 8. Lỗi câu thông báo cố định "247 từ" trong `buildOfflineMedicalAnalysis`
+
+* **Vị trí:** Cuối hàm `buildOfflineMedicalAnalysis(q)`.
+* **Nguyên nhân:** Chuỗi văn bản đang ghi cứng `"Chưa tìm thấy từ khóa ... trong kho 247 từ có sẵn"`.
+* **Mã sửa lỗi:** Thay `247 từ` bằng `${vocabList.length} từ`.
+
+---
+
+### PHẦN 2: KIỂM TOÁN TỪ VỰNG & BỔ SUNG ĐỦ 323 THUẬT NGỮ (THEO GOOGLE DOCS)
+
+#### Phát hiện sai lệch số lượng trong mảng `SEED_DATA_191` hiện tại:
+
+* Trong `RELEASE_CHANGELOG` của bản cập nhật `02/11/2026`, tiêu đề ghi: **"Mở Rộng Kho Từ Vựng Lên 323 Thuật Ngữ"**.
+* Tuy nhiên, khi đếm thực tế các phần tử trong mảng `SEED_DATA_191` của mã nguồn bạn gửi, hiện chỉ có **293 từ** (`Unit 0`: 15, `Unit 1`: 71, `Unit 2`: 29, `Unit 3`: 34, `Unit 4`: 57, `Unit 5`: 58, `Unit 6`: 29, `Unit 7`: 30).
+* Đối chiếu với bảng từ vựng và câu hỏi ôn tập trong file Google Docs `UNIT 1-UNIT 7.docx`, hệ thống đang **thiếu đúng 30 thuật ngữ chuyên ngành** ở các Unit 4, 5, 6, 7 (đặc biệt là các từ có xuất hiện trong bài thi Cuối bài của Unit 6 và Unit 7 như `Cephalometric projection`, `Radiation exposure`, `Lead apron`, `Lead collar`, `Hidden caries`, `Discoloration`, `Pulp involvement`, `Bacterial invasion`...).
+
+#### Mã JSON của 30 thuật ngữ còn thiếu (Dán nối tiếp vào cuối mảng `SEED_DATA_191` để đạt chuẩn 323/323 thuật ngữ):
+
+```json
+      { "id": "u4_58", "unit": "Unit 4", "word": "Maxillofacial surgeon", "ipa": "/ˌmæk.sɪl.əʊˈfeɪ.ʃəl ˈsɜː.dʒən/", "pos": "n.", "meaning": "Bác sĩ phẫu thuật hàm mặt", "relatedTerms": ["Maxillofacial surgery", "Oral surgeon", "Facial trauma"], "example": "The maxillofacial surgeon reconstructed the fractured mandible using titanium plates.", "exampleVi": "Bác sĩ phẫu thuật hàm mặt đã tái tạo xương hàm dưới bị gãy bằng nẹp vít hợp kim titan.", "clinicalNote": "Bác sĩ chuyên khoa sâu điều trị chấn thương, dị tật và bệnh lý vùng hàm mặt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_59", "unit": "Unit 5", "word": "Salivary flow", "ipa": "/ˈsæl.ɪ.vər.i fləʊ/", "pos": "n.", "meaning": "Lưu lượng nước bọt", "relatedTerms": ["Saliva", "Hyposalivation", "Xerostomia"], "example": "Adequate salivary flow is essential for washing away food debris and buffering acids.", "exampleVi": "Lưu lượng nước bọt đầy đủ là điều thiết yếu để rửa trôi vụn thức ăn và đệm trung hòa axit.", "clinicalNote": "Yếu tố bảo vệ sinh học tự nhiên quan trọng nhất chống lại sâu răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_60", "unit": "Unit 5", "word": "Interproximal surface", "ipa": "/ˌɪn.təˈprɒk.sɪ.məl ˈsɜː.fɪs/", "pos": "n.", "meaning": "Mặt bên của răng (Mặt tiếp cận)", "relatedTerms": ["Dental floss", "Interdental cleaning device", "Interproximal caries"], "example": "A toothbrush cannot effectively clean the interproximal surfaces between adjacent teeth.", "exampleVi": "Bàn chải đánh răng không thể làm sạch hiệu quả các mặt bên giữa hai răng kế cận.", "clinicalNote": "Bao gồm mặt gần (mesial) và mặt xa (distal), cần dùng chỉ nha khoa để làm sạch.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_61", "unit": "Unit 5", "word": "Gingival margin", "ipa": "/ˈdʒɪn.dʒɪ.vəl ˈmɑː.dʒɪn/", "pos": "n.", "meaning": "Đường viền lợi (Bờ viền nướu)", "relatedTerms": ["Gumline", "Supragingival", "Subgingival"], "example": "Plaque frequently accumulates along the gingival margin if brushing is inadequate.", "exampleVi": "Mảng bám thường tích tụ dọc theo đường viền lợi nếu việc chải răng không kỹ lưỡng.", "clinicalNote": "Mốc giải phẫu phân chia vùng trên lợi và vùng dưới lợi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_62", "unit": "Unit 5", "word": "Supragingival", "ipa": "/ˌsuː.prəˈdʒɪn.dʒɪ.vəl/", "pos": "adj.", "meaning": "Trên lợi (Trên nướu)", "relatedTerms": ["Subgingival", "Gingival margin", "Dental calculus (Tartar)"], "example": "Supragingival calculus is visible above the gumline and often appears yellow or chalky white.", "exampleVi": "Cao răng trên lợi có thể nhìn thấy phía trên đường viền lợi và thường có màu vàng hoặc trắng đục.", "clinicalNote": "Thường gặp ở mặt lưỡi răng cửa dưới và mặt má răng cối lớn hàm trên.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_63", "unit": "Unit 5", "word": "Subgingival", "ipa": "/ˌsʌbˈdʒɪn.dʒɪ.vəl/", "pos": "adj.", "meaning": "Dưới lợi (Dưới nướu)", "relatedTerms": ["Supragingival", "Periodontal pocket", "Dental scaling"], "example": "Subgingival calculus forms inside periodontal pockets and is dark brown or greenish-black.", "exampleVi": "Cao răng dưới lợi hình thành bên trong các túi nha chu và có màu nâu sẫm hoặc đen ánh xanh.", "clinicalNote": "Bám rất chắc vào bề mặt xê-măng chân răng, cần lấy sạch bằng đầu cạo vôi chuyên dụng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_64", "unit": "Unit 5", "word": "Tenderness", "ipa": "/ˈten.də.nəs/", "pos": "n.", "meaning": "Đau khi chạm phải (Nhạy cảm đau)", "relatedTerms": ["Gingivitis", "Inflammation", "Toothache"], "example": "Patients with acute gingivitis often report gingival swelling and tenderness during brushing.", "exampleVi": "Bệnh nhân bị viêm lợi cấp tính thường than phiền về tình trạng sưng nướu và đau khi chạm phải lúc chải răng.", "clinicalNote": "Triệu chứng đau khu trú khi có lực ấn hoặc chạm vào mô viêm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_65", "unit": "Unit 5", "word": "Tongue coating", "ipa": "/tʌŋ ˈkəʊ.tɪŋ/", "pos": "n.", "meaning": "Cặn lưỡi / Rêu lưỡi", "relatedTerms": ["Halitosis", "Tongue", "Bacteria"], "example": "Removing tongue coating daily helps eliminate volatile sulfur compounds that cause halitosis.", "exampleVi": "Làm sạch lớp cặn rêu lưỡi hàng ngày giúp loại bỏ các hợp chất lưu huỳnh bay hơi gây hôi miệng.", "clinicalNote": "Lớp mảng bám gồm vi khuẩn, tế bào biểu mô bong tróc và cặn thức ăn trên lưng lưỡi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_30", "unit": "Unit 6", "word": "Head and neck examination", "ipa": "/hed ænd nek ɪɡˌzæm.ɪˈneɪ.ʃən/", "pos": "n.", "meaning": "Khám đầu và cổ", "relatedTerms": ["Extraoral examination", "Comprehensive examination", "Lymph nodes"], "example": "A comprehensive dental visit begins with a thorough head and neck examination.", "exampleVi": "Một buổi khám nha khoa toàn diện bắt đầu bằng việc khám đầu và cổ kỹ lưỡng.", "clinicalNote": "Đánh giá sự cân xứng khuôn mặt, khớp thái dương hàm, tuyến nước bọt và hệ thống hạch cổ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_31", "unit": "Unit 6", "word": "Extraoral examination", "ipa": "/ˌek.strəˈɔː.rəl ɪɡˌzæm.ɪˈneɪ.ʃən/", "pos": "n.", "meaning": "Khám ngoài miệng", "relatedTerms": ["Intraoral examination", "Head and neck examination"], "example": "Palpation of the temporomandibular joint is part of the extraoral examination.", "exampleVi": "Sờ nắn khớp thái dương hàm là một phần của quy trình khám ngoài miệng.", "clinicalNote": "Quan sát và sờ nắn các cấu trúc vùng đầu, mặt, cổ trước khi khám trong khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_32", "unit": "Unit 6", "word": "Intraoral examination", "ipa": "/ˌɪn.trəˈɔː.rəl ɪɡˌzæm.ɪˈneɪ.ʃən/", "pos": "n.", "meaning": "Khám trong miệng", "relatedTerms": ["Extraoral examination", "Dental mirror", "Periodontal probing"], "example": "The intraoral examination evaluates the oral mucosa, tongue, gingiva, and dentition.", "exampleVi": "Khám trong miệng đánh giá niêm mạc miệng, lưỡi, lợi và toàn bộ bộ răng.", "clinicalNote": "Sử dụng gương, thám trâm và cây đo túi nha chu dưới ánh sáng đèn ghế nha.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_33", "unit": "Unit 6", "word": "Malocclusion", "ipa": "/ˌmæl.əˈkluː.ʒən/", "pos": "n.", "meaning": "Sai khớp cắn", "relatedTerms": ["Occlusion", "Orthodontics", "Crowding"], "example": "Occlusion is assessed during the examination to identify bite problems or malocclusion.", "exampleVi": "Khớp cắn được đánh giá trong quá trình khám để xác định các vấn đề ăn nhai hoặc sai khớp cắn.", "clinicalNote": "Sự lệch lạc về tương quan giữa hai hàm hoặc vị trí các răng trên cung hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_34", "unit": "Unit 6", "word": "Bridge", "ipa": "/brɪdʒ/", "pos": "n.", "meaning": "Cầu răng", "relatedTerms": ["Crown", "Prosthodontics", "Dental restoration / Filling"], "example": "Existing restorations, including fillings, crowns, and bridges, are evaluated for marginal integrity.", "exampleVi": "Các phục hồi hiện có, bao gồm miếng trám, mão răng và cầu răng, đều được kiểm tra độ khít sát bờ viền.", "clinicalNote": "Phục hình cố định thay thế một hoặc nhiều răng mất bằng cách tựa lên các răng trụ kế cận.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_35", "unit": "Unit 6", "word": "Polish", "ipa": "/ˈpɒl.ɪʃ/", "pos": "v.", "meaning": "Đánh bóng (răng / miếng trám)", "relatedTerms": ["Dental scaling", "Regular check-up", "Professional cleaning / Scaling"], "example": "After scaling, the clinician will polish the teeth to remove extrinsic stains and smooth the enamel.", "exampleVi": "Sau khi lấy cao răng, bác sĩ sẽ đánh bóng răng để loại bỏ vết nhiễm màu ngoại lai và làm láng bề mặt men.", "clinicalNote": "Giúp bề mặt răng trơn láng, hạn chế sự tái bám dính của mảng bám vi khuẩn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_36", "unit": "Unit 6", "word": "Tomograms", "ipa": "/ˈtɒm.ə.ɡræmz/", "pos": "n.", "meaning": "Phim chụp cắt lớp", "relatedTerms": ["Extraoral radiography", "Computed tomography (CT)"], "example": "Tomograms are used to examine deep craniofacial structures that are difficult to see on conventional films.", "exampleVi": "Phim chụp cắt lớp được sử dụng để khảo sát các cấu trúc sọ mặt nằm sâu khó quan sát trên phim thông thường.", "clinicalNote": "Kỹ thuật chụp từng lớp cắt giải phẫu giúp loại bỏ sự chồng bóng của các cấu trúc lân cận.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_37", "unit": "Unit 6", "word": "Cephalometric projection", "ipa": "/ˌsef.ə.ləˈmet.rɪk prəˈdʒek.ʃən/", "pos": "n.", "meaning": "Phim sọ nghiêng (Phim đo sọ)", "relatedTerms": ["Extraoral radiography", "Orthodontics", "Skull"], "example": "Cephalometric projections show the entire side of the head and are essential in orthodontic treatment planning.", "exampleVi": "Phim sọ nghiêng hiển thị toàn bộ mặt bên của đầu và rất thiết yếu trong lập kế hoạch điều trị chỉnh nha.", "clinicalNote": "Dùng để đo đạc các góc và kích thước sọ mặt, đánh giá hướng tăng trưởng xương hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_38", "unit": "Unit 6", "word": "Computed tomography (CT)", "ipa": "/kəmˈpjuː.tɪd təˈmɒɡ.rə.fi/", "pos": "n.", "meaning": "Chụp cắt lớp vi tính (CT)", "relatedTerms": ["Cone-beam computed tomography (CBCT)", "Fracture", "Tumor"], "example": "Computed tomography provides cross-sectional images of the jaws to identify fractures and tumors.", "exampleVi": "Chụp cắt lớp vi tính cung cấp hình ảnh cắt ngang của xương hàm để xác định các đường gãy xương và khối u.", "clinicalNote": "Cho phép khảo sát cấu trúc xương hàm theo cả 3 chiều không gian với độ chính xác cao.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_39", "unit": "Unit 6", "word": "Unerupted tooth", "ipa": "/ˌʌn.ɪˈrʌp.tɪd tuːθ/", "pos": "n.", "meaning": "Răng chưa mọc", "relatedTerms": ["Impacted tooth", "Occlusal X-ray", "Tooth eruption"], "example": "Occlusal and panoramic radiographs help locate unerupted teeth within the jawbone.", "exampleVi": "Phim mặt nhai và phim toàn cảnh giúp xác định vị trí các răng chưa mọc bên trong xương hàm.", "clinicalNote": "Răng còn nằm trong xương hàm do chưa đến tuổi mọc hoặc bị cản trở đường mọc.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_40", "unit": "Unit 6", "word": "Fracture", "ipa": "/ˈfræk.tʃər/", "pos": "n.", "meaning": "Gãy xương / Gãy nứt răng", "relatedTerms": ["Computed tomography (CT)", "Maxillofacial surgery", "Tooth fracture"], "example": "Radiographic imaging is mandatory to evaluate the location and displacement of a jaw fracture.", "exampleVi": "Chẩn đoán hình ảnh X-quang là bắt buộc để đánh giá vị trí và mức độ di lệch của đường gãy xương hàm.", "clinicalNote": "Sự mất liên tục của cấu trúc mô cứng (xương hàm hoặc thân/chân răng) sau chấn thương.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_41", "unit": "Unit 6", "word": "Tumor", "ipa": "/ˈtjuː.mər/", "pos": "n.", "meaning": "Khối u", "relatedTerms": ["Lesion", "Oral pathology", "Computed tomography (CT)"], "example": "Panoramic radiographs and CT scans help detect odontogenic cysts and jaw tumors.", "exampleVi": "Phim toàn cảnh và chụp CT giúp phát hiện các nang do răng và các khối u xương hàm.", "clinicalNote": "Sự tăng sinh bất thường của tế bào tạo thành khối tân sinh lành tính hoặc ác tính.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_42", "unit": "Unit 6", "word": "Radiation exposure", "ipa": "/ˌreɪ.diˈeɪ.ʃən ɪkˈspəʊ.ʒər/", "pos": "n.", "meaning": "Sự phơi nhiễm bức xạ", "relatedTerms": ["Radiation protection", "Lead apron", "Lead collar"], "example": "Digital dental radiography significantly reduces radiation exposure compared to conventional film.", "exampleVi": "Chụp X-quang nha khoa kỹ thuật số làm giảm đáng kể sự phơi nhiễm bức xạ so với phim truyền thống.", "clinicalNote": "Luôn tuân thủ nguyên tắc ALARA (As Low As Reasonably Achievable) khi chỉ định chụp phim.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_43", "unit": "Unit 6", "word": "Radiation protection", "ipa": "/ˌreɪ.diˈeɪ.ʃən prəˈtek.ʃən/", "pos": "n.", "meaning": "Bảo vệ chống bức xạ (An toàn bức xạ)", "relatedTerms": ["Radiation exposure", "Lead apron", "Lead collar"], "example": "Strict radiation protection protocols safeguard both patients and dental staff during X-ray procedures.", "exampleVi": "Các quy trình bảo vệ chống bức xạ nghiêm ngặt giúp bảo vệ an toàn cho cả bệnh nhân và nhân viên nha khoa khi chụp X-quang.", "clinicalNote": "Bao gồm mặc áo chì, đeo cổ chì bảo vệ tuyến giáp và đứng sau vách chắn chì.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_44", "unit": "Unit 6", "word": "Lead apron / Lead collar", "ipa": "/led ˈeɪ.prən / led ˈkɒl.ər/", "pos": "n.", "meaning": "Áo chì / Cổ chì (Tấm chắn tuyến giáp)", "relatedTerms": ["Radiation protection", "Radiation exposure"], "example": "Patients wear a lead apron and a thyroid lead collar to shield radiosensitive organs during dental X-rays.", "exampleVi": "Bệnh nhân mặc áo chì và đeo cổ chì để che chắn các cơ quan nhạy cảm với tia xạ trong quá trình chụp X-quang nha khoa.", "clinicalNote": "Thiết bị bảo hộ cá nhân thiết yếu trong phòng chụp X-quang Răng Hàm Mặt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_31", "unit": "Unit 7", "word": "Initial caries / Deep caries", "ipa": "/ɪˈnɪʃ.əl ˈkeə.riːz / diːp ˈkeə.riːz/", "pos": "n.", "meaning": "Sâu răng giai đoạn đầu / Sâu răng sâu", "relatedTerms": ["White spot lesion", "Dentin caries", "Pulp involvement"], "example": "Initial caries can be reversed with fluoride, whereas deep caries approaches the dental pulp and requires restoration.", "exampleVi": "Sâu răng giai đoạn đầu có thể phục hồi bằng fluoride, trong khi sâu răng sâu tiến sát buồng tủy và đòi hỏi phải hàn phục hồi.", "clinicalNote": "Hai thái cực tiến triển của sang thương sâu răng trước khi xâm lấn vào buồng tủy.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_32", "unit": "Unit 7", "word": "Hidden caries", "ipa": "/ˈhɪd.ən ˈkeə.riːz/", "pos": "n.", "meaning": "Sâu răng tiềm ẩn (Sâu răng ẩn)", "relatedTerms": ["Bitewing X-ray", "Interproximal caries", "Dentin caries"], "example": "Dental radiographs are essential for detecting hidden caries beneath seemingly intact enamel.", "exampleVi": "Phim X-quang nha khoa rất cần thiết để phát hiện sâu răng tiềm ẩn bên dưới lớp men có vẻ ngoài còn nguyên vẹn.", "clinicalNote": "Tổn thương sâu ngà tiến triển âm thầm bên dưới lớp men bề mặt hoặc ở vùng kẽ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_33", "unit": "Unit 7", "word": "Remain intact / Surface breakdown", "ipa": "/rɪˈmeɪn ɪnˈtækt / ˈsɜː.fɪs ˈbreɪk.daʊn/", "pos": "v. / n.", "meaning": "Còn nguyên vẹn / Sự sập vỡ bề mặt men", "relatedTerms": ["White spot lesion", "Cavitation", "Remineralization"], "example": "If the enamel surface remains intact, remineralization is possible; once surface breakdown occurs, a cavity forms.", "exampleVi": "Nếu bề mặt men răng còn nguyên vẹn thì có thể tái khoáng hóa; một khi sự sập vỡ bề mặt xảy ra, lỗ sâu sẽ hình thành.", "clinicalNote": "Ranh giới quyết định giữa điều trị bảo tồn không xâm lấn và điều trị khoan trám tạo xoang.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_34", "unit": "Unit 7", "word": "Discoloration", "ipa": "/dɪsˌkʌl.əˈreɪ.ʃən/", "pos": "n.", "meaning": "Sự đổi màu răng", "relatedTerms": ["Carious lesion", "Pulp necrosis", "White spot lesion"], "example": "As the carious lesion progresses, the affected tooth may develop chalky white, brown, or black discoloration.", "exampleVi": "Khi tổn thương sâu răng tiến triển, chiếc răng bị ảnh hưởng có thể xuất hiện sự đổi màu trắng đục, nâu hoặc đen.", "clinicalNote": "Dấu hiệu thị giác quan trọng giúp nhận diện sâu răng hoặc hoại tử tủy khi khám lâm sàng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_35", "unit": "Unit 7", "word": "Bacterial invasion", "ipa": "/bækˈtɪə.ri.əl ɪnˈveɪ.ʒən/", "pos": "n.", "meaning": "Sự xâm lấn của vi khuẩn", "relatedTerms": ["Dentin caries", "Pulpitis", "Pulp involvement"], "example": "Bacterial invasion through the dentinal tubules triggers an inflammatory response in the dental pulp.", "exampleVi": "Sự xâm lấn của vi khuẩn qua các ống ngà kích hoạt phản ứng viêm bên trong tủy răng.", "clinicalNote": "Cơ chế bệnh sinh trực tiếp dẫn đến viêm tủy và nhiễm trùng quanh chóp.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_36", "unit": "Unit 7", "word": "Pulp involvement", "ipa": "/pʌlp ɪnˈvɒlv.mənt/", "pos": "n.", "meaning": "Tổn thương xâm lấn tủy (Sâu răng lan đến tủy)", "relatedTerms": ["Deep caries", "Pulpitis", "Root canal therapy"], "example": "Stage four of dental caries is characterized by pulp involvement, severe pain, and potential abscess formation.", "exampleVi": "Giai đoạn bốn của bệnh sâu răng được đặc trưng bởi tổn thương xâm lấn tủy, đau dữ dội và nguy cơ hình thành ổ áp-xe.", "clinicalNote": "Giai đoạn muộn của sâu răng (Stage 4), bắt buộc phải can thiệp nội nha hoặc nhổ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_37", "unit": "Unit 7", "word": "Tooth fracture / Break altogether", "ipa": "/tuːθ ˈfræk.tʃər / breɪk ˌɔːl.təˈɡeð.ər/", "pos": "n. / v.", "meaning": "Gãy nứt răng / Gãy vỡ hoàn toàn", "relatedTerms": ["Cavitation", "Crown", "Extraction"], "example": "Without timely treatment, a severely decayed tooth may suffer a tooth fracture when biting down or break altogether.", "exampleVi": "Nếu không được điều trị kịp thời, một chiếc răng sâu nặng có thể bị nứt gãy khi cắn xuống hoặc gãy vỡ hoàn toàn.", "clinicalNote": "Biến chứng cơ học nghiêm trọng khi mô ngà nâng đỡ bên dưới men răng bị phá hủy rộng.", "srsLevel": 0, "mistakeCount": 0 }
+
+```
+
+---
+
+### PHẦN 3: BẢNG TỔNG KẾT TRẠNG THÁI SAU KHI VÁ LỖI
+
+| Hạng mục kiểm tra | Trạng thái mã cũ | Trạng thái sau khi áp dụng bản vá |
+| --- | --- | --- |
+| **Tổng số từ vựng (`SEED_DATA_191`)** | 293 từ (Lệch so với thông báo 323 từ) | **323 từ** (Đủ 100% từ vựng Unit 0 ➔ Unit 7 trong Docs) |
+| **Đồng bộ SRS liên Unit** | Chưa đồng bộ (Từ trùng giữa các Unit bị tách điểm) | **Đồng bộ tự động** (`syncCrossUnitSrs`) trên toàn bộ 8 Unit |
+| **Chuẩn 4 đáp án A-B-C-D ở CBT** | Bị nhảy thành 6–8 đáp án nếu đổi cài đặt ở Tab 1 | **Cố định 4 đáp án A-B-C-D** độc lập hoàn toàn với Tab 1 |
+| **Múi giờ tính Streak (Tab 0)** | Tính theo giờ UTC (Lệch 7 tiếng tại Việt Nam) | **Chuẩn GMT+7 địa phương** (`getLocalDateString`) |
+| **Tạm dừng Sprint 60s (Tab 4)** | Chỉ dừng khi chuyển Tab, không dừng khi mở Modal | **Tự động bật màn chắn tạm dừng** ngay khi mở bất kỳ Modal nào |
+| **Phím tắt bàn phím CBT & Sprint** | Chỉ có ở Tab 1 và Tab 2, bị lọt phím khi mở Modal | **Đầy đủ phím tắt** cho Tab 1, 2, 4, 6 và khóa an toàn khi mở Modal |
+| **Bảo mật XSS (`escapeHtml`)** | Còn sót ở danh sách lỗi sai CBT (`cbtMistakeList`) | **Đã bọc `escapeHtml` 100%** ở mọi vùng render động |

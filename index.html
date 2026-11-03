@@ -1526,8 +1526,13 @@
         type: "important",
         date: "02/11/2026 • 21:00",
         icon: "fa-book-medical",
-        title: "Mở Rộng Kho Từ Vựng Lên 323 Thuật Ngữ (Unit 0, Unit 6, Unit 7 & Bổ Sung Unit 5)",
-        desc: "Cập nhật trọn bộ Unit 6 (Khám & Chẩn đoán hình ảnh X-quang), Unit 7 (Bệnh lý sâu răng, biến chứng tủy & điều trị phục hồi), Unit 0 (Từ vựng bắc cầu lâm sàng) cùng cơ chế cách ly đáp án nhiễu chuyên biệt cho Unit 0."
+        title: "Mở Rộng Kho Từ Vựng Lên 323 Thuật Ngữ (Unit 1–7 & Từ Vựng Bổ Trợ)",
+        desc: "Cập nhật trọn bộ 323 thuật ngữ chuẩn giáo trình gồm Unit 6 (Khám & X-quang nha khoa), Unit 7 (Bệnh lý sâu răng, biến chứng tủy & phục hồi), bổ sung Unit 4–5 và học phần Từ vựng bổ trợ kèm thuật toán cách ly đáp án nhiễu."
+      },
+      {
+        type: "minor",
+        date: "03/11/2026 • 14:35",
+        title: "Đổi tên Unit 0 thành 'Từ vựng bổ trợ', đồng bộ SRS liên Unit, cố định 4 đáp án CBT, chuẩn hóa múi giờ Streak GMT+7 & bổ sung đủ 323/323 thuật ngữ"
       }
     ];
 
@@ -1631,7 +1636,7 @@
     }
 
     const UNIT_METADATA = {
-      "Unit 0": {
+      "Từ vựng bổ trợ": {
         shortTitle: "Từ vựng bắc cầu & Giao tiếp học thuật lâm sàng",
         corePoints: "Các động từ, tính từ học thuật cốt lõi trong khám, đánh giá, chẩn đoán, theo dõi và tư vấn điều trị nha khoa."
       },
@@ -1974,21 +1979,51 @@
       { "id": "u7_28", "unit": "Unit 7", "word": "Pit and fissure sealant", "ipa": "/pɪt ænd ˈfɪʃə ˈsiːlənt/", "pos": "n.", "meaning": "Chất trám bít hố rãnh", "relatedTerms": ["Pit and fissure caries", "Preventive treatment"], "example": "Applying a pit and fissure sealant protects the chewing surfaces of newly erupted molars.", "exampleVi": "Đặt chất trám bít hố rãnh giúp bảo vệ mặt nhai của các răng hàm lớn mới mọc.", "clinicalNote": "Biện pháp dự phòng sâu răng mặt nhai hiệu quả cao ở trẻ em và thanh thiếu niên.", "srsLevel": 0, "mistakeCount": 0 },
       { "id": "u7_29", "unit": "Unit 7", "word": "Topical fluoride", "ipa": "/ˈtɒpɪkəl ˈflʊəraɪd/", "pos": "n.", "meaning": "Fluoride bôi tại chỗ", "relatedTerms": ["Remineralization", "White spot lesion"], "example": "Professional topical fluoride varnish strengthens enamel and prevents caries.", "exampleVi": "Vecni fluoride bôi tại chỗ chuyên nghiệp giúp củng cố men răng và ngăn ngừa sâu răng.", "clinicalNote": "Bao gồm kem đánh răng, nước súc miệng, gel và vecni fluoride nồng độ cao.", "srsLevel": 0, "mistakeCount": 0 },
       { "id": "u7_30", "unit": "Unit 7", "word": "Minimally invasive dentistry", "ipa": "/ˈmɪnɪməli ɪnˈveɪsɪv ˈdɛntɪstri/", "pos": "n.", "meaning": "Nha khoa xâm lấn tối thiểu", "relatedTerms": ["Remineralization", "Cavity preparation"], "example": "Minimally invasive dentistry focuses on early caries detection and maximum preservation of natural tooth structure.", "exampleVi": "Nha khoa xâm lấn tối thiểu tập trung vào phát hiện sâu răng sớm và bảo tồn tối đa cấu trúc răng tự nhiên.", "clinicalNote": "Triết lý điều trị hiện đại ưu tiên tái khoáng hóa và chỉ lấy bỏ mô ngà nhiễm khuẩn.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_01", "unit": "Unit 0", "word": "Evaluate / Assess", "ipa": "/ɪˈvæljʊeɪt / əˈsɛs/", "pos": "v.", "meaning": "Đánh giá", "relatedTerms": ["Examine", "Determine"], "example": "Radiographs help the clinician evaluate the extent of periodontal bone support.", "exampleVi": "Phim X-quang giúp bác sĩ lâm sàng đánh giá mức độ nâng đỡ của xương nha chu.", "clinicalNote": "Động từ học thuật cốt lõi dùng khi phân tích tình trạng bệnh nhân trước và sau điều trị.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_02", "unit": "Unit 0", "word": "Indicate", "ipa": "/ˈɪndɪkeɪt/", "pos": "v.", "meaning": "Chỉ ra / Cho thấy / Chỉ định", "relatedTerms": ["Suggest", "Reveal"], "example": "Deep periodontal pockets indicate attachment loss and active gum disease.", "exampleVi": "Túi nha chu sâu cho thấy sự mất bám dính và bệnh lý nướu đang hoạt động.", "clinicalNote": "Ở dạng bị động (be indicated for) mang nghĩa là 'được chỉ định cho' phương pháp điều trị nào đó.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_03", "unit": "Unit 0", "word": "Identify / Detect", "ipa": "/aɪˈdɛntɪfaɪ / dɪˈtɛkt/", "pos": "v.", "meaning": "Xác định / Phát hiện", "relatedTerms": ["Recognize", "Locate"], "example": "Bitewing radiographs help detect early interproximal lesions before they become visible.", "exampleVi": "Phim cánh cắn giúp phát hiện các tổn thương mặt bên sớm trước khi chúng nhìn thấy được bằng mắt thường.", "clinicalNote": "Thường đi kèm với các danh từ như lesion, caries, abnormality.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_04", "unit": "Unit 0", "word": "Establish", "ipa": "/ɪˈstæblɪʃ/", "pos": "v.", "meaning": "Thiết lập / Xác lập", "relatedTerms": ["Formulate", "Determine"], "example": "Clinical and radiographic findings are combined to establish an accurate diagnosis.", "exampleVi": "Các phát hiện lâm sàng và X-quang được kết hợp để thiết lập một chẩn đoán chính xác.", "clinicalNote": "Hay dùng trong cụm 'establish a diagnosis' (xác lập chẩn đoán) hoặc 'establish occlusion'.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_05", "unit": "Unit 0", "word": "Monitor", "ipa": "/ˈmɒnɪtə/", "pos": "v.", "meaning": "Theo dõi / Giám sát", "relatedTerms": ["Observe", "Follow up"], "example": "Regular check-ups allow the dentist to monitor the progression of arrested caries.", "exampleVi": "Khám định kỳ cho phép nha sĩ theo dõi sự tiến triển của các tổn thương sâu răng ngừng tiến triển.", "clinicalNote": "Theo dõi định kỳ sự thay đổi của bệnh lý hoặc sự mọc răng theo thời gian.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_06", "unit": "Unit 0", "word": "Recommend / Advise", "ipa": "/ˌrɛkəˈmɛnd / ədˈvaɪz/", "pos": "v.", "meaning": "Khuyến nghị / Khuyên", "relatedTerms": ["Suggest", "Instruct"], "example": "Dentists recommend brushing twice a day with fluoridated toothpaste.", "exampleVi": "Các nha sĩ khuyến nghị chải răng hai lần mỗi ngày với kem đánh răng có chứa fluoride.", "clinicalNote": "Dùng trong giao tiếp tư vấn giáo dục sức khỏe răng miệng cho bệnh nhân.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_07", "unit": "Unit 0", "word": "Perform / Conduct", "ipa": "/pəˈfɔːm / kənˈdʌkt/", "pos": "v.", "meaning": "Thực hiện / Tiến hành", "relatedTerms": ["Carry out", "Execute"], "example": "The dentist will perform a thorough clinical examination before taking X-rays.", "exampleVi": "Nha sĩ sẽ thực hiện một cuộc khám lâm sàng kỹ lưỡng trước khi chụp X-quang.", "clinicalNote": "Thường đi với danh từ chỉ thủ thuật, phẫu thuật hoặc khám nghiệm (perform a procedure/examination).", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_08", "unit": "Unit 0", "word": "Prevent", "ipa": "/prɪˈvɛnt/", "pos": "v.", "meaning": "Ngăn ngừa / Phòng tránh", "relatedTerms": ["Avoid", "Inhibit"], "example": "Daily flossing helps prevent plaque accumulation between teeth.", "exampleVi": "Dùng chỉ nha khoa hàng ngày giúp ngăn ngừa sự tích tụ mảng bám giữa các răng.", "clinicalNote": "Cấu trúc thông dụng: prevent something from + V-ing.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_09", "unit": "Unit 0", "word": "Restore", "ipa": "/rɪˈstɔː/", "pos": "v.", "meaning": "Phục hồi / Khôi phục", "relatedTerms": ["Repair", "Rehabilitate"], "example": "Dental fillings restore damaged teeth to their normal shape and function.", "exampleVi": "Miếng trám răng khôi phục lại hình dạng và chức năng bình thường cho các răng bị tổn thương.", "clinicalNote": "Gốc động từ của danh từ Restoration (Phục hồi/Trám răng) và Restorative dentistry.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_10", "unit": "Unit 0", "word": "Affect / Impact", "ipa": "/əˈfɛkt / ˈɪmpækt/", "pos": "v.", "meaning": "Ảnh hưởng / Tác động đến", "relatedTerms": ["Influence", "Compromise"], "example": "Severe malocclusion can negatively affect both mastication and speech.", "exampleVi": "Sai khớp cắn nghiêm trọng có thể ảnh hưởng tiêu cực đến cả việc ăn nhai và phát âm.", "clinicalNote": "Dùng để mô tả tác động của bệnh lý lên cấu trúc giải phẫu hoặc chất lượng sống.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_11", "unit": "Unit 0", "word": "Require", "ipa": "/rɪˈkwaɪə/", "pos": "v.", "meaning": "Đòi hỏi / Cần đến", "relatedTerms": ["Need", "Necessitate"], "example": "Irreversible pulpitis requires endodontic treatment or tooth extraction.", "exampleVi": "Viêm tủy không hồi phục đòi hỏi phải điều trị nội nha hoặc nhổ răng.", "clinicalNote": "Diễn tả mức độ cần thiết về mặt chỉ định điều trị.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_12", "unit": "Unit 0", "word": "Maintain", "ipa": "/meɪnˈteɪn/", "pos": "v.", "meaning": "Duy trì / Giữ gìn", "relatedTerms": ["Preserve", "Sustain"], "example": "Patients must maintain good oral hygiene to ensure the longevity of dental implants.", "exampleVi": "Bệnh nhân phải duy trì vệ sinh răng miệng tốt để đảm bảo tuổi thọ của trụ Implant.", "clinicalNote": "Hay gặp trong cụm 'maintain oral health' hoặc 'maintain arch space'.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_13", "unit": "Unit 0", "word": "Associated with", "ipa": "/əˈsəʊʃɪeɪtɪd wɪð/", "pos": "adj.", "meaning": "Liên quan đến / Đi kèm với", "relatedTerms": ["Related to", "Linked to"], "example": "Periodontal disease is strongly associated with systemic conditions such as diabetes.", "exampleVi": "Bệnh nha chu có liên quan mật thiết đến các bệnh lý toàn thân như tiểu đường.", "clinicalNote": "Cụm tính từ học thuật cực kỳ phổ biến trong y văn để chỉ mối liên hệ bệnh sinh.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_14", "unit": "Unit 0", "word": "Susceptible to / Prone to", "ipa": "/səˈsɛptəbl tuː / prəʊn tuː/", "pos": "adj.", "meaning": "Dễ mắc phải / Nhạy cảm với", "relatedTerms": ["Vulnerable to", "At risk of"], "example": "Newly erupted teeth with deep fissures are highly susceptible to dental caries.", "exampleVi": "Những chiếc răng mới mọc có rãnh trũng sâu rất dễ mắc bệnh sâu răng.", "clinicalNote": "Dùng để mô tả cơ địa hoặc vùng giải phẫu có nguy cơ cao bị tấn công bởi tác nhân gây bệnh.", "srsLevel": 0, "mistakeCount": 0 },
-      { "id": "com_15", "unit": "Unit 0", "word": "Progress / Advance", "ipa": "/prəˈgrɛs / ədˈvɑːns/", "pos": "v.", "meaning": "Tiến triển / Lan rộng", "relatedTerms": ["Develop", "Spread"], "example": "If left untreated, gingivitis can progress to destructive periodontitis.", "exampleVi": "Nếu không được điều trị, viêm nướu có thể tiến triển thành viêm nha chu phá hủy.", "clinicalNote": "Mô tả diễn tiến nặng dần của bệnh lý theo thời gian.", "srsLevel": 0, "mistakeCount": 0 }
+      { "id": "com_01", "unit": "Từ vựng bổ trợ", "word": "Evaluate / Assess", "ipa": "/ɪˈvæljʊeɪt / əˈsɛs/", "pos": "v.", "meaning": "Đánh giá", "relatedTerms": ["Examine", "Determine"], "example": "Radiographs help the clinician evaluate the extent of periodontal bone support.", "exampleVi": "Phim X-quang giúp bác sĩ lâm sàng đánh giá mức độ nâng đỡ của xương nha chu.", "clinicalNote": "Động từ học thuật cốt lõi dùng khi phân tích tình trạng bệnh nhân trước và sau điều trị.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_02", "unit": "Từ vựng bổ trợ", "word": "Indicate", "ipa": "/ˈɪndɪkeɪt/", "pos": "v.", "meaning": "Chỉ ra / Cho thấy / Chỉ định", "relatedTerms": ["Suggest", "Reveal"], "example": "Deep periodontal pockets indicate attachment loss and active gum disease.", "exampleVi": "Túi nha chu sâu cho thấy sự mất bám dính và bệnh lý nướu đang hoạt động.", "clinicalNote": "Ở dạng bị động (be indicated for) mang nghĩa là 'được chỉ định cho' phương pháp điều trị nào đó.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_03", "unit": "Từ vựng bổ trợ", "word": "Identify / Detect", "ipa": "/aɪˈdɛntɪfaɪ / dɪˈtɛkt/", "pos": "v.", "meaning": "Xác định / Phát hiện", "relatedTerms": ["Recognize", "Locate"], "example": "Bitewing radiographs help detect early interproximal lesions before they become visible.", "exampleVi": "Phim cánh cắn giúp phát hiện các tổn thương mặt bên sớm trước khi chúng nhìn thấy được bằng mắt thường.", "clinicalNote": "Thường đi kèm với các danh từ như lesion, caries, abnormality.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_04", "unit": "Từ vựng bổ trợ", "word": "Establish", "ipa": "/ɪˈstæblɪʃ/", "pos": "v.", "meaning": "Thiết lập / Xác lập", "relatedTerms": ["Formulate", "Determine"], "example": "Clinical and radiographic findings are combined to establish an accurate diagnosis.", "exampleVi": "Các phát hiện lâm sàng và X-quang được kết hợp để thiết lập một chẩn đoán chính xác.", "clinicalNote": "Hay dùng trong cụm 'establish a diagnosis' (xác lập chẩn đoán) hoặc 'establish occlusion'.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_05", "unit": "Từ vựng bổ trợ", "word": "Monitor", "ipa": "/ˈmɒnɪtə/", "pos": "v.", "meaning": "Theo dõi / Giám sát", "relatedTerms": ["Observe", "Follow up"], "example": "Regular check-ups allow the dentist to monitor the progression of arrested caries.", "exampleVi": "Khám định kỳ cho phép nha sĩ theo dõi sự tiến triển của các tổn thương sâu răng ngừng tiến triển.", "clinicalNote": "Theo dõi định kỳ sự thay đổi của bệnh lý hoặc sự mọc răng theo thời gian.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_06", "unit": "Từ vựng bổ trợ", "word": "Recommend / Advise", "ipa": "/ˌrɛkəˈmɛnd / ədˈvaɪz/", "pos": "v.", "meaning": "Khuyến nghị / Khuyên", "relatedTerms": ["Suggest", "Instruct"], "example": "Dentists recommend brushing twice a day with fluoridated toothpaste.", "exampleVi": "Các nha sĩ khuyến nghị chải răng hai lần mỗi ngày với kem đánh răng có chứa fluoride.", "clinicalNote": "Dùng trong giao tiếp tư vấn giáo dục sức khỏe răng miệng cho bệnh nhân.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_07", "unit": "Từ vựng bổ trợ", "word": "Perform / Conduct", "ipa": "/pəˈfɔːm / kənˈdʌkt/", "pos": "v.", "meaning": "Thực hiện / Tiến hành", "relatedTerms": ["Carry out", "Execute"], "example": "The dentist will perform a thorough clinical examination before taking X-rays.", "exampleVi": "Nha sĩ sẽ thực hiện một cuộc khám lâm sàng kỹ lưỡng trước khi chụp X-quang.", "clinicalNote": "Thường đi với danh từ chỉ thủ thuật, phẫu thuật hoặc khám nghiệm (perform a procedure/examination).", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_08", "unit": "Từ vựng bổ trợ", "word": "Prevent", "ipa": "/prɪˈvɛnt/", "pos": "v.", "meaning": "Ngăn ngừa / Phòng tránh", "relatedTerms": ["Avoid", "Inhibit"], "example": "Daily flossing helps prevent plaque accumulation between teeth.", "exampleVi": "Dùng chỉ nha khoa hàng ngày giúp ngăn ngừa sự tích tụ mảng bám giữa các răng.", "clinicalNote": "Cấu trúc thông dụng: prevent something from + V-ing.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_09", "unit": "Từ vựng bổ trợ", "word": "Restore", "ipa": "/rɪˈstɔː/", "pos": "v.", "meaning": "Phục hồi / Khôi phục", "relatedTerms": ["Repair", "Rehabilitate"], "example": "Dental fillings restore damaged teeth to their normal shape and function.", "exampleVi": "Miếng trám răng khôi phục lại hình dạng và chức năng bình thường cho các răng bị tổn thương.", "clinicalNote": "Gốc động từ của danh từ Restoration (Phục hồi/Trám răng) và Restorative dentistry.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_10", "unit": "Từ vựng bổ trợ", "word": "Affect / Impact", "ipa": "/əˈfɛkt / ˈɪmpækt/", "pos": "v.", "meaning": "Ảnh hưởng / Tác động đến", "relatedTerms": ["Influence", "Compromise"], "example": "Severe malocclusion can negatively affect both mastication and speech.", "exampleVi": "Sai khớp cắn nghiêm trọng có thể ảnh hưởng tiêu cực đến cả việc ăn nhai và phát âm.", "clinicalNote": "Dùng để mô tả tác động của bệnh lý lên cấu trúc giải phẫu hoặc chất lượng sống.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_11", "unit": "Từ vựng bổ trợ", "word": "Require", "ipa": "/rɪˈkwaɪə/", "pos": "v.", "meaning": "Đòi hỏi / Cần đến", "relatedTerms": ["Need", "Necessitate"], "example": "Irreversible pulpitis requires endodontic treatment or tooth extraction.", "exampleVi": "Viêm tủy không hồi phục đòi hỏi phải điều trị nội nha hoặc nhổ răng.", "clinicalNote": "Diễn tả mức độ cần thiết về mặt chỉ định điều trị.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_12", "unit": "Từ vựng bổ trợ", "word": "Maintain", "ipa": "/meɪnˈteɪn/", "pos": "v.", "meaning": "Duy trì / Giữ gìn", "relatedTerms": ["Preserve", "Sustain"], "example": "Patients must maintain good oral hygiene to ensure the longevity of dental implants.", "exampleVi": "Bệnh nhân phải duy trì vệ sinh răng miệng tốt để đảm bảo tuổi thọ của trụ Implant.", "clinicalNote": "Hay gặp trong cụm 'maintain oral health' hoặc 'maintain arch space'.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_13", "unit": "Từ vựng bổ trợ", "word": "Associated with", "ipa": "/əˈsəʊʃɪeɪtɪd wɪð/", "pos": "adj.", "meaning": "Liên quan đến / Đi kèm với", "relatedTerms": ["Related to", "Linked to"], "example": "Periodontal disease is strongly associated with systemic conditions such as diabetes.", "exampleVi": "Bệnh nha chu có liên quan mật thiết đến các bệnh lý toàn thân như tiểu đường.", "clinicalNote": "Cụm tính từ học thuật cực kỳ phổ biến trong y văn để chỉ mối liên hệ bệnh sinh.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_14", "unit": "Từ vựng bổ trợ", "word": "Susceptible to / Prone to", "ipa": "/səˈsɛptəbl tuː / prəʊn tuː/", "pos": "adj.", "meaning": "Dễ mắc phải / Nhạy cảm với", "relatedTerms": ["Vulnerable to", "At risk of"], "example": "Newly erupted teeth with deep fissures are highly susceptible to dental caries.", "exampleVi": "Những chiếc răng mới mọc có rãnh trũng sâu rất dễ mắc bệnh sâu răng.", "clinicalNote": "Dùng để mô tả cơ địa hoặc vùng giải phẫu có nguy cơ cao bị tấn công bởi tác nhân gây bệnh.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "com_15", "unit": "Từ vựng bổ trợ", "word": "Progress / Advance", "ipa": "/prəˈgrɛs / ədˈvɑːns/", "pos": "v.", "meaning": "Tiến triển / Lan rộng", "relatedTerms": ["Develop", "Spread"], "example": "If left untreated, gingivitis can progress to destructive periodontitis.", "exampleVi": "Nếu không được điều trị, viêm nướu có thể tiến triển thành viêm nha chu phá hủy.", "clinicalNote": "Mô tả diễn tiến nặng dần của bệnh lý theo thời gian.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u4_58", "unit": "Unit 4", "word": "Maxillofacial surgeon", "ipa": "/ˌmæk.sɪl.əʊˈfeɪ.ʃəl ˈsɜː.dʒən/", "pos": "n.", "meaning": "Bác sĩ phẫu thuật hàm mặt", "relatedTerms": ["Maxillofacial surgery", "Oral surgeon", "Facial trauma"], "example": "The maxillofacial surgeon reconstructed the fractured mandible using titanium plates.", "exampleVi": "Bác sĩ phẫu thuật hàm mặt đã tái tạo xương hàm dưới bị gãy bằng nẹp vít hợp kim titan.", "clinicalNote": "Bác sĩ chuyên khoa sâu điều trị chấn thương, dị tật và bệnh lý vùng hàm mặt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_59", "unit": "Unit 5", "word": "Salivary flow", "ipa": "/ˈsæl.ɪ.vər.i fləʊ/", "pos": "n.", "meaning": "Lưu lượng nước bọt", "relatedTerms": ["Saliva", "Hyposalivation", "Xerostomia"], "example": "Adequate salivary flow is essential for washing away food debris and buffering acids.", "exampleVi": "Lưu lượng nước bọt đầy đủ là điều thiết yếu để rửa trôi vụn thức ăn và đệm trung hòa axit.", "clinicalNote": "Yếu tố bảo vệ sinh học tự nhiên quan trọng nhất chống lại sâu răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_60", "unit": "Unit 5", "word": "Interproximal surface", "ipa": "/ˌɪn.təˈprɒk.sɪ.məl ˈsɜː.fɪs/", "pos": "n.", "meaning": "Mặt bên của răng (Mặt tiếp cận)", "relatedTerms": ["Dental floss", "Interdental cleaning device", "Interproximal caries"], "example": "A toothbrush cannot effectively clean the interproximal surfaces between adjacent teeth.", "exampleVi": "Bàn chải đánh răng không thể làm sạch hiệu quả các mặt bên giữa hai răng kế cận.", "clinicalNote": "Bao gồm mặt gần (mesial) và mặt xa (distal), cần dùng chỉ nha khoa để làm sạch.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_61", "unit": "Unit 5", "word": "Gingival margin", "ipa": "/ˈdʒɪn.dʒɪ.vəl ˈmɑː.dʒɪn/", "pos": "n.", "meaning": "Đường viền lợi (Bờ viền nướu)", "relatedTerms": ["Gumline", "Supragingival", "Subgingival"], "example": "Plaque frequently accumulates along the gingival margin if brushing is inadequate.", "exampleVi": "Mảng bám thường tích tụ dọc theo đường viền lợi nếu việc chải răng không kỹ lưỡng.", "clinicalNote": "Mốc giải phẫu phân chia vùng trên lợi và vùng dưới lợi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_62", "unit": "Unit 5", "word": "Supragingival", "ipa": "/ˌsuː.prəˈdʒɪn.dʒɪ.vəl/", "pos": "adj.", "meaning": "Trên lợi (Trên nướu)", "relatedTerms": ["Subgingival", "Gingival margin", "Dental calculus (Tartar)"], "example": "Supragingival calculus is visible above the gumline and often appears yellow or chalky white.", "exampleVi": "Cao răng trên lợi có thể nhìn thấy phía trên đường viền lợi và thường có màu vàng hoặc trắng đục.", "clinicalNote": "Thường gặp ở mặt lưỡi răng cửa dưới và mặt má răng cối lớn hàm trên.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_63", "unit": "Unit 5", "word": "Subgingival", "ipa": "/ˌsʌbˈdʒɪn.dʒɪ.vəl/", "pos": "adj.", "meaning": "Dưới lợi (Dưới nướu)", "relatedTerms": ["Supragingival", "Periodontal pocket", "Dental scaling"], "example": "Subgingival calculus forms inside periodontal pockets and is dark brown or greenish-black.", "exampleVi": "Cao răng dưới lợi hình thành bên trong các túi nha chu và có màu nâu sẫm hoặc đen ánh xanh.", "clinicalNote": "Bám rất chắc vào bề mặt xê-măng chân răng, cần lấy sạch bằng đầu cạo vôi chuyên dụng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_64", "unit": "Unit 5", "word": "Tenderness", "ipa": "/ˈten.də.nəs/", "pos": "n.", "meaning": "Đau khi chạm phải (Nhạy cảm đau)", "relatedTerms": ["Gingivitis", "Inflammation", "Toothache"], "example": "Patients with acute gingivitis often report gingival swelling and tenderness during brushing.", "exampleVi": "Bệnh nhân bị viêm lợi cấp tính thường than phiền về tình trạng sưng nướu và đau khi chạm phải lúc chải răng.", "clinicalNote": "Triệu chứng đau khu trú khi có lực ấn hoặc chạm vào mô viêm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u5_65", "unit": "Unit 5", "word": "Tongue coating", "ipa": "/tʌŋ ˈkəʊ.tɪŋ/", "pos": "n.", "meaning": "Cặn lưỡi / Rêu lưỡi", "relatedTerms": ["Halitosis", "Tongue", "Bacteria"], "example": "Removing tongue coating daily helps eliminate volatile sulfur compounds that cause halitosis.", "exampleVi": "Làm sạch lớp cặn rêu lưỡi hàng ngày giúp loại bỏ các hợp chất lưu huỳnh bay hơi gây hôi miệng.", "clinicalNote": "Lớp mảng bám gồm vi khuẩn, tế bào biểu mô bong tróc và cặn thức ăn trên lưng lưỡi.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_30", "unit": "Unit 6", "word": "Head and neck examination", "ipa": "/hed ænd nek ɪɡˌzæm.ɪˈneɪ.ʃən/", "pos": "n.", "meaning": "Khám đầu và cổ", "relatedTerms": ["Extraoral examination", "Comprehensive examination", "Lymph nodes"], "example": "A comprehensive dental visit begins with a thorough head and neck examination.", "exampleVi": "Một buổi khám nha khoa toàn diện bắt đầu bằng việc khám đầu và cổ kỹ lưỡng.", "clinicalNote": "Đánh giá sự cân xứng khuôn mặt, khớp thái dương hàm, tuyến nước bọt và hệ thống hạch cổ.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_31", "unit": "Unit 6", "word": "Extraoral examination", "ipa": "/ˌek.strəˈɔː.rəl ɪɡˌzæm.ɪˈneɪ.ʃən/", "pos": "n.", "meaning": "Khám ngoài miệng", "relatedTerms": ["Intraoral examination", "Head and neck examination"], "example": "Palpation of the temporomandibular joint is part of the extraoral examination.", "exampleVi": "Sờ nắn khớp thái dương hàm là một phần của quy trình khám ngoài miệng.", "clinicalNote": "Quan sát và sờ nắn các cấu trúc vùng đầu, mặt, cổ trước khi khám trong khoang miệng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_32", "unit": "Unit 6", "word": "Intraoral examination", "ipa": "/ˌɪn.trəˈɔː.rəl ɪɡˌzæm.ɪˈneɪ.ʃən/", "pos": "n.", "meaning": "Khám trong miệng", "relatedTerms": ["Extraoral examination", "Dental mirror", "Periodontal probing"], "example": "The intraoral examination evaluates the oral mucosa, tongue, gingiva, and dentition.", "exampleVi": "Khám trong miệng đánh giá niêm mạc miệng, lưỡi, lợi và toàn bộ bộ răng.", "clinicalNote": "Sử dụng gương, thám trâm và cây đo túi nha chu dưới ánh sáng đèn ghế nha.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_33", "unit": "Unit 6", "word": "Malocclusion", "ipa": "/ˌmæl.əˈkluː.ʒən/", "pos": "n.", "meaning": "Sai khớp cắn", "relatedTerms": ["Occlusion", "Orthodontics", "Crowding"], "example": "Occlusion is assessed during the examination to identify bite problems or malocclusion.", "exampleVi": "Khớp cắn được đánh giá trong quá trình khám để xác định các vấn đề ăn nhai hoặc sai khớp cắn.", "clinicalNote": "Sự lệch lạc về tương quan giữa hai hàm hoặc vị trí các răng trên cung hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_34", "unit": "Unit 6", "word": "Bridge", "ipa": "/brɪdʒ/", "pos": "n.", "meaning": "Cầu răng", "relatedTerms": ["Crown", "Prosthodontics", "Dental restoration / Filling"], "example": "Existing restorations, including fillings, crowns, and bridges, are evaluated for marginal integrity.", "exampleVi": "Các phục hồi hiện có, bao gồm miếng trám, mão răng và cầu răng, đều được kiểm tra độ khít sát bờ viền.", "clinicalNote": "Phục hình cố định thay thế một hoặc nhiều răng mất bằng cách tựa lên các răng trụ kế cận.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_35", "unit": "Unit 6", "word": "Polish", "ipa": "/ˈpɒl.ɪʃ/", "pos": "v.", "meaning": "Đánh bóng (răng / miếng trám)", "relatedTerms": ["Dental scaling", "Regular check-up", "Professional cleaning / Scaling"], "example": "After scaling, the clinician will polish the teeth to remove extrinsic stains and smooth the enamel.", "exampleVi": "Sau khi lấy cao răng, bác sĩ sẽ đánh bóng răng để loại bỏ vết nhiễm màu ngoại lai và làm láng bề mặt men.", "clinicalNote": "Giúp bề mặt răng trơn láng, hạn chế sự tái bám dính của mảng bám vi khuẩn.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_36", "unit": "Unit 6", "word": "Tomograms", "ipa": "/ˈtɒm.ə.ɡræmz/", "pos": "n.", "meaning": "Phim chụp cắt lớp", "relatedTerms": ["Extraoral radiography", "Computed tomography (CT)"], "example": "Tomograms are used to examine deep craniofacial structures that are difficult to see on conventional films.", "exampleVi": "Phim chụp cắt lớp được sử dụng để khảo sát các cấu trúc sọ mặt nằm sâu khó quan sát trên phim thông thường.", "clinicalNote": "Kỹ thuật chụp từng lớp cắt giải phẫu giúp loại bỏ sự chồng bóng của các cấu trúc lân cận.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_37", "unit": "Unit 6", "word": "Cephalometric projection", "ipa": "/ˌsef.ə.ləˈmet.rɪk prəˈdʒek.ʃən/", "pos": "n.", "meaning": "Phim sọ nghiêng (Phim đo sọ)", "relatedTerms": ["Extraoral radiography", "Orthodontics", "Skull"], "example": "Cephalometric projections show the entire side of the head and are essential in orthodontic treatment planning.", "exampleVi": "Phim sọ nghiêng hiển thị toàn bộ mặt bên của đầu và rất thiết yếu trong lập kế hoạch điều trị chỉnh nha.", "clinicalNote": "Dùng để đo đạc các góc và kích thước sọ mặt, đánh giá hướng tăng trưởng xương hàm.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_38", "unit": "Unit 6", "word": "Computed tomography (CT)", "ipa": "/kəmˈpjuː.tɪd təˈmɒɡ.rə.fi/", "pos": "n.", "meaning": "Chụp cắt lớp vi tính (CT)", "relatedTerms": ["Cone-beam computed tomography (CBCT)", "Fracture", "Tumor"], "example": "Computed tomography provides cross-sectional images of the jaws to identify fractures and tumors.", "exampleVi": "Chụp cắt lớp vi tính cung cấp hình ảnh cắt ngang của xương hàm để xác định các đường gãy xương và khối u.", "clinicalNote": "Cho phép khảo sát cấu trúc xương hàm theo cả 3 chiều không gian với độ chính xác cao.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_39", "unit": "Unit 6", "word": "Unerupted tooth", "ipa": "/ˌʌn.ɪˈrʌp.tɪd tuːθ/", "pos": "n.", "meaning": "Răng chưa mọc", "relatedTerms": ["Impacted tooth", "Occlusal X-ray", "Tooth eruption"], "example": "Occlusal and panoramic radiographs help locate unerupted teeth within the jawbone.", "exampleVi": "Phim mặt nhai và phim toàn cảnh giúp xác định vị trí các răng chưa mọc bên trong xương hàm.", "clinicalNote": "Răng còn nằm trong xương hàm do chưa đến tuổi mọc hoặc bị cản trở đường mọc.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_40", "unit": "Unit 6", "word": "Fracture", "ipa": "/ˈfræk.tʃər/", "pos": "n.", "meaning": "Gãy xương / Gãy nứt răng", "relatedTerms": ["Computed tomography (CT)", "Maxillofacial surgery", "Tooth fracture"], "example": "Radiographic imaging is mandatory to evaluate the location and displacement of a jaw fracture.", "exampleVi": "Chẩn đoán hình ảnh X-quang là bắt buộc để đánh giá vị trí và mức độ di lệch của đường gãy xương hàm.", "clinicalNote": "Sự mất liên tục của cấu trúc mô cứng (xương hàm hoặc thân/chân răng) sau chấn thương.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_41", "unit": "Unit 6", "word": "Tumor", "ipa": "/ˈtjuː.mər/", "pos": "n.", "meaning": "Khối u", "relatedTerms": ["Lesion", "Oral pathology", "Computed tomography (CT)"], "example": "Panoramic radiographs and CT scans help detect odontogenic cysts and jaw tumors.", "exampleVi": "Phim toàn cảnh và chụp CT giúp phát hiện các nang do răng và các khối u xương hàm.", "clinicalNote": "Sự tăng sinh bất thường của tế bào tạo thành khối tân sinh lành tính hoặc ác tính.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_42", "unit": "Unit 6", "word": "Radiation exposure", "ipa": "/ˌreɪ.diˈeɪ.ʃən ɪkˈspəʊ.ʒər/", "pos": "n.", "meaning": "Sự phơi nhiễm bức xạ", "relatedTerms": ["Radiation protection", "Lead apron", "Lead collar"], "example": "Digital dental radiography significantly reduces radiation exposure compared to conventional film.", "exampleVi": "Chụp X-quang nha khoa kỹ thuật số làm giảm đáng kể sự phơi nhiễm bức xạ so với phim truyền thống.", "clinicalNote": "Luôn tuân thủ nguyên tắc ALARA (As Low As Reasonably Achievable) khi chỉ định chụp phim.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_43", "unit": "Unit 6", "word": "Radiation protection", "ipa": "/ˌreɪ.diˈeɪ.ʃən prəˈtek.ʃən/", "pos": "n.", "meaning": "Bảo vệ chống bức xạ (An toàn bức xạ)", "relatedTerms": ["Radiation exposure", "Lead apron", "Lead collar"], "example": "Strict radiation protection protocols safeguard both patients and dental staff during X-ray procedures.", "exampleVi": "Các quy trình bảo vệ chống bức xạ nghiêm ngặt giúp bảo vệ an toàn cho cả bệnh nhân và nhân viên nha khoa khi chụp X-quang.", "clinicalNote": "Bao gồm mặc áo chì, đeo cổ chì bảo vệ tuyến giáp và đứng sau vách chắn chì.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u6_44", "unit": "Unit 6", "word": "Lead apron / Lead collar", "ipa": "/led ˈeɪ.prən / led ˈkɒl.ər/", "pos": "n.", "meaning": "Áo chì / Cổ chì (Tấm chắn tuyến giáp)", "relatedTerms": ["Radiation protection", "Radiation exposure"], "example": "Patients wear a lead apron and a thyroid lead collar to shield radiosensitive organs during dental X-rays.", "exampleVi": "Bệnh nhân mặc áo chì và đeo cổ chì để che chắn các cơ quan nhạy cảm với tia xạ trong quá trình chụp X-quang nha khoa.", "clinicalNote": "Thiết bị bảo hộ cá nhân thiết yếu trong phòng chụp X-quang Răng Hàm Mặt.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_31", "unit": "Unit 7", "word": "Initial caries / Deep caries", "ipa": "/ɪˈnɪʃ.əl ˈkeə.riːz / diːp ˈkeə.riːz/", "pos": "n.", "meaning": "Sâu răng giai đoạn đầu / Sâu răng sâu", "relatedTerms": ["White spot lesion", "Dentin caries", "Pulp involvement"], "example": "Initial caries can be reversed with fluoride, whereas deep caries approaches the dental pulp and requires restoration.", "exampleVi": "Sâu răng giai đoạn đầu có thể phục hồi bằng fluoride, trong khi sâu răng sâu tiến sát buồng tủy và đòi hỏi phải hàn phục hồi.", "clinicalNote": "Hai thái cực tiến triển của sang thương sâu răng trước khi xâm lấn vào buồng tủy.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_32", "unit": "Unit 7", "word": "Hidden caries", "ipa": "/ˈhɪd.ən ˈkeə.riːz/", "pos": "n.", "meaning": "Sâu răng tiềm ẩn (Sâu răng ẩn)", "relatedTerms": ["Bitewing X-ray", "Interproximal caries", "Dentin caries"], "example": "Dental radiographs are essential for detecting hidden caries beneath seemingly intact enamel.", "exampleVi": "Phim X-quang nha khoa rất cần thiết để phát hiện sâu răng tiềm ẩn bên dưới lớp men có vẻ ngoài còn nguyên vẹn.", "clinicalNote": "Tổn thương sâu ngà tiến triển âm thầm bên dưới lớp men bề mặt hoặc ở vùng kẽ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_33", "unit": "Unit 7", "word": "Remain intact / Surface breakdown", "ipa": "/rɪˈmeɪn ɪnˈtækt / ˈsɜː.fɪs ˈbreɪk.daʊn/", "pos": "v. / n.", "meaning": "Còn nguyên vẹn / Sự sập vỡ bề mặt men", "relatedTerms": ["White spot lesion", "Cavitation", "Remineralization"], "example": "If the enamel surface remains intact, remineralization is possible; once surface breakdown occurs, a cavity forms.", "exampleVi": "Nếu bề mặt men răng còn nguyên vẹn thì có thể tái khoáng hóa; một khi sự sập vỡ bề mặt xảy ra, lỗ sâu sẽ hình thành.", "clinicalNote": "Ranh giới quyết định giữa điều trị bảo tồn không xâm lấn và điều trị khoan trám tạo xoang.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_34", "unit": "Unit 7", "word": "Discoloration", "ipa": "/dɪsˌkʌl.əˈreɪ.ʃən/", "pos": "n.", "meaning": "Sự đổi màu răng", "relatedTerms": ["Carious lesion", "Pulp necrosis", "White spot lesion"], "example": "As the carious lesion progresses, the affected tooth may develop chalky white, brown, or black discoloration.", "exampleVi": "Khi tổn thương sâu răng tiến triển, chiếc răng bị ảnh hưởng có thể xuất hiện sự đổi màu trắng đục, nâu hoặc đen.", "clinicalNote": "Dấu hiệu thị giác quan trọng giúp nhận diện sâu răng hoặc hoại tử tủy khi khám lâm sàng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_35", "unit": "Unit 7", "word": "Bacterial invasion", "ipa": "/bækˈtɪə.ri.əl ɪnˈveɪ.ʒən/", "pos": "n.", "meaning": "Sự xâm lấn của vi khuẩn", "relatedTerms": ["Dentin caries", "Pulpitis", "Pulp involvement"], "example": "Bacterial invasion through the dentinal tubules triggers an inflammatory response in the dental pulp.", "exampleVi": "Sự xâm lấn của vi khuẩn qua các ống ngà kích hoạt phản ứng viêm bên trong tủy răng.", "clinicalNote": "Cơ chế bệnh sinh trực tiếp dẫn đến viêm tủy và nhiễm trùng quanh chóp.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_36", "unit": "Unit 7", "word": "Pulp involvement", "ipa": "/pʌlp ɪnˈvɒlv.mənt/", "pos": "n.", "meaning": "Tổn thương xâm lấn tủy (Sâu răng lan đến tủy)", "relatedTerms": ["Deep caries", "Pulpitis", "Root canal therapy"], "example": "Stage four of dental caries is characterized by pulp involvement, severe pain, and potential abscess formation.", "exampleVi": "Giai đoạn bốn của bệnh sâu răng được đặc trưng bởi tổn thương xâm lấn tủy, đau dữ dội và nguy cơ hình thành ổ áp-xe.", "clinicalNote": "Giai đoạn muộn của sâu răng (Stage 4), bắt buộc phải can thiệp nội nha hoặc nhổ răng.", "srsLevel": 0, "mistakeCount": 0 },
+      { "id": "u7_37", "unit": "Unit 7", "word": "Tooth fracture / Break altogether", "ipa": "/tuːθ ˈfræk.tʃər / breɪk ˌɔːl.təˈɡeð.ər/", "pos": "n. / v.", "meaning": "Gãy nứt răng / Gãy vỡ hoàn toàn", "relatedTerms": ["Cavitation", "Crown", "Extraction"], "example": "Without timely treatment, a severely decayed tooth may suffer a tooth fracture when biting down or break altogether.", "exampleVi": "Nếu không được điều trị kịp thời, một chiếc răng sâu nặng có thể bị nứt gãy khi cắn xuống hoặc gãy vỡ hoàn toàn.", "clinicalNote": "Biến chứng cơ học nghiêm trọng khi mô ngà nâng đỡ bên dưới men răng bị phá hủy rộng.", "srsLevel": 0, "mistakeCount": 0 }
     ];
 
     const MEDICAL_ROOT_LEXICON = [
@@ -2107,9 +2142,9 @@
         if (s.dictIndex !== undefined) dictIndex = s.dictIndex;
         if (s.onlyMistakes !== undefined) onlyMistakesFilter = s.onlyMistakes;
         if (Array.isArray(s.selectedUnits) && s.selectedUnits.length > 0) {
-          selectedUnits = new Set(s.selectedUnits.map(u => typeof u === "number" ? `Unit ${u}` : String(u)));
-          // Nếu nâng cấp lên phiên bản mới có thêm Unit mới (như Unit 0, 5, 6, 7), tự động bật thêm cho người dùng
-          if (localStorage.getItem(STORAGE_KEY_SEEN_VERSION) !== APP_BUILD_VERSION) {
+          selectedUnits = new Set(s.selectedUnits.map(u => normalizeUnitName(u)));
+          // Nếu nâng cấp lên phiên bản mới có thêm Unit mới, tự động bật thêm cho người dùng
+          if (localStorage.getItem(STORAGE_KEY_SEEN_VERSION) !== `${APP_BUILD_VERSION}_${VERSION_STATE.currentFullVersion}`) {
             getAllUnits().forEach(u => selectedUnits.add(u));
           }
         }
@@ -2179,8 +2214,19 @@
     }
 
     // ================= STREAK & VERSIONING =================
+    function getLocalDateString(dateObj = new Date()) {
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
     function updateDailyStreak() {
-      const todayStr = new Date().toISOString().slice(0, 10);
+      const now = new Date();
+      const todayStr = getLocalDateString(now);
+      const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+      const yesterdayStr = getLocalDateString(yesterday);
+
       let streakData = { count: 1, lastDate: todayStr };
       const raw = localStorage.getItem(STORAGE_KEY_STREAK);
       if (raw) {
@@ -2188,15 +2234,10 @@
           const parsed = JSON.parse(raw);
           if (parsed.lastDate === todayStr) {
             streakData = parsed;
+          } else if (parsed.lastDate === yesterdayStr) {
+            streakData = { count: (parsed.count || 0) + 1, lastDate: todayStr };
           } else {
-            const last = new Date(parsed.lastDate);
-            const today = new Date(todayStr);
-            const diffDays = Math.round((today - last) / (1000 * 60 * 60 * 24));
-            if (diffDays === 1) {
-              streakData = { count: (parsed.count || 0) + 1, lastDate: todayStr };
-            } else {
-              streakData = { count: 1, lastDate: todayStr };
-            }
+            streakData = { count: 1, lastDate: todayStr };
           }
         } catch (e) {}
       }
@@ -2269,15 +2310,15 @@
         const subItemsHtml = hasSub
           ? `<div id="${subBoxId}" class="collapse-content pt-2 mt-2 border-t border-slate-200/70 dark:border-slate-700/70 space-y-1.5">
                <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
-                 Các bản vá & tinh chỉnh nhỏ thuộc ${item.version}:
+                 Các bản vá & tinh chỉnh nhỏ thuộc ${escapeHtml(item.version)}:
                </p>
                ${item.subUpdates.map(sub => `
                  <div class="p-2 rounded-xl bg-white/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-700/60 flex items-start justify-between gap-2 text-[11px]">
                    <div class="flex items-start gap-1.5">
-                     <span class="font-mono font-extrabold text-teal-600 dark:text-teal-400 shrink-0">[${sub.version}]</span>
-                     <span class="text-slate-700 dark:text-slate-300">${sub.title}</span>
+                     <span class="font-mono font-extrabold text-teal-600 dark:text-teal-400 shrink-0">[${escapeHtml(sub.version)}]</span>
+                     <span class="text-slate-700 dark:text-slate-300">${escapeHtml(sub.title)}</span>
                    </div>
-                   <span class="text-[9px] italic text-slate-400 shrink-0">${sub.date}</span>
+                   <span class="text-[9px] italic text-slate-400 shrink-0">${escapeHtml(sub.date)}</span>
                  </div>
                `).join("")}
              </div>`
@@ -2286,7 +2327,7 @@
         // Ở chân thanh thông báo chính (cạnh thời gian cập nhật), thêm nút mũi tên xổ xuống nếu có bản nhỏ:
         const toggleSubBtnHtml = hasSub
           ? `<button type="button" data-toggle-sub="${subBoxId}" class="inline-flex items-center gap-1 text-[10px] font-extrabold text-teal-700 dark:text-teal-300 hover:underline">
-               <span>Chi tiết ${item.subUpdates.length} bản cập nhật nhỏ (mới nhất: ${item.subUpdates[0].version})</span>
+               <span>Chi tiết ${item.subUpdates.length} bản cập nhật nhỏ (mới nhất: ${escapeHtml(item.subUpdates[0].version)})</span>
                <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300"></i>
              </button>`
           : `<span></span>`;
@@ -2294,19 +2335,19 @@
         card.innerHTML = `
           <div class="flex flex-wrap items-start justify-between gap-2">
             <p class="font-extrabold ${t.title} flex items-center gap-2 flex-1 min-w-[200px]">
-              <i class="fa-solid ${item.icon || "fa-star"} ${t.icon}"></i>
-              <span>${idx + 1}. ${item.title}</span>
+              <i class="fa-solid ${escapeHtml(item.icon || "fa-star")} ${t.icon}"></i>
+              <span>${idx + 1}. ${escapeHtml(item.title)}</span>
             </p>
             <div class="flex items-center gap-1.5 shrink-0">
-              ${t.badgeText ? `<span class="text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider ${t.badge}">${t.badgeText}</span>` : ""}
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded-md ${t.badge}">${item.version}</span>
+              ${t.badgeText ? `<span class="text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider ${t.badge}">${escapeHtml(t.badgeText)}</span>` : ""}
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-md ${t.badge}">${escapeHtml(item.version)}</span>
             </div>
           </div>
-          <p class="text-[11px] ${t.desc} leading-relaxed">${item.desc || ""}</p>
+          <p class="text-[11px] ${t.desc} leading-relaxed">${escapeHtml(item.desc || "")}</p>
           <div class="pt-1 flex flex-wrap items-center justify-between gap-2">
             ${toggleSubBtnHtml}
             <span class="text-[10px] italic text-slate-400 dark:text-slate-500 flex items-center gap-1">
-              <i class="fa-regular fa-clock text-[9px]"></i> Cập nhật lúc: ${item.date}
+              <i class="fa-regular fa-clock text-[9px]"></i> Cập nhật lúc: ${escapeHtml(item.date)}
             </span>
           </div>
           ${subItemsHtml}
@@ -2337,6 +2378,20 @@
         const bell = document.getElementById("whatsNewBellIcon");
         if (bell) bell.classList.remove("animate-bounce");
       }
+    }
+
+    function normalizeUnitName(rawUnit) {
+      if (rawUnit === 0 || rawUnit === "0") return "Từ vựng bổ trợ";
+      if (typeof rawUnit === "number") return `Unit ${rawUnit}`;
+      if (typeof rawUnit === "string") {
+        const trimmed = rawUnit.trim();
+        if (trimmed === "0" || /^unit\s*0$/i.test(trimmed) || /^từ vựng bổ trợ$/i.test(trimmed)) {
+          return "Từ vựng bổ trợ";
+        }
+        if (/^\d+$/.test(trimmed)) return `Unit ${trimmed}`;
+        return trimmed;
+      }
+      return "Unit 1";
     }
 
     // ================= KHỞI TẠO CƠ SỞ DỮ LIỆU & ĐỒNG BỘ =================
@@ -2375,8 +2430,8 @@
           return { ...seed };
         });
         savedVocab.forEach(custom => {
-          if (custom && typeof custom.unit === "number") {
-            custom.unit = `Unit ${custom.unit}`;
+          if (custom) {
+            custom.unit = normalizeUnitName(custom.unit);
           }
           if (!merged.some(m => m.id === custom.id)) {
             if ((custom.word || "").trim().toLowerCase() === "dental hygienist") {
@@ -2395,6 +2450,11 @@
       
       const spec = specialtiesMap[currentSpecialtyId];
       vocabList = spec.vocab || [];
+      vocabList.forEach(v => {
+        if (v && (v.srsLevel > 0 || (v.mistakeCount || 0) > 0)) {
+          syncCrossUnitSrs(v);
+        }
+      });
       document.getElementById("currentSpecialtyName").textContent = spec.name;
       document.getElementById("headerSpecIcon").className = `fa-solid ${spec.icon || "fa-tooth"} text-lg`;
       
@@ -2422,10 +2482,16 @@
     function getAllUnits() {
       const units = [];
       vocabList.forEach(v => {
-        if (v && typeof v.unit === "number") v.unit = `Unit ${v.unit}`;
+        if (v) v.unit = normalizeUnitName(v.unit);
         if (v && v.unit && !units.includes(v.unit)) units.push(v.unit);
       });
-      return units.length > 0 ? units.sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true })) : ["Unit 1"];
+      return units.length > 0
+        ? units.sort((a, b) => {
+            if (a === "Từ vựng bổ trợ" && b !== "Từ vựng bổ trợ") return -1;
+            if (b === "Từ vựng bổ trợ" && a !== "Từ vựng bổ trợ") return 1;
+            return String(a).localeCompare(String(b), undefined, { numeric: true });
+          })
+        : ["Unit 1"];
     }
 
     function getFilteredVocab() {
@@ -2670,17 +2736,25 @@
       }
     }
 
+    function syncCrossUnitSrs(sourceItem) {
+      if (!sourceItem || !sourceItem.word) return;
+      const targetVariants = extractAllVariants(sourceItem.word);
+      if (targetVariants.length === 0) return;
+
+      vocabList.forEach(v => {
+        if (v.id === sourceItem.id) return;
+        const vVariants = extractAllVariants(v.word);
+        // Nếu trùng thuật ngữ tiếng Anh chính hoặc các biến thể đồng nghĩa
+        if (vVariants.some(vw => targetVariants.includes(vw))) {
+          v.srsLevel = sourceItem.srsLevel;
+          v.mistakeCount = sourceItem.mistakeCount;
+        }
+      });
+    }
+
     function recordStudyOutcome(item, isCorrect) {
       if (!item) return;
-      if (isCorrect) {
-        if ((item.mistakeCount || 0) > 0) item.mistakeCount--;
-        if ((item.mistakeCount || 0) === 0) {
-          item.srsLevel = Math.min(3, Math.max(2, (item.srsLevel || 0) + 1));
-        }
-      } else {
-        item.mistakeCount = (item.mistakeCount || 0) + 1;
-        item.srsLevel = 1;
-      }
+      updateOutcomeMemoryOnly(item, isCorrect);
       saveDatabase();
     }
     
@@ -2695,6 +2769,7 @@
         item.mistakeCount = (item.mistakeCount || 0) + 1;
         item.srsLevel = 1;
       }
+      syncCrossUnitSrs(item);
     }
 
     // Tách toàn bộ các biến thể đồng nghĩa ngăn cách bởi dấu / hoặc trong ngoặc ()
@@ -2785,10 +2860,10 @@
           const normPosB = (targetItem.pos || "").replace(/\.$/, "").toLowerCase();
           const posScore = (normPosA && normPosA === normPosB) ? 15 : 0;
 
-          // 5. CÁCH LY TUYỆT ĐỐI UNIT 0 (Từ vựng bắc cầu) VỚI UNIT 1–7 (Thuật ngữ chuyên ngành RHM)
-          const isTargetUnit0 = (targetItem.unit === "Unit 0");
-          const isCandUnit0 = (c.unit === "Unit 0");
-          const domainIsolationScore = (isTargetUnit0 !== isCandUnit0) ? -1000 : 0;
+          // 5. CÁCH LY TUYỆT ĐỐI "Từ vựng bổ trợ" VỚI UNIT 1–7 (Thuật ngữ chuyên ngành RHM)
+          const isTargetSupportUnit = (targetItem.unit === "Từ vựng bổ trợ");
+          const isCandSupportUnit = (c.unit === "Từ vựng bổ trợ");
+          const domainIsolationScore = (isTargetSupportUnit !== isCandSupportUnit) ? -1000 : 0;
 
           // Tổng hợp điểm theo chiến thuật người dùng chọn
           if (strategy === "meaning") {
@@ -2832,19 +2907,34 @@
     function maskWordInSentence(sentence, rawWord) {
       if (!sentence || !rawWord) return sentence || "";
       let masked = sentence;
-      const variants = [];
+      const variants = new Set();
+
       rawWord.split("/").forEach(part => {
         const noParen = part.replace(/\([^)]*\)/g, "").trim();
-        if (noParen) variants.push(noParen);
-        const match = part.match(/\(([^)]+)\)/);
-        if (match && match[1]) variants.push(match[1].trim());
-      });
-      variants.sort((a, b) => b.length - a.length).forEach(v => {
-        if (v.length >= 2) {
-          const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-          masked = masked.replace(new RegExp("\\b" + escaped + "\\w*", "gi"), "[_____]");
+        if (noParen) {
+          variants.add(noParen);
+          // Nếu là động từ/danh từ tận cùng bằng 'e' hoặc 'y', thêm gốc từ cắt đuôi để bắt được dạng -ing, -ed, -ies
+          if (noParen.length > 4 && (noParen.endsWith("e") || noParen.endsWith("y"))) {
+            variants.add(noParen.slice(0, -1));
+          }
         }
+        const match = part.match(/\(([^)]+)\)/);
+        if (match && match[1]) variants.add(match[1].trim());
       });
+
+      Array.from(variants)
+        .sort((a, b) => b.length - a.length)
+        .forEach(v => {
+          if (v.length >= 2) {
+            const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            masked = masked.replace(new RegExp("\\b" + escaped + "\\w*", "gi"), "[_____]");
+          }
+        });
+
+      // Phòng vệ an toàn: Nếu câu ví dụ dùng từ đồng nghĩa hoàn toàn khác khiến chưa có dấu [_____]
+      if (!masked.includes("[_____]")) {
+        masked = `${masked} (Thuật ngữ tương ứng: [_____])`;
+      }
       return masked;
     }
 
@@ -3541,7 +3631,7 @@
         const pct = Math.round((st.right / st.total) * 100);
         breakdownList.innerHTML += `
           <div class="flex items-center justify-between gap-2">
-            <span class="font-bold text-slate-700 dark:text-slate-300">${uName}: ${st.right}/${st.total} câu (${pct}%)</span>
+            <span class="font-bold text-slate-700 dark:text-slate-300">${escapeHtml(uName)}: ${st.right}/${st.total} câu (${pct}%)</span>
             <div class="w-36 h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
               <div class="h-full ${pct >= 75 ? "bg-emerald-500" : (pct >= 50 ? "bg-amber-500" : "bg-rose-500")}" style="width:${pct}%"></div>
             </div>
@@ -3557,7 +3647,7 @@
         gapBox.classList.remove("hidden");
         btnReviewMistakes.classList.remove("hidden");
         mistakes.forEach(m => {
-          mistakeListEl.innerHTML += `<li><strong>${m.word}</strong>: Bạn chọn: <span class="text-rose-500 line-through">${m.userAnsText}</span> ➔ Đáp án đúng: <span class="text-emerald-600">${m.correctAnsText}</span> <span class="text-[10px] opacity-75">[${m.unit}]</span></li>`;
+          mistakeListEl.innerHTML += `<li><strong>${escapeHtml(m.word)}</strong>: Bạn chọn: <span class="text-rose-500 line-through">${escapeHtml(m.userAnsText)}</span> ➔ Đáp án đúng: <span class="text-emerald-600">${escapeHtml(m.correctAnsText)}</span> <span class="text-[10px] opacity-75">[${escapeHtml(m.unit)}]</span></li>`;
         });
       } else {
         gapBox.classList.add("hidden");
@@ -3641,7 +3731,7 @@
       if (lower.includes("hội thoại") || lower.includes("khám")) {
         return `💬 MẪU HỘI THOẠI LÂM SÀNG:\n\n👨‍⚕️ Dentist: "What brings you to the clinic?" (Hôm nay bạn đến phòng khám vì vấn đề gì?)\n🧑 Patient: "I have severe throbbing pain in my molar." (Tôi bị đau buốt nhức dữ dội ở răng hàm.)`;
       }
-      return `📚 DỮ LIỆU NỘI TUYẾN:\nChưa tìm thấy từ khóa "${q}" trong kho 247 từ có sẵn. Bạn hãy lưu Gemini API Key bên dưới để Gemini trực tiếp phân tích chi tiết bất kỳ thuật ngữ hay câu hỏi nào.`;
+      return `📚 DỮ LIỆU NỘI TUYẾN:\nChưa tìm thấy từ khóa "${q}" trong kho ${vocabList.length} từ có sẵn. Bạn hãy lưu Gemini API Key bên dưới để Gemini trực tiếp phân tích chi tiết bất kỳ thuật ngữ hay câu hỏi nào.`;
     }
 
     async function enrichWordWithAiFallback(word, meaning, unit) {
@@ -3908,6 +3998,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       const btnOpenWN = document.getElementById("btnOpenWhatsNewModal");
       if (btnOpenWN && whatsNewModal) {
         btnOpenWN.onclick = () => {
+          if (isSprintActive && !isSprintPaused) pauseSprintGame();
           if (chkDontShowAgain) {
             chkDontShowAgain.checked = localStorage.getItem(STORAGE_KEY_SEEN_VERSION) === APP_BUILD_VERSION;
           }
@@ -3941,7 +4032,10 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
 
       const bindModal = (o, m, c) => {
         const ob = document.getElementById(o), mod = document.getElementById(m), cb = document.getElementById(c);
-        if (ob && mod) ob.onclick = () => mod.classList.remove("hidden");
+        if (ob && mod) ob.onclick = () => {
+          if (isSprintActive && !isSprintPaused) pauseSprintGame();
+          mod.classList.remove("hidden");
+        };
         if (cb && mod) cb.onclick = () => mod.classList.add("hidden");
         if (mod) mod.addEventListener("click", e => { if (e.target === mod) mod.classList.add("hidden"); });
       };
@@ -3960,11 +4054,14 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       bindModal("btnDashOpenFullGuide", "guideModal", "btnCloseGuideModal");
       document.getElementById("btnGotItGuideModal").onclick = () => document.getElementById("guideModal").classList.add("hidden");
       
+      const jsonModalEl = document.getElementById("jsonModal");
       document.getElementById("btnOpenJsonModal").onclick = () => {
+        if (isSprintActive && !isSprintPaused) pauseSprintGame();
         document.getElementById("jsonTextBox").value = JSON.stringify(vocabList, null, 2);
-        document.getElementById("jsonModal").classList.remove("hidden");
+        jsonModalEl.classList.remove("hidden");
       };
-      document.getElementById("btnCloseJsonModal").onclick = () => document.getElementById("jsonModal").classList.add("hidden");
+      document.getElementById("btnCloseJsonModal").onclick = () => jsonModalEl.classList.add("hidden");
+      if (jsonModalEl) jsonModalEl.addEventListener("click", e => { if (e.target === jsonModalEl) jsonModalEl.classList.add("hidden"); });
 
       document.getElementById("btnTheme").onclick = () => {
         const isDark = document.documentElement.classList.toggle("dark");
@@ -4115,6 +4212,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
           if (!item) return;
           item.srsLevel = lvl;
           if (lvl === 3) item.mistakeCount = 0; else if (lvl === 1) item.mistakeCount = Math.max(1, item.mistakeCount || 0);
+          syncCrossUnitSrs(item);
           saveDatabase(); triggerHaptic("success"); fcIndex++; saveStudyProgress(); renderFlashcard();
           if (autoAudio && fcPool[fcIndex]) speakText(fcPool[fcIndex].word);
         };
@@ -4253,7 +4351,8 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
         const allowedCbtModes = resolveDirectionModes(examDir);
         cbtPool = shuffled.map(q => {
           const qType = allowedCbtModes[Math.floor(Math.random() * allowedCbtModes.length)];
-          const dist = getDistinctDistractors(q, (quizOptionCount || 4) - 1, qType, distractorStrategy);
+          // Cố định lấy đúng 3 đáp án nhiễu (tổng 4 đáp án A-B-C-D chuẩn CBT độc lập với Tab 1)
+          const dist = getDistinctDistractors(q, 3, qType, distractorStrategy);
           const lockedOptions = [q, ...dist].sort(() => Math.random() - 0.5);
           return { ...q, qType, lockedOptions };
         });
@@ -4436,9 +4535,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       };
       function normalizeImportedItem(item) {
         if (!item || typeof item !== "object") return item;
-        const normalizedUnit = typeof item.unit === "number"
-          ? `Unit ${item.unit}`
-          : (typeof item.unit === "string" && /^\d+$/.test(item.unit.trim()) ? `Unit ${item.unit.trim()}` : (item.unit || "Unit 1"));
+        const normalizedUnit = normalizeUnitName(item.unit);
         const rawPos = (item.pos || "n.").trim();
         const normalizedPos = rawPos.endsWith(".") ? rawPos : `${rawPos}.`;
         return {
@@ -4968,6 +5065,15 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
       // Keyboard Shortcuts
       window.addEventListener("keydown", e => {
         if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
+
+        // Chặn phím tắt nếu đang có bất kỳ cửa sổ Modal nào mở
+        const anyModalOpen = ["guideModal", "authorModal", "specialtyModal", "aiHubModal", "pwaModal", "jsonModal", "whatsNewModal"]
+          .some(id => {
+            const el = document.getElementById(id);
+            return el && !el.classList.contains("hidden");
+          });
+        if (anyModalOpen) return;
+
         if (currentActiveTab === "quiz") {
           if (["1", "2", "3", "4", "5", "6", "7", "8"].includes(e.key) && !currentQuizAnswered) {
             const btns = document.querySelectorAll(".quiz-opt-btn");
@@ -4980,9 +5086,31 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
         } else if (currentActiveTab === "flashcard") {
           if (e.code === "Space") {
             e.preventDefault(); document.getElementById("btnFcSpeakFront").click();
-          } else if (e.key === "ArrowRight") { document.getElementById("btnFcNext").click();
-          } else if (e.key === "ArrowLeft") { document.getElementById("btnFcPrev").click();
-          } else if (["ArrowUp", "ArrowDown", "Enter"].includes(e.key)) { e.preventDefault(); document.getElementById("fcCardInner").click(); }
+          } else if (e.key === "ArrowRight") {
+            document.getElementById("btnFcNext").click();
+          } else if (e.key === "ArrowLeft") {
+            document.getElementById("btnFcPrev").click();
+          } else if (["ArrowUp", "ArrowDown", "Enter"].includes(e.key)) {
+            e.preventDefault(); document.getElementById("fcCardInner").click();
+          }
+        } else if (currentActiveTab === "sprint" && isSprintActive && !isSprintPaused) {
+          if (["1", "2", "3", "4"].includes(e.key)) {
+            const btns = document.querySelectorAll("#sprintOptionsBox button");
+            if (btns[parseInt(e.key, 10) - 1]) btns[parseInt(e.key, 10) - 1].click();
+          }
+        } else if (currentActiveTab === "cbt" && !document.getElementById("cbtExamView").classList.contains("hidden")) {
+          const key = e.key.toUpperCase();
+          const optMap = { "A": 0, "B": 1, "C": 2, "D": 3, "1": 0, "2": 1, "3": 2, "4": 3 };
+          if (optMap[key] !== undefined) {
+            const btns = document.querySelectorAll("#cbtOptionsContainer button");
+            if (btns[optMap[key]]) btns[optMap[key]].click();
+          } else if (key === "F") {
+            e.preventDefault(); document.getElementById("btnFlagCBT").click();
+          } else if (e.key === "ArrowRight" || e.key === "Enter") {
+            e.preventDefault(); document.getElementById("btnCBTNext").click();
+          } else if (e.key === "ArrowLeft") {
+            e.preventDefault(); document.getElementById("btnCBTPrev").click();
+          }
         }
       });
     }
