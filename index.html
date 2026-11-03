@@ -113,7 +113,7 @@
         <div class="flex items-center gap-1.5 ml-auto">
           <button id="btnOpenWhatsNewModal" type="button" title="Xem thông báo bản cập nhật mới" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/80 dark:hover:bg-teal-900/70 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 flex items-center gap-1.5 transition">
             <i id="whatsNewBellIcon" class="fa-solid fa-bell text-amber-500 animate-bounce"></i>
-            <span id="headerVersionBadgeText" class="hidden sm:inline">Bản mới v7.2</span>
+            <span id="headerVersionBadgeText" class="hidden sm:inline">Bản mới v7.5.2</span>
           </button>
           <button id="btnOpenGuideModal" type="button" title="Cẩm nang hướng dẫn sử dụng toàn bộ chế độ & tính năng" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/80 dark:hover:bg-indigo-900/70 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 flex items-center gap-1.5 transition">
             <i class="fa-solid fa-book-open-reader"></i>
@@ -2087,7 +2087,7 @@
     let quizOptionCount = 4; // Hỗ trợ 4, 6, hoặc 8 đáp án
     let distractorStrategy = "smart"; // 'smart' (tổng hợp), 'meaning' (gần nghĩa), 'unit' (cùng unit), 'length' (cùng độ dài)
     let fcPool = [], fcIndex = 0;
-    let dictIndex = 0, isDictTransitioning = false;
+    let dictPool = [], dictIndex = 0, isDictTransitioning = false;
 
     let sprintTimer = null, sprintSeconds = 60, sprintScore = 0, sprintCombo = 1, currentSprintItem = null;
     let sprintBestScore = 0, isSprintActive = false, isSprintPaused = false;
@@ -2134,8 +2134,13 @@
 
     function speakText(text) {
       if (!text) return;
-      const clean = text.split("/")[0].replace(/\([^)]*\)/g, "").trim();
-      if ("speechSynthesis" in window) {
+      const clean = text
+        .replace(/\([^)]*\)/g, "")
+        .split("/")
+        .map(s => s.trim())
+        .filter(Boolean)
+        .join(", ");
+      if ("speechSynthesis" in window && clean) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(clean);
         u.lang = "en-US";
@@ -2489,10 +2494,7 @@
       
       const spec = specialtiesMap[currentSpecialtyId];
       vocabList = spec.vocab || [];
-      [...vocabList]
-        .filter(v => v && ((v.srsLevel || 0) > 0 || (v.mistakeCount || 0) > 0))
-        .sort((a, b) => (a.srsLevel || 0) - (b.srsLevel || 0) || (a.mistakeCount || 0) - (b.mistakeCount || 0))
-        .forEach(v => syncCrossUnitSrs(v));
+      reconcileAllCrossUnitSrs();
       document.getElementById("currentSpecialtyName").textContent = spec.name;
       document.getElementById("headerSpecIcon").className = `fa-solid ${spec.icon || "fa-tooth"} text-lg`;
       
@@ -2548,6 +2550,12 @@
 
     function updateHeaderBadges() {
       const allUnits = getAllUnits();
+      selectedUnits.forEach(u => {
+        if (!allUnits.includes(u)) selectedUnits.delete(u);
+      });
+      if (selectedUnits.size === 0 && allUnits.length > 0) {
+        allUnits.forEach(u => selectedUnits.add(u));
+      }
       const filtered = getFilteredVocab();
       const masteredCount = vocabList.filter(v => v.srsLevel === 3).length;
       const mistakeTotal = vocabList.filter(v => (v.mistakeCount || 0) > 0 || v.srsLevel === 1).length;
@@ -2647,6 +2655,7 @@
 
     function syncAllViews() {
       fcPool = getFilteredVocab();
+      dictPool = getFilteredVocab();
       updateHeaderBadges();
       renderDashboard();
       renderUnitAccordion(); 
@@ -2772,6 +2781,41 @@
           unitContainer.appendChild(row);
         });
       }
+    }
+
+    function reconcileAllCrossUnitSrs() {
+      const bestStateMap = new Map();
+      vocabList.forEach(v => {
+        if (!v || !v.word) return;
+        const normPos = (v.pos || "").replace(/\.$/, "").toLowerCase().trim();
+        const variants = extractAllVariants(v.word);
+        variants.forEach(vw => {
+          const key = `${normPos}::${vw}`;
+          const cur = bestStateMap.get(key);
+          const lvl = v.srsLevel || 0;
+          const err = v.mistakeCount || 0;
+          if (!cur || lvl > cur.srsLevel || (lvl === cur.srsLevel && err > cur.mistakeCount)) {
+            bestStateMap.set(key, { srsLevel: lvl, mistakeCount: err });
+          }
+        });
+      });
+
+      vocabList.forEach(v => {
+        if (!v || !v.word) return;
+        const normPos = (v.pos || "").replace(/\.$/, "").toLowerCase().trim();
+        const variants = extractAllVariants(v.word);
+        let maxLvl = v.srsLevel || 0;
+        let maxErr = v.mistakeCount || 0;
+        variants.forEach(vw => {
+          const st = bestStateMap.get(`${normPos}::${vw}`);
+          if (st && (st.srsLevel > maxLvl || (st.srsLevel === maxLvl && st.mistakeCount > maxErr))) {
+            maxLvl = st.srsLevel;
+            maxErr = st.mistakeCount;
+          }
+        });
+        v.srsLevel = maxLvl;
+        v.mistakeCount = maxErr;
+      });
     }
 
     function syncCrossUnitSrs(sourceItem) {
@@ -2946,6 +2990,22 @@
       return dist;
     }
 
+    function buildFlexiblePhraseRegex(phrase) {
+      const tokens = phrase.trim().split(/\s+/).filter(Boolean);
+      const tokenPatterns = tokens.map(tok => {
+        const escaped = tok.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        if (tok.length > 4 && (tok.endsWith("e") || tok.endsWith("y"))) {
+          const stem = tok.slice(0, -1).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          return `(?:${escaped}|${stem})(?:s|es|ed|d|ing|y|ies|ied|ion|ation|ations|ive|or|er)?`;
+        }
+        if (tok.length >= 3) {
+          return `${escaped}(?:s|es|ed|d|ing|y|ies|ied)?`;
+        }
+        return escaped;
+      });
+      return new RegExp("\\b" + tokenPatterns.join("\\s+") + "\\b", "gi");
+    }
+
     function maskWordInSentence(sentence, rawWord) {
       if (!sentence || !rawWord) return sentence || "";
       let masked = sentence;
@@ -2953,13 +3013,7 @@
 
       rawWord.split("/").forEach(part => {
         const noParen = part.replace(/\([^)]*\)/g, "").trim();
-        if (noParen) {
-          variants.add(noParen);
-          // Nếu là động từ/danh từ tận cùng bằng 'e' hoặc 'y', thêm gốc từ cắt đuôi để bắt được dạng -ing, -ed, -ies
-          if (noParen.length > 4 && (noParen.endsWith("e") || noParen.endsWith("y"))) {
-            variants.add(noParen.slice(0, -1));
-          }
-        }
+        if (noParen) variants.add(noParen);
         const match = part.match(/\(([^)]+)\)/);
         if (match && match[1]) variants.add(match[1].trim());
       });
@@ -2968,11 +3022,7 @@
         .sort((a, b) => b.length - a.length)
         .forEach(v => {
           if (v.length >= 2) {
-            const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-            masked = masked.replace(
-              new RegExp("\\b" + escaped + "(?:s|es|ed|d|ing|y|ies|ied|ion|ation|ations|ive|or|er)?\\b", "gi"),
-              "[_____]"
-            );
+            masked = masked.replace(buildFlexiblePhraseRegex(v), "[_____]");
           }
         });
 
@@ -3212,21 +3262,38 @@
       saveStudyProgress();
     }
 
+    function normalizeDictString(str) {
+      return String(str || "")
+        .toLowerCase()
+        .replace(/[-–—]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
     function getAcceptedDictationTargets(rawWord) {
       const targets = new Set();
       if (!rawWord) return [""];
       rawWord.split("/").forEach(part => {
-        const clean = part.replace(/\([^)]*\)/g, "").trim().toLowerCase();
-        if (clean) targets.add(clean);
+        const clean = part.replace(/\([^)]*\)/g, "").trim();
+        if (clean) {
+          targets.add(clean.toLowerCase());
+          targets.add(normalizeDictString(clean));
+        }
         const match = part.match(/\(([^)]+)\)/);
-        if (match && match[1]) targets.add(match[1].trim().toLowerCase());
+        if (match && match[1]) {
+          targets.add(match[1].trim().toLowerCase());
+          targets.add(normalizeDictString(match[1]));
+        }
       });
-      targets.add(rawWord.replace(/\([^)]*\)/g, "").trim().toLowerCase());
+      const fullClean = rawWord.replace(/\([^)]*\)/g, "").trim();
+      targets.add(fullClean.toLowerCase());
+      targets.add(normalizeDictString(fullClean));
       return Array.from(targets);
     }
 
     function renderDictation() {
-      const list = getFilteredVocab();
+      if (!dictPool || dictPool.length === 0) dictPool = getFilteredVocab();
+      const list = dictPool;
       if (!list.length) return;
       if (dictIndex >= list.length) dictIndex = 0;
       const item = list[dictIndex];
@@ -3236,12 +3303,18 @@
       document.getElementById("dictMeaningPrompt").textContent = `Nghĩa: ${item.meaning}`;
       document.getElementById("dictClinicalHint").textContent = `Gợi ý: ${item.clinicalNote}`;
 
-      const cw = item.word.split("/")[0].replace(/\([^)]*\)/g, "").trim();
-      const masked = cw.split(" ").map(w => {
-          if (w.length <= 1) return "_";
-          if (w.length === 2) return w[0] + "_";
-          return w[0] + "_".repeat(w.length - 2) + w.slice(-1);
-      }).join("  ");
+      const masked = item.word
+        .split("/")
+        .map(part => {
+          const cw = part.replace(/\([^)]*\)/g, "").trim();
+          return cw.split(/\s+/).filter(Boolean).map(w => {
+            if (w.length <= 1) return "_";
+            if (w.length === 2) return w[0] + "_";
+            return w[0] + "_".repeat(w.length - 2) + w.slice(-1);
+          }).join("  ");
+        })
+        .filter(Boolean)
+        .join("   /   ");
       document.getElementById("dictWordMask").textContent = masked;
       document.getElementById("dictInput").value = "";
       document.getElementById("dictFeedback").textContent = "";
@@ -3451,26 +3524,15 @@
       const lower = (text || "").toLowerCase();
 
       parsedSyllabusWords = vocabList.filter(v => {
-        const engVariants = [];
-        v.word.split("/").forEach(part => {
-          const clean = part.replace(/\([^)]*\)/g, "").trim();
-          if (clean.length >= 3) engVariants.push(clean);
-          const match = part.match(/\(([^)]+)\)/);
-          if (match && match[1] && match[1].trim().length >= 3) {
-            engVariants.push(match[1].trim());
-          }
-        });
-
+        const engVariants = extractAllVariants(v.word).filter(w => w.length >= 2);
         const matchedEng = engVariants.some(variant => {
           const escaped = variant.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-          return new RegExp("\\b" + escaped + "s?\\b", "i").test(text);
+          return new RegExp("\\b" + escaped + "(?:s|es)?\\b", "i").test(text);
         });
         if (matchedEng) return true;
 
-        const cleanVi = v.meaning.toLowerCase().replace(/\([^)]*\)/g, "").split("/")[0].trim();
-        if (cleanVi.length >= 6 && lower.includes(cleanVi)) return true;
-
-        return false;
+        const viVariants = extractAllVariants(v.meaning).filter(m => m.length >= 4);
+        return viVariants.some(vi => lower.includes(vi));
       });
 
       cbtMatchedCountBadge.textContent = `Khớp ${parsedSyllabusWords.length} thuật ngữ`;
@@ -3521,7 +3583,7 @@
           updateCBTTimerDisplay();
           clearInterval(cbtTimerInterval);
           cbtTimerInterval = setInterval(() => {
-            if (currentActiveTab !== "cbt") return; // Tạm dừng đếm ngược nếu người dùng chuyển sang Tab khác
+            if (currentActiveTab !== "cbt" || document.hidden) return; // Tạm dừng đếm ngược nếu người dùng chuyển sang Tab khác hoặc ẩn trình duyệt
             cbtTimeLeft--; updateCBTTimerDisplay(); saveCBTState();
             if (cbtTimeLeft <= 0) {
               clearInterval(cbtTimerInterval);
@@ -3756,10 +3818,12 @@
     }
 
     function buildOfflineMedicalAnalysis(q) {
-      const lower = q.toLowerCase();
+      const lower = (q || "").toLowerCase().trim();
       const matchedWords = vocabList.filter(v => {
-        const cleanW = v.word.toLowerCase().split("/")[0].replace(/\([^)]*\)/g, "").trim();
-        return (cleanW.length >= 3 && lower.includes(cleanW)) || v.meaning.toLowerCase().includes(lower);
+        const wVars = extractAllVariants(v.word);
+        const mVars = extractAllVariants(v.meaning);
+        return wVars.some(cw => cw.length >= 2 && lower.includes(cw)) ||
+               mVars.some(cm => cm.length >= 2 && (lower.includes(cm) || cm.includes(lower)));
       });
       if (matchedWords.length >= 2) {
         const w1 = matchedWords[0], w2 = matchedWords[1];
@@ -4005,7 +4069,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
         selectedUnits = new Set(getAllUnits());
         onlyMistakesFilter = false;
         document.getElementById("chkOnlyMistakes").checked = false;
-        quizIndex = 0; quizScore = 0; fcIndex = 0; dictIndex = 0; quizPool = [];
+        quizIndex = 0; quizScore = 0; fcIndex = 0; dictIndex = 0; quizPool = []; dictPool = [];
       }
       syncAllViews();
       renderSpecialtyList();
@@ -4278,9 +4342,13 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       bindSrs("btnSrsHard", 1); bindSrs("btnSrsGood", 2); bindSrs("btnSrsEasy", 3);
 
       // Dictation
-      document.getElementById("btnDictSpeak").onclick = () => { if (getFilteredVocab()[dictIndex]) speakText(getFilteredVocab()[dictIndex].word); };
+      document.getElementById("btnDictSpeak").onclick = () => {
+        if (!dictPool || dictPool.length === 0) dictPool = getFilteredVocab();
+        if (dictPool[dictIndex]) speakText(dictPool[dictIndex].word);
+      };
       document.getElementById("btnDictShowAnswer").onclick = () => {
-        const item = getFilteredVocab()[dictIndex];
+        if (!dictPool || dictPool.length === 0) dictPool = getFilteredVocab();
+        const item = dictPool[dictIndex];
         if (!item) return;
         const fb = document.getElementById("dictFeedback");
         fb.className = "text-xs font-extrabold text-amber-600 dark:text-amber-400"; fb.textContent = `💡 Đáp án: ${item.word} (${item.ipa})`;
@@ -4290,12 +4358,13 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
       document.getElementById("dictForm").onsubmit = e => {
         e.preventDefault();
         if (isDictTransitioning) return;
-        const item = getFilteredVocab()[dictIndex];
+        if (!dictPool || dictPool.length === 0) dictPool = getFilteredVocab();
+        const item = dictPool[dictIndex];
         if (!item) return;
         const val = document.getElementById("dictInput").value.trim().toLowerCase();
         const fb = document.getElementById("dictFeedback");
 
-        if (getAcceptedDictationTargets(item.word).includes(val)) {
+        if (getAcceptedDictationTargets(item.word).includes(normalizeDictString(val))) {
           isDictTransitioning = true; playTone(780, "sine"); triggerHaptic("success"); recordStudyOutcome(item, true);
           fb.className = "text-xs font-extrabold text-emerald-600 dark:text-emerald-400"; fb.textContent = `✅ Chính xác! ${item.word} (${item.ipa})`;
           setTimeout(() => { dictIndex++; saveStudyProgress(); renderDictation(); }, 1000);
@@ -4421,7 +4490,7 @@ Trả về DUY NHẤT một chuỗi JSON hợp lệ không kèm bất kỳ giả
 
         updateCBTTimerDisplay(); clearInterval(cbtTimerInterval);
         cbtTimerInterval = setInterval(() => {
-          if (currentActiveTab !== "cbt") return; // Tạm dừng đếm ngược nếu người dùng chuyển sang Tab khác
+          if (currentActiveTab !== "cbt" || document.hidden) return; // Tạm dừng đếm ngược nếu người dùng chuyển sang Tab khác hoặc ẩn trình duyệt
           cbtTimeLeft--; updateCBTTimerDisplay(); saveCBTState();
           if (cbtTimeLeft <= 0) { clearInterval(cbtTimerInterval); showToast("Hết giờ! Tự động thu bài.", "error"); submitCBTExam(); }
         }, 1000);
@@ -4819,7 +4888,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
           updateDocExamTimer();
           clearInterval(docExamTimerInterval);
           docExamTimerInterval = setInterval(() => {
-            if (currentActiveTab !== "docexam") return; // Tạm dừng đếm khi chuyển sang tab khác
+            if (currentActiveTab !== "docexam" || document.hidden) return; // Tạm dừng đếm khi chuyển sang tab khác hoặc ẩn trình duyệt
             docExamTimeLeft--;
             updateDocExamTimer();
             if (docExamTimeLeft <= 0) {
@@ -4963,7 +5032,7 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không có markdown backticks
         updateDocExamTimer();
         clearInterval(docExamTimerInterval);
         docExamTimerInterval = setInterval(() => {
-          if (currentActiveTab !== "docexam") return;
+          if (currentActiveTab !== "docexam" || document.hidden) return;
           docExamTimeLeft--;
           updateDocExamTimer();
           if (docExamTimeLeft <= 0) {
@@ -5168,6 +5237,17 @@ Trả về DUY NHẤT một mảng JSON hợp lệ không kèm bất kỳ giải
             e.preventDefault(); document.getElementById("btnCBTNext").click();
           } else if (e.key === "ArrowLeft") {
             e.preventDefault(); document.getElementById("btnCBTPrev").click();
+          }
+        } else if (currentActiveTab === "docexam" && !document.getElementById("docExamPlayView").classList.contains("hidden")) {
+          const key = e.key.toUpperCase();
+          const optMap = { "A": 0, "B": 1, "C": 2, "D": 3, "1": 0, "2": 1, "3": 2, "4": 3 };
+          if (optMap[key] !== undefined && docExamAnswers[docExamCurrentIndex] === undefined) {
+            const btns = document.querySelectorAll("#docExamOptionsContainer button");
+            if (btns[optMap[key]]) btns[optMap[key]].click();
+          } else if (e.key === "ArrowRight" || e.key === "Enter") {
+            e.preventDefault(); document.getElementById("btnDocExamNext").click();
+          } else if (e.key === "ArrowLeft") {
+            e.preventDefault(); document.getElementById("btnDocExamPrev").click();
           }
         }
       });
